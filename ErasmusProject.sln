@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erasmus.Web", "Erasmus.Web\Erasmus.Web.csproj", "{C1F54E57-653D-4CB3-A8F9-84A5B835BEC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erasmus.Domain", "Erasmus.Domain\Erasmus.Domain.csproj", "{8DB88035-2212-4E45-A8B7-193107101847}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erasmus.Repository", "Erasmus.Repository\Erasmus.Repository.csproj", "{B54D4EB1-6BE7-44AC-B40E-CA4283E60ABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erasmus.Service", "Erasmus.Service\Erasmus.Service.csproj", "{284E1CA7-A81F-4D18-B2D2-0EFE0B4D32A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1F54E57-653D-4CB3-A8F9-84A5B835BEC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F54E57-653D-4CB3-A8F9-84A5B835BEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F54E57-653D-4CB3-A8F9-84A5B835BEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F54E57-653D-4CB3-A8F9-84A5B835BEC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DB88035-2212-4E45-A8B7-193107101847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DB88035-2212-4E45-A8B7-193107101847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DB88035-2212-4E45-A8B7-193107101847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DB88035-2212-4E45-A8B7-193107101847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B54D4EB1-6BE7-44AC-B40E-CA4283E60ABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54D4EB1-6BE7-44AC-B40E-CA4283E60ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54D4EB1-6BE7-44AC-B40E-CA4283E60ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54D4EB1-6BE7-44AC-B40E-CA4283E60ABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284E1CA7-A81F-4D18-B2D2-0EFE0B4D32A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284E1CA7-A81F-4D18-B2D2-0EFE0B4D32A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284E1CA7-A81F-4D18-B2D2-0EFE0B4D32A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284E1CA7-A81F-4D18-B2D2-0EFE0B4D32A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0EFE3D4F-8C9D-40EA-BD79-D75EE1F903C3}
+	EndGlobalSection
+EndGlobal
