@@ -7,10 +7,8 @@ using System.Text;
 namespace Erasmus.Domain.Domain
 {
     // Admin - IdentityUser is 1-1
-    public class Admin
+    public class Admin : BaseEntity
     {
-        [Key]
-        public string Id { get; set; }
         public string UserId { get; set; }
         public virtual ErasmusUser BaseRecord { get; set; }
 

@@ -6,10 +6,8 @@ using System.Text;
 
 namespace Erasmus.Domain.Domain
 {
-    public class Coordinator
+    public class Coordinator : BaseEntity
     {
-        [Key]
-        public string Id { get; set; }
         public string UserId { get; set; }
         public ErasmusUser BaseRecord { get; set; }
         public Guid FacultyId { get; set; }

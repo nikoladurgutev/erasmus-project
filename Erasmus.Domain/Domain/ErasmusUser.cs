@@ -14,20 +14,19 @@ namespace Erasmus.Domain.DomainModels
         public string LastName { get; set; }
 
         // only for admin users these properties will be present
-        public Admin Admin { get; set; }
-        public string AdminId { get; set; }
+        public virtual Admin Admin { get; set; }
+        public Guid? AdminId { get; set; }
         // only for coordinators these properties will be present
-        public Coordinator Coordinator { get; set; }
-        public string CoordinatorId { get; set; }
+        public virtual Coordinator Coordinator { get; set; }
+        public Guid? CoordinatorId { get; set; }
 
         //only for participants these properties will be present
-        public Participant Participant { get; set; }
-        public string ParticipantId { get; set; }
+        public virtual Participant Participant { get; set; }
+        public Guid? ParticipantId { get; set; }
 
         // only for students these properties will be present
-        public Student Student { get; set; }
-        public string StudentId { get; set; }
-
+        public virtual Student Student { get; set; }
+        public Guid? StudentId { get; set; }
 
     }
 }

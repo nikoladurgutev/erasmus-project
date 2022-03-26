@@ -2,39 +2,39 @@
 
 namespace Erasmus.Repository.Migrations
 {
-    public partial class ChangedUserClass : Migration
+    public partial class ChangedRoles : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1866497a-449d-4bf8-a0e8-298e9ba2b5fa");
+                keyValue: "4206f286-62ef-4cec-a02f-40ebada4f88d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5d86181f-99a2-4efb-be99-439a48319446");
+                keyValue: "a089b36a-efed-481c-a5fa-c6bdcad11d18");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "8357d211-a3c3-4a6d-83f9-b1e8365df29e");
+                keyValue: "a459e14c-9b12-4063-818b-8200b9df0b71");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "e737ad48-4963-4b3b-ba95-cd32e29fd2e5");
+                keyValue: "c746e614-e12d-4751-8551-d3b03b6d18af");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6398ffc4-7ff8-4a50-aae6-19f171d4dd58", "ba7935b9-ecae-4c23-a612-20e27a835b89", "Student", null },
-                    { "d4febcaf-e560-4f75-9efb-14f09b865d8e", "f29c07cd-8515-4033-9a00-fce33441cc3f", "User", null },
-                    { "f99e7cc4-5de4-42ff-b24d-4f65a69e6f3f", "207c4299-9586-405b-9a47-a473659220c3", "Admin", null },
-                    { "7a6cb36a-31c0-405e-8d9c-6a6a82122fa5", "87ee762b-5d3f-4695-b2aa-088a17806b4e", "Coordinator", null }
+                    { "de07ff60-ae6d-4fc6-8867-6333c155d4e3", "f9769206-a77e-4675-9bbb-13e1ac7b64cd", "Student", "STUDENT" },
+                    { "2b428846-5ef4-46fb-8435-b77412d325f8", "7c484dfc-55f8-46b9-bd26-b31db1d08d22", "User", "USER" },
+                    { "0ef6bb47-4cd1-4672-8a8d-74a38c0a2f7d", "e5ccb05f-7c35-4a48-a3d9-95b165b5a12a", "Admin", "ADMIN" },
+                    { "57af2b3a-17f0-4313-9892-aeab8b7a32a3", "ed630bc5-491a-4904-8427-106a404a13fb", "Coordinator", "COORDINATOR" }
                 });
         }
 
@@ -43,32 +43,32 @@ namespace Erasmus.Repository.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "6398ffc4-7ff8-4a50-aae6-19f171d4dd58");
+                keyValue: "0ef6bb47-4cd1-4672-8a8d-74a38c0a2f7d");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7a6cb36a-31c0-405e-8d9c-6a6a82122fa5");
+                keyValue: "2b428846-5ef4-46fb-8435-b77412d325f8");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "d4febcaf-e560-4f75-9efb-14f09b865d8e");
+                keyValue: "57af2b3a-17f0-4313-9892-aeab8b7a32a3");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "f99e7cc4-5de4-42ff-b24d-4f65a69e6f3f");
+                keyValue: "de07ff60-ae6d-4fc6-8867-6333c155d4e3");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "8357d211-a3c3-4a6d-83f9-b1e8365df29e", "eeb9e5fe-be0c-44d0-8822-1a095e7488e5", "Student", null },
-                    { "5d86181f-99a2-4efb-be99-439a48319446", "373d8bf0-f880-4795-91f4-a0c150ec5d53", "User", null },
-                    { "e737ad48-4963-4b3b-ba95-cd32e29fd2e5", "d43c8b27-4730-4877-a8d0-3305e027eae1", "Admin", null },
-                    { "1866497a-449d-4bf8-a0e8-298e9ba2b5fa", "4aa821f2-6cbe-4327-8c91-cdf72c5cca1c", "Coordinator", null }
+                    { "4206f286-62ef-4cec-a02f-40ebada4f88d", "87b411de-5d2c-4cd2-b83e-ae2fbe31f519", "STUDENT", null },
+                    { "a459e14c-9b12-4063-818b-8200b9df0b71", "38869408-561b-4c1b-b960-1cd7e1d8f14c", "USER", null },
+                    { "a089b36a-efed-481c-a5fa-c6bdcad11d18", "415186d4-8a25-4ab5-a94e-3727faada565", "ADMIN", null },
+                    { "c746e614-e12d-4751-8551-d3b03b6d18af", "fe8de6ad-520c-499b-bccd-a18cd93af68b", "COORDINATOR", null }
                 });
         }
     }

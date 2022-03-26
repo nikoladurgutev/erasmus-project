@@ -1,4 +1,6 @@
 using Erasmus.Domain.DomainModels;
+using Erasmus.Repository.Implementation;
+using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +37,8 @@ namespace Erasmus.Web
             //    .AddRoles<IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            //services.AddScoped(typeof(IUserRepository<>), typeof(UserRepository<>));
 
             services.AddIdentity<ErasmusUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
