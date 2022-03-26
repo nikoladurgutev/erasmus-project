@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Erasmus.Domain.DomainModels
+{
+    public class ErasmusProject : BaseEntity
+    {
+        public string ProjectTitle { get; set; }
+        public string ProjectDescription { get; set; }
+        //TODO: make city table, make country table
+        public string Location { get; set; }
+        public DateTime Deadline { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+
+        // TODO: add foreign key to University
+        // TODO: add foreign key to global admin who created the event
+
+    }
+}

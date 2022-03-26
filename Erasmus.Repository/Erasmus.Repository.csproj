@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220324180414_RemovedModels.cs" />
+    <Compile Remove="Migrations\20220324180414_RemovedModels.Designer.cs" />
+    <Compile Remove="Migrations\20220326112134_AddedClassesForusers.cs" />
+    <Compile Remove="Migrations\20220326112134_AddedClassesForusers.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
   </ItemGroup>

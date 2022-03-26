@@ -1,0 +1,24 @@
+﻿@using Erasmus.Domain.Domain
+@model Erasmus.Domain.Identity.RegisterDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var roles = Enum.GetValues(typeof(Role));
+}
+
+<form asp-controller="Account" asp-action="RegisterAsChoice" method="post">
+  <input id="chosenRole" type="hidden" asp-for="@Model.ChosenRole"/>
+  @foreach(var role in roles)
+  {
+       <button id="choose-role-btn" type="submit">@role.ToString()</button>
+  }
+</form>
+
+<script>
+    $(function() {
+        $('#choose-role-btn').click(function(){
+            $('#chosenRole').val($(this).text());
+        });
+    });
+</script>
