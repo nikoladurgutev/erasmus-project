@@ -28,5 +28,8 @@ namespace Erasmus.Domain.DomainModels
         public virtual Student Student { get; set; }
         public Guid? StudentId { get; set; }
 
+        public virtual Organizer Organizer { get; set; }
+        public virtual Guid? OrganizerId { get; set; }
+
     }
 }
