@@ -30,10 +30,27 @@ namespace Erasmus.Web.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Student" },
-                                                    new IdentityRole { Name = "User" }, new IdentityRole { Name = "Admin" },
-                                                    new IdentityRole { Name = "Coordinator" });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Student", NormalizedName = "STUDENT" },
+                                                    new IdentityRole { Name = "User", NormalizedName = "USER" }, new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+                                                    new IdentityRole { Name = "Coordinator", NormalizedName = "COORDINATOR" });
 
+            builder.Entity<Admin>()
+                   .HasOne<ErasmusUser>(s => s.BaseRecord)
+                   .WithOne(z => z.Admin).HasForeignKey<ErasmusUser>(z => z.AdminId);
+
+            builder.Entity<Coordinator>()
+                  .HasOne<ErasmusUser>(s => s.BaseRecord)
+                  .WithOne(z => z.Coordinator).HasForeignKey<ErasmusUser>(z => z.CoordinatorId);
+
+
+            builder.Entity<Participant>()
+                   .HasOne<ErasmusUser>(s => s.BaseRecord)
+                   .WithOne(z => z.Participant).HasForeignKey<ErasmusUser>(z => z.ParticipantId);
+
+
+            builder.Entity<Student>()
+                   .HasOne<ErasmusUser>(s => s.BaseRecord)
+                   .WithOne(z => z.Student).HasForeignKey<ErasmusUser>(z => z.StudentId);
         }
     }
 }

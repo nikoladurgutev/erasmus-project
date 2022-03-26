@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220326112159_AddedClassesForUsers")]
-    partial class AddedClassesForUsers
+    [Migration("20220326130456_ChangedRoleNames")]
+    partial class ChangedRoleNames
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Admin", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -36,8 +37,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Coordinator", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -49,8 +51,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Participant", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -62,8 +65,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Student", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -110,15 +114,15 @@ namespace Erasmus.Repository.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdminId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("AdminId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CoordinatorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("CoordinatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -150,8 +154,8 @@ namespace Erasmus.Repository.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("ParticipantId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -165,8 +169,8 @@ namespace Erasmus.Repository.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -301,27 +305,27 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91b4cc57-567c-44cd-9000-e76db18d048b",
-                            ConcurrencyStamp = "76a04d69-5f31-451c-bbbc-7c99dd9fb3f8",
-                            Name = "Student"
+                            Id = "4206f286-62ef-4cec-a02f-40ebada4f88d",
+                            ConcurrencyStamp = "87b411de-5d2c-4cd2-b83e-ae2fbe31f519",
+                            Name = "STUDENT"
                         },
                         new
                         {
-                            Id = "c1139df5-5923-4725-a4cd-4d5928b2199e",
-                            ConcurrencyStamp = "8ed4d5ee-eb82-44ca-806e-ef8b28dffe4a",
-                            Name = "User"
+                            Id = "a459e14c-9b12-4063-818b-8200b9df0b71",
+                            ConcurrencyStamp = "38869408-561b-4c1b-b960-1cd7e1d8f14c",
+                            Name = "USER"
                         },
                         new
                         {
-                            Id = "715c83f1-fbae-4b59-b1be-b94670428475",
-                            ConcurrencyStamp = "ecba1604-dcce-43cf-a4d0-a2b4ef40f86f",
-                            Name = "Admin"
+                            Id = "a089b36a-efed-481c-a5fa-c6bdcad11d18",
+                            ConcurrencyStamp = "415186d4-8a25-4ab5-a94e-3727faada565",
+                            Name = "ADMIN"
                         },
                         new
                         {
-                            Id = "51e8ec0b-8998-4fdd-85c5-73fd737dabad",
-                            ConcurrencyStamp = "adb66c97-424d-4ec7-8e63-1b1eb84ce049",
-                            Name = "Coordinator"
+                            Id = "c746e614-e12d-4751-8551-d3b03b6d18af",
+                            ConcurrencyStamp = "fe8de6ad-520c-499b-bccd-a18cd93af68b",
+                            Name = "COORDINATOR"
                         });
                 });
 

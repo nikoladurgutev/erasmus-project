@@ -21,8 +21,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Admin", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -34,8 +35,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Coordinator", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -47,8 +49,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Participant", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -60,8 +63,9 @@ namespace Erasmus.Repository.Migrations
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Student", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -108,15 +112,15 @@ namespace Erasmus.Repository.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("AdminId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("AdminId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CoordinatorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("CoordinatorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
@@ -148,8 +152,8 @@ namespace Erasmus.Repository.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("ParticipantId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -163,8 +167,8 @@ namespace Erasmus.Repository.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -299,27 +303,31 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91b4cc57-567c-44cd-9000-e76db18d048b",
-                            ConcurrencyStamp = "76a04d69-5f31-451c-bbbc-7c99dd9fb3f8",
-                            Name = "Student"
+                            Id = "de07ff60-ae6d-4fc6-8867-6333c155d4e3",
+                            ConcurrencyStamp = "f9769206-a77e-4675-9bbb-13e1ac7b64cd",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "c1139df5-5923-4725-a4cd-4d5928b2199e",
-                            ConcurrencyStamp = "8ed4d5ee-eb82-44ca-806e-ef8b28dffe4a",
-                            Name = "User"
+                            Id = "2b428846-5ef4-46fb-8435-b77412d325f8",
+                            ConcurrencyStamp = "7c484dfc-55f8-46b9-bd26-b31db1d08d22",
+                            Name = "User",
+                            NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "715c83f1-fbae-4b59-b1be-b94670428475",
-                            ConcurrencyStamp = "ecba1604-dcce-43cf-a4d0-a2b4ef40f86f",
-                            Name = "Admin"
+                            Id = "0ef6bb47-4cd1-4672-8a8d-74a38c0a2f7d",
+                            ConcurrencyStamp = "e5ccb05f-7c35-4a48-a3d9-95b165b5a12a",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "51e8ec0b-8998-4fdd-85c5-73fd737dabad",
-                            ConcurrencyStamp = "adb66c97-424d-4ec7-8e63-1b1eb84ce049",
-                            Name = "Coordinator"
+                            Id = "57af2b3a-17f0-4313-9892-aeab8b7a32a3",
+                            ConcurrencyStamp = "ed630bc5-491a-4904-8427-106a404a13fb",
+                            Name = "Coordinator",
+                            NormalizedName = "COORDINATOR"
                         });
                 });
 

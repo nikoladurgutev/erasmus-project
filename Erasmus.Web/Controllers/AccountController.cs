@@ -1,6 +1,8 @@
 ﻿using Erasmus.Domain.Domain;
 using Erasmus.Domain.DomainModels;
 using Erasmus.Domain.Identity;
+using Erasmus.Repository.Implementation;
+using Erasmus.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +18,16 @@ namespace Erasmus.Web.Controllers
         private readonly UserManager<ErasmusUser> userManager;
         private readonly SignInManager<ErasmusUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IRepository<Student> studentRepository;
+
+        public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager, RoleManager<IdentityRole> roleManager, IRepository<Student> _studentRepository)
+        {
+
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
+            this.studentRepository = _studentRepository;
+        }
         public IActionResult Index()
         {
             return View();
@@ -36,20 +48,13 @@ namespace Erasmus.Web.Controllers
             return RedirectToAction("Register", "Account");
         }
 
-        public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager, RoleManager<IdentityRole> roleManager)
-        {
-
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.roleManager = roleManager;
-        }
 
         [HttpGet]
-        public IActionResult Register(string chosenRole)
+        public IActionResult Register(Role chosenRole)
         {
             UserRegisterDto model = new UserRegisterDto
             {
-                Role = (Role)Enum.Parse(typeof(Role), chosenRole)
+                Role = chosenRole
             };
             return View(model);
         }
@@ -71,10 +76,29 @@ namespace Erasmus.Web.Controllers
                         PhoneNumberConfirmed = true
                     };
                     var result = await userManager.CreateAsync(user, request.Password);
+                    
                     if (result.Succeeded)
                     {
                         // if the user is valid, add it to the selected role
-                        await userManager.AddToRoleAsync(user, request.Role.ToString().ToLower());
+                        await userManager.AddToRoleAsync(user, request.Role.ToString());
+                        // add a role in the table (if the role is Student -> in the Student table)
+                        switch (request.Role.ToString())
+                        {
+                            case "Student":
+                                Student student = new Student
+                                {
+                                    BaseRecord = user,
+                                    UserId = user.Id
+                                };
+                                studentRepository.Insert(student);
+                                break;
+                            case "Participant":
+                                break;
+                            case "Coordinator":
+                                break;
+                            case "Admin":
+                                break;
+                        }
                         return RedirectToAction("Login");
                     }
                     else
