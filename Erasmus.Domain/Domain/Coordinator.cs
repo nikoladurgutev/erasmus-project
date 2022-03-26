@@ -12,5 +12,7 @@ namespace Erasmus.Domain.Domain
         public string Id { get; set; }
         public string UserId { get; set; }
         public ErasmusUser BaseRecord { get; set; }
+        public Guid FacultyId { get; set; }
+        public Faculty Faculty { get; set; }
     }
 }

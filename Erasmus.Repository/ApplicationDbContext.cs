@@ -34,6 +34,18 @@ namespace Erasmus.Web.Data
                                                     new IdentityRole { Name = "User" }, new IdentityRole { Name = "Admin" },
                                                     new IdentityRole { Name = "Coordinator" });
 
+
+            //ONE TO ONE
+            //Coordinator - Faculty
+            builder.Entity<Faculty>()
+                .HasOne<Coordinator>(z => z.Coordinator)
+                .WithOne(z => z.Faculty)
+                .HasForeignKey<Coordinator>(z => z.FacultyId);
+
+            //ONE TO MANY
+            //Student - Faculty
+
+
         }
     }
 }
