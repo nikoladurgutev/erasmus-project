@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220326130456_ChangedRoleNames")]
-    partial class ChangedRoleNames
+    [Migration("20220326160429_RemoveProperty")]
+    partial class RemoveProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,13 @@ namespace Erasmus.Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d73d3e8c-ff96-4805-a1bc-18a2467280cc"),
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5"
+                        });
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Coordinator", b =>
@@ -208,6 +215,24 @@ namespace Erasmus.Repository.Migrations
                         .HasFilter("[StudentId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "2259774f-4aab-4f63-bb32-fc2ad188cb0b",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGzf2Kb9gPyFbdjxec+6WaBGgv+G5d6O0ag0PudhCwhc054jlLkH1Fh1QfwwvdkBeg==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ffa43251-b425-49ae-a49c-fd9fdeb26820",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Erasmus.Domain.DomainModels.Faculty", b =>
@@ -305,27 +330,38 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4206f286-62ef-4cec-a02f-40ebada4f88d",
-                            ConcurrencyStamp = "87b411de-5d2c-4cd2-b83e-ae2fbe31f519",
-                            Name = "STUDENT"
+                            Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
+                            ConcurrencyStamp = "87aa9c3d-ea51-4a24-8f84-9eef12b44083",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a459e14c-9b12-4063-818b-8200b9df0b71",
-                            ConcurrencyStamp = "38869408-561b-4c1b-b960-1cd7e1d8f14c",
-                            Name = "USER"
+                            Id = "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b",
+                            ConcurrencyStamp = "8b9c6b53-6c90-45b9-9000-978da37a2c9a",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "a089b36a-efed-481c-a5fa-c6bdcad11d18",
-                            ConcurrencyStamp = "415186d4-8a25-4ab5-a94e-3727faada565",
-                            Name = "ADMIN"
+                            Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
+                            ConcurrencyStamp = "c60bf2ea-8feb-4523-b002-b718c82733d5",
+                            Name = "User",
+                            NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "c746e614-e12d-4751-8551-d3b03b6d18af",
-                            ConcurrencyStamp = "fe8de6ad-520c-499b-bccd-a18cd93af68b",
-                            Name = "COORDINATOR"
+                            Id = "12739aa2-fc68-45db-82e8-2d0602e94eb6",
+                            ConcurrencyStamp = "63cd4d0f-1d06-4a72-ac1c-94a40a1942df",
+                            Name = "Coordinator",
+                            NormalizedName = "COORDINATOR"
+                        },
+                        new
+                        {
+                            Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
+                            ConcurrencyStamp = "4ab9cd6a-6e98-4e08-a2d6-544a056d82b1",
+                            Name = "Participant",
+                            NormalizedName = "PARTICIPANT"
                         });
                 });
 
@@ -412,6 +448,13 @@ namespace Erasmus.Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

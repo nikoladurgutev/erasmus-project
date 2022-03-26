@@ -299,15 +299,31 @@ namespace Erasmus.Repository.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "Id", "UserId" },
+                values: new object[] { new Guid("d73d3e8c-ff96-4805-a1bc-18a2467280cc"), "b74ddd14-6340-4840-95c2-db12554843e5" });
+
+            migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "319d2f62-af4e-4ea9-a006-468e8f1cbb7f", "11e82941-b45a-42e0-b41d-8020a7f1c13a", "Student", null },
-                    { "1017c6c1-9b43-4a80-b867-a6ded6b58045", "31b858d8-3558-4fa8-afd1-2a0c1986e535", "User", null },
-                    { "4e2477b9-d7c5-445c-b228-6c3e0bd33b95", "0b2a077e-2b78-4a2c-abb7-0a4aaf33829b", "Admin", null },
-                    { "ae10cdcf-ffea-458c-a55c-6c34e1c9a75f", "d90ab2bb-5c77-4814-9170-2d45626eeca9", "Coordinator", null }
+                    { "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7", "a75bd587-a12f-468f-b60b-84f09cdb1d4c", "Admin", "ADMIN" },
+                    { "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b", "3df89512-d139-4e93-832f-2b643d677af8", "Student", "STUDENT" },
+                    { "4eb6f781-cba6-4873-ac70-7539916f1a17", "5c2a465e-fd17-4e77-80fe-a8759a79edf2", "User", "USER" },
+                    { "12739aa2-fc68-45db-82e8-2d0602e94eb6", "9445cc82-05a5-45ec-858e-69c917c51b09", "Coordinator", "COORDINATOR" },
+                    { "94a5b35b-ef16-434d-b99c-6ecf3c88b40a", "7ac18423-d1fe-4a5b-a9ed-255134a2c413", "Participant", "PARTICIPANT" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AdminId", "ConcurrencyStamp", "CoordinatorId", "Email", "EmailConfirmed", "FacultyId", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "ParticipantId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StudentId", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, null, "7eac10a4-0ef8-4c05-9f2a-7d63fbb54512", null, "admin@gmail.com", true, null, null, null, false, null, null, null, null, null, "1234567890", false, "63b9b4ae-69be-4278-afba-f8e24f2fb1cd", null, false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
