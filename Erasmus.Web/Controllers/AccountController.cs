@@ -19,14 +19,22 @@ namespace Erasmus.Web.Controllers
         private readonly SignInManager<ErasmusUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRepository<Student> studentRepository;
+        private readonly IRepository<Participant> participantRepository;
+        private readonly IRepository<Coordinator> coordinatorRepository;
+        private readonly IRepository<Admin> adminRepository;
 
-        public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager, RoleManager<IdentityRole> roleManager, IRepository<Student> _studentRepository)
+        public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager,
+                                 RoleManager<IdentityRole> roleManager, IRepository<Student> studentRepository
+            , IRepository<Participant> participantRepository, IRepository<Coordinator> coordinatorRepository, IRepository<Admin> adminRepository)
         {
 
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
-            this.studentRepository = _studentRepository;
+            this.studentRepository = studentRepository;
+            this.participantRepository = participantRepository;
+            this.coordinatorRepository = coordinatorRepository;
+            this.adminRepository = adminRepository;
         }
         public IActionResult Index()
         {
@@ -50,11 +58,11 @@ namespace Erasmus.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Register(Role chosenRole)
+        public IActionResult Register()
         {
             UserRegisterDto model = new UserRegisterDto
             {
-                Role = chosenRole
+                Role = (Role)TempData["Role"]
             };
             return View(model);
         }
@@ -93,10 +101,28 @@ namespace Erasmus.Web.Controllers
                                 studentRepository.Insert(student);
                                 break;
                             case "Participant":
+                                Participant participant = new Participant
+                                {
+                                    BaseRecord = user,
+                                    UserId = user.Id
+                                };
+                                participantRepository.Insert(participant);
                                 break;
                             case "Coordinator":
+                                Coordinator coordinator = new Coordinator
+                                {
+                                    BaseRecord = user,
+                                    UserId = user.Id
+                                };
+                                coordinatorRepository.Insert(coordinator);
                                 break;
                             case "Admin":
+                                Admin admin = new Admin
+                                {
+                                    BaseRecord = user,
+                                    UserId = user.Id
+                                };
+                                adminRepository.Insert(admin);
                                 break;
                         }
                         return RedirectToAction("Login");
@@ -152,7 +178,7 @@ namespace Erasmus.Web.Controllers
                 }
 
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-
+                var check = await userManager.CheckPasswordAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await userManager.AddClaimAsync(user, new Claim("UserRole", "Admin"));

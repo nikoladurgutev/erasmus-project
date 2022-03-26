@@ -4,14 +4,16 @@ using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220326154835_AddPassword")]
+    partial class AddPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,17 +221,16 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54798742-b707-4529-8bec-13835b2b33a8",
+                            ConcurrencyStamp = "5c04c97e-7aa9-48ca-bddd-55a6bb952aa6",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED3CYXashaj1+3bL+gWH0jm/39D0jJ7StsaL4rdWERrxK1HJZqqS1x30VAs1qR7QVg==",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "cbb7f7d2-8329-4fb7-b354-355944562f02",
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAEAACcQAAAAEIfQAFUaiveLqqNr8ABsA3ungmTDlS9QrUjpnJLv886+8MTLC6yxUuVhMyluHF9lCA==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "c72bddce-b6f0-4742-967b-06a4038ac3a8",
                             TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
+                            UserName = "Admin"
                         });
                 });
 
@@ -329,35 +330,35 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
-                            ConcurrencyStamp = "dce2291a-132e-4612-94e4-d0c37f20e4bb",
+                            ConcurrencyStamp = "79ce87e8-1d79-4076-b31d-bb6e7ac69ab7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b",
-                            ConcurrencyStamp = "8d6aae6d-2371-4092-9c1c-7915549ab678",
+                            ConcurrencyStamp = "1545be00-1412-4274-a122-0a0e3af1e4ec",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
-                            ConcurrencyStamp = "7db9d9fe-7b7c-42ea-a421-492732f97d97",
+                            ConcurrencyStamp = "da1d4baa-a60d-4d96-ab1a-d9316ce9b2da",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "12739aa2-fc68-45db-82e8-2d0602e94eb6",
-                            ConcurrencyStamp = "407680f9-6367-4bf0-be6d-740c91e49617",
+                            ConcurrencyStamp = "09157cf6-4ba1-4c2e-bfd2-c607760770b2",
                             Name = "Coordinator",
                             NormalizedName = "COORDINATOR"
                         },
                         new
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
-                            ConcurrencyStamp = "86940af7-a5bc-42ba-9ff5-02c95d072d4b",
+                            ConcurrencyStamp = "e53884d2-98fd-4a03-9c39-77b028d27c47",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });

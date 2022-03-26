@@ -7,18 +7,26 @@
     var roles = Enum.GetValues(typeof(Role));
 }
 
-<form asp-controller="Account" asp-action="RegisterAsChoice" method="post">
-  <input id="chosenRole" type="hidden" asp-for="@Model.ChosenRole"/>
-  @foreach(var role in roles)
+<form id="role-form" asp-controller="Account" asp-action="RegisterAsChoice" method="post">
+  <input id="chosenRole" type="hidden" name="chosenRole"/>
+  <input id="chosenRoleIndex" type="hidden"/>
+  @for(var i = 0; i < roles.Length; i++)
   {
-       <button id="choose-role-btn" type="submit">@role.ToString()</button>
+        var role = roles.GetValue(i);
+        <button class="choose-role-btn" data-index="@i" type="button">@role.ToString()</button>
   }
 </form>
 
 <script>
     $(function() {
-        $('#choose-role-btn').click(function(){
-            $('#chosenRole').val($(this).text());
+        console.log('test');
+        $('.choose-role-btn').click(function(){
+            debugger;
+            $("#chosenRoleIndex").val($(this).attr('data-index'));
+            var selectedBtn = $("button.choose-role-btn")[$("#chosenRoleIndex").val()];
+            $('#chosenRole').val($(selectedBtn).text());
+            console.log($('#chosenRole').val());
+            $('#role-form').submit();
         });
     });
 </script>
