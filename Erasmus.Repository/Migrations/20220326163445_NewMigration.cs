@@ -3,22 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Erasmus.Repository.Migrations
 {
-    public partial class Initial : Migration
+    public partial class NewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Admins",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Admins", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -31,18 +19,6 @@ namespace Erasmus.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Coordinators",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Coordinators", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,19 +36,6 @@ namespace Erasmus.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ErasmusProjects", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Faculties",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    FacultyName = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Faculties", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,6 +57,21 @@ namespace Erasmus.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Organizer",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    OrganizationName = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    OrganizationContact = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organizer", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Participants",
                 columns: table => new
                 {
@@ -103,18 +81,6 @@ namespace Erasmus.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Participants", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,6 +118,140 @@ namespace Erasmus.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    ErasmusProjectId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Admins_ErasmusProjects_ErasmusProjectId",
+                        column: x => x.ErasmusProjectId,
+                        principalTable: "ErasmusProjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NonGovProjectOrganizer",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    OrganizerId = table.Column<Guid>(nullable: false),
+                    NonGovProjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NonGovProjectOrganizer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NonGovProjectOrganizer_NonGovProject_NonGovProjectId",
+                        column: x => x.NonGovProjectId,
+                        principalTable: "NonGovProject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_NonGovProjectOrganizer_Organizer_OrganizerId",
+                        column: x => x.OrganizerId,
+                        principalTable: "Organizer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ErasmusProjectUniversity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UniversityId = table.Column<Guid>(nullable: false),
+                    ErasmusProjectId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ErasmusProjectUniversity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ErasmusProjectUniversity_ErasmusProjects_ErasmusProjectId",
+                        column: x => x.ErasmusProjectId,
+                        principalTable: "ErasmusProjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ErasmusProjectUniversity_Universities_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "Universities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faculties",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FacultyName = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    UniversityId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faculties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Faculties_Universities_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "Universities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Coordinators",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    FacultyId = table.Column<Guid>(nullable: true),
+                    ErasmusProjectId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Coordinators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Coordinators_ErasmusProjects_ErasmusProjectId",
+                        column: x => x.ErasmusProjectId,
+                        principalTable: "ErasmusProjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Coordinators_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    FacultyId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Faculties_FacultyId",
+                        column: x => x.FacultyId,
+                        principalTable: "Faculties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -176,7 +276,7 @@ namespace Erasmus.Repository.Migrations
                     CoordinatorId = table.Column<Guid>(nullable: true),
                     ParticipantId = table.Column<Guid>(nullable: true),
                     StudentId = table.Column<Guid>(nullable: true),
-                    FacultyId = table.Column<Guid>(nullable: true)
+                    OrganizerId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,9 +294,9 @@ namespace Erasmus.Repository.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Faculties_FacultyId",
-                        column: x => x.FacultyId,
-                        principalTable: "Faculties",
+                        name: "FK_AspNetUsers_Organizer_OrganizerId",
+                        column: x => x.OrganizerId,
+                        principalTable: "Organizer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -300,30 +400,36 @@ namespace Erasmus.Repository.Migrations
 
             migrationBuilder.InsertData(
                 table: "Admins",
-                columns: new[] { "Id", "UserId" },
-                values: new object[] { new Guid("d73d3e8c-ff96-4805-a1bc-18a2467280cc"), "b74ddd14-6340-4840-95c2-db12554843e5" });
+                columns: new[] { "Id", "ErasmusProjectId", "UserId" },
+                values: new object[] { new Guid("d73d3e8c-ff96-4805-a1bc-18a2467280cc"), null, "b74ddd14-6340-4840-95c2-db12554843e5" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7", "a75bd587-a12f-468f-b60b-84f09cdb1d4c", "Admin", "ADMIN" },
-                    { "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b", "3df89512-d139-4e93-832f-2b643d677af8", "Student", "STUDENT" },
-                    { "4eb6f781-cba6-4873-ac70-7539916f1a17", "5c2a465e-fd17-4e77-80fe-a8759a79edf2", "User", "USER" },
-                    { "12739aa2-fc68-45db-82e8-2d0602e94eb6", "9445cc82-05a5-45ec-858e-69c917c51b09", "Coordinator", "COORDINATOR" },
-                    { "94a5b35b-ef16-434d-b99c-6ecf3c88b40a", "7ac18423-d1fe-4a5b-a9ed-255134a2c413", "Participant", "PARTICIPANT" }
+                    { "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7", "01d90c75-1c80-4a34-a249-18d373774c2d", "Admin", "ADMIN" },
+                    { "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b", "00fb481d-bffb-4e9e-afbe-33af7bf2d2d2", "Student", "STUDENT" },
+                    { "4eb6f781-cba6-4873-ac70-7539916f1a17", "c921dbdf-5c06-4e45-a9a8-3abf00e005bf", "User", "USER" },
+                    { "12739aa2-fc68-45db-82e8-2d0602e94eb6", "9846a5ee-6d4b-46a5-81ee-2634b403aa96", "Coordinator", "COORDINATOR" },
+                    { "94a5b35b-ef16-434d-b99c-6ecf3c88b40a", "aed41d21-be58-4aed-b787-db060230f341", "Participant", "PARTICIPANT" },
+                    { "107d8023-1135-4354-b924-5a390c4e9ecc", "22f6e01b-7e57-4ea9-a3a7-cfc9a4ae98d3", "Organizer", "ORGANIZER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "AdminId", "ConcurrencyStamp", "CoordinatorId", "Email", "EmailConfirmed", "FacultyId", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "ParticipantId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StudentId", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, null, "7eac10a4-0ef8-4c05-9f2a-7d63fbb54512", null, "admin@gmail.com", true, null, null, null, false, null, null, null, null, null, "1234567890", false, "63b9b4ae-69be-4278-afba-f8e24f2fb1cd", null, false, "Admin" });
+                columns: new[] { "Id", "AccessFailedCount", "AdminId", "ConcurrencyStamp", "CoordinatorId", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizerId", "ParticipantId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StudentId", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, null, "1f9152c0-fc42-45ed-a940-3b8cbc7bb4ce", null, "admin@gmail.com", true, null, null, true, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", null, null, "AQAAAAEAACcQAAAAEDU3jdnR3ixG2MrYdeDxz/xZAZaCIys2Qd8N2D6MizAfy9AW33BRqGWAUWMZ7vrb6g==", null, true, "bae7ab4f-6723-44db-ab7c-11ff985a73b4", null, false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
                 values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admins_ErasmusProjectId",
+                table: "Admins",
+                column: "ErasmusProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -367,11 +473,6 @@ namespace Erasmus.Repository.Migrations
                 filter: "[CoordinatorId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_FacultyId",
-                table: "AspNetUsers",
-                column: "FacultyId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -382,6 +483,13 @@ namespace Erasmus.Repository.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_OrganizerId",
+                table: "AspNetUsers",
+                column: "OrganizerId",
+                unique: true,
+                filter: "[OrganizerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ParticipantId",
@@ -396,6 +504,48 @@ namespace Erasmus.Repository.Migrations
                 column: "StudentId",
                 unique: true,
                 filter: "[StudentId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Coordinators_ErasmusProjectId",
+                table: "Coordinators",
+                column: "ErasmusProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Coordinators_FacultyId",
+                table: "Coordinators",
+                column: "FacultyId",
+                unique: true,
+                filter: "[FacultyId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ErasmusProjectUniversity_ErasmusProjectId",
+                table: "ErasmusProjectUniversity",
+                column: "ErasmusProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ErasmusProjectUniversity_UniversityId",
+                table: "ErasmusProjectUniversity",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Faculties_UniversityId",
+                table: "Faculties",
+                column: "UniversityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NonGovProjectOrganizer_NonGovProjectId",
+                table: "NonGovProjectOrganizer",
+                column: "NonGovProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NonGovProjectOrganizer_OrganizerId",
+                table: "NonGovProjectOrganizer",
+                column: "OrganizerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_FacultyId",
+                table: "Students",
+                column: "FacultyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -416,13 +566,10 @@ namespace Erasmus.Repository.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ErasmusProjects");
+                name: "ErasmusProjectUniversity");
 
             migrationBuilder.DropTable(
-                name: "NonGovProject");
-
-            migrationBuilder.DropTable(
-                name: "Universities");
+                name: "NonGovProjectOrganizer");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -431,19 +578,31 @@ namespace Erasmus.Repository.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "NonGovProject");
+
+            migrationBuilder.DropTable(
                 name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "Coordinators");
 
             migrationBuilder.DropTable(
-                name: "Faculties");
+                name: "Organizer");
 
             migrationBuilder.DropTable(
                 name: "Participants");
 
             migrationBuilder.DropTable(
                 name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "ErasmusProjects");
+
+            migrationBuilder.DropTable(
+                name: "Faculties");
+
+            migrationBuilder.DropTable(
+                name: "Universities");
         }
     }
 }

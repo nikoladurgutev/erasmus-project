@@ -12,7 +12,7 @@ namespace Erasmus.Domain.Domain
         public string UserId { get; set; }
         public virtual ErasmusUser BaseRecord { get; set; }
 
-        public Guid ErasmusProjectId { get; set; }
+        public Guid? ErasmusProjectId { get; set; }
         public ErasmusProject ErasmusProject { get; set; }
 
     }

@@ -25,7 +25,7 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ErasmusProjectId")
+                    b.Property<Guid?>("ErasmusProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -51,10 +51,10 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ErasmusProjectId")
+                    b.Property<Guid?>("ErasmusProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FacultyId")
+                    b.Property<Guid?>("FacultyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -65,7 +65,8 @@ namespace Erasmus.Repository.Migrations
                     b.HasIndex("ErasmusProjectId");
 
                     b.HasIndex("FacultyId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[FacultyId] IS NOT NULL");
 
                     b.ToTable("Coordinators");
                 });
@@ -76,10 +77,10 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ErasmusProjectId")
+                    b.Property<Guid?>("ErasmusProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UniversityId")
+                    b.Property<Guid?>("UniversityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -97,10 +98,10 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("NonGovProjectId")
+                    b.Property<Guid?>("NonGovProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OrganizerId")
+                    b.Property<Guid?>("OrganizerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -155,7 +156,7 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FacultyId")
+                    b.Property<Guid?>("FacultyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -307,15 +308,15 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54798742-b707-4529-8bec-13835b2b33a8",
+                            ConcurrencyStamp = "39d5fa31-a2f2-4a15-92d1-85270e35ac83",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED3CYXashaj1+3bL+gWH0jm/39D0jJ7StsaL4rdWERrxK1HJZqqS1x30VAs1qR7QVg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEJ23bV+IlPBlhClVnlguL8Du0xoUpbWVfGrM3ior5geCsrXvtgO+WmUCkmnkmGlCg==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "cbb7f7d2-8329-4fb7-b354-355944562f02",
+                            SecurityStamp = "99228c2d-8b32-4b0d-b234-9173d8fc7c42",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -333,7 +334,7 @@ namespace Erasmus.Repository.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UniversityId")
+                    b.Property<Guid?>("UniversityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -422,37 +423,44 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
-                            ConcurrencyStamp = "dce2291a-132e-4612-94e4-d0c37f20e4bb",
+                            ConcurrencyStamp = "6c2f9e9a-64c9-4305-b54a-b9ba006e9aed",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b",
-                            ConcurrencyStamp = "8d6aae6d-2371-4092-9c1c-7915549ab678",
+                            ConcurrencyStamp = "538cd46c-24ce-4d83-a145-8c6179332d8c",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
-                            ConcurrencyStamp = "7db9d9fe-7b7c-42ea-a421-492732f97d97",
+                            ConcurrencyStamp = "8abc57cb-362f-4690-880b-cbdbab892650",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "12739aa2-fc68-45db-82e8-2d0602e94eb6",
-                            ConcurrencyStamp = "407680f9-6367-4bf0-be6d-740c91e49617",
+                            ConcurrencyStamp = "9b98ebae-6ade-4f05-9e56-d31dd9b688df",
                             Name = "Coordinator",
                             NormalizedName = "COORDINATOR"
                         },
                         new
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
-                            ConcurrencyStamp = "86940af7-a5bc-42ba-9ff5-02c95d072d4b",
+                            ConcurrencyStamp = "19155cc7-d8e8-4533-9b52-4a0a6ab9a16b",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
+                        },
+                        new
+                        {
+                            Id = "d5c7b4cf-0386-4a3a-acff-ed31f0ba02f5",
+                            ConcurrencyStamp = "374f4160-82d9-4564-afa6-07bc915c16b2",
+                            Name = "Organizer",
+                            NormalizedName = "ORGANIZER"
                         });
                 });
 
@@ -571,24 +579,18 @@ namespace Erasmus.Repository.Migrations
                 {
                     b.HasOne("Erasmus.Domain.DomainModels.ErasmusProject", "ErasmusProject")
                         .WithMany("Admins")
-                        .HasForeignKey("ErasmusProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ErasmusProjectId");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Coordinator", b =>
                 {
                     b.HasOne("Erasmus.Domain.DomainModels.ErasmusProject", "ErasmusProject")
                         .WithMany("Coordinators")
-                        .HasForeignKey("ErasmusProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ErasmusProjectId");
 
                     b.HasOne("Erasmus.Domain.DomainModels.Faculty", "Faculty")
                         .WithOne("Coordinator")
-                        .HasForeignKey("Erasmus.Domain.Domain.Coordinator", "FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Erasmus.Domain.Domain.Coordinator", "FacultyId");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.ErasmusProjectUniversity", b =>
@@ -596,14 +598,12 @@ namespace Erasmus.Repository.Migrations
                     b.HasOne("Erasmus.Domain.DomainModels.ErasmusProject", "ErasmusProject")
                         .WithMany("ErasmusProjectUniversities")
                         .HasForeignKey("ErasmusProjectId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Erasmus.Domain.DomainModels.University", "University")
                         .WithMany("ErasmusProjectUniversities")
                         .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.NonGovProjectOrganizer", b =>
@@ -611,23 +611,19 @@ namespace Erasmus.Repository.Migrations
                     b.HasOne("Erasmus.Domain.DomainModels.NonGovProject", "NonGovProject")
                         .WithMany("NonGovProjectOrganizers")
                         .HasForeignKey("NonGovProjectId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Erasmus.Domain.Domain.Organizer", "Organizer")
                         .WithMany("NonGovProjectOrganizers")
                         .HasForeignKey("OrganizerId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.Student", b =>
                 {
                     b.HasOne("Erasmus.Domain.DomainModels.Faculty", "Faculty")
                         .WithMany("Students")
-                        .HasForeignKey("FacultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacultyId");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.DomainModels.ErasmusUser", b =>
@@ -657,9 +653,7 @@ namespace Erasmus.Repository.Migrations
                 {
                     b.HasOne("Erasmus.Domain.DomainModels.University", "University")
                         .WithMany("Faculties")
-                        .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UniversityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
