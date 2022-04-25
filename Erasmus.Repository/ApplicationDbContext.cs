@@ -25,7 +25,8 @@ namespace Erasmus.Web.Data
         public virtual DbSet<Coordinator> Coordinators { get; set; }
         public virtual DbSet<Participant> Participants { get; set; }
         public virtual DbSet<Student> Students { get; set; }
-
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         private void SeedUsers(ModelBuilder builder)
         {
             PasswordHasher<ErasmusUser> passwordHasher = new PasswordHasher<ErasmusUser>();
@@ -74,11 +75,16 @@ namespace Erasmus.Web.Data
             SeedRoles(builder);
             SeedUserRoles(builder);
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "c76aee55-4ff7-463d-a2ba-ce2c8a06e13b", Name = "Student", NormalizedName = "STUDENT" },
-                                                    new IdentityRole { Id = "4eb6f781-cba6-4873-ac70-7539916f1a17", Name = "User", NormalizedName = "USER" },
-                                                    new IdentityRole { Id = "12739aa2-fc68-45db-82e8-2d0602e94eb6", Name = "Coordinator", NormalizedName = "COORDINATOR" },
+            builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "4eb6f781-cba6-4873-ac70-7539916f1a17", Name = "User", NormalizedName = "USER" },
                                                     new IdentityRole { Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a", Name = "Participant", NormalizedName = "PARTICIPANT" },
-                                                    new IdentityRole { Name = "Organizer", NormalizedName = "ORGANIZER" });
+                                                    new IdentityRole { Id = "a06137ff-e363-4441-a340-569663a0cc0e", Name = "Organizer", NormalizedName = "ORGANIZER" });
+
+            builder.Entity<Country>().HasData(new Country { Id = Guid.Parse("57242f19-0405-494c-b4bc-bdb52a725442"), Name = "Macedonia" },
+                                              new Country { Id = Guid.Parse(" cbec8be4-6325-4b2f-b08e-22d709c27688"), Name = "UK" });
+
+            builder.Entity<City>().HasData(new City { Id = Guid.Parse("415c3843-4bf9-4a21-8696-6781a66204e2"), Name = "Skopje", CountryId = Guid.Parse("57242f19-0405-494c-b4bc-bdb52a725442") },
+                                           new City { Id = Guid.Parse("6c3175f9-55e1-423c-a721-ee2ce7af688c"), Name = "London", CountryId = Guid.Parse("cbec8be4-6325-4b2f-b08e-22d709c27688") });
+            
 
             builder.Entity<Admin>()
                    .HasOne<ErasmusUser>(s => s.BaseRecord)
@@ -134,6 +140,17 @@ namespace Erasmus.Web.Data
                 .HasOne<University>(z => z.University)
                 .WithMany(z => z.Faculties)
                 .HasForeignKey(z => z.UniversityId);
+
+            builder.Entity<University>()
+                .HasOne(z => z.City)
+                .WithMany(z => z.Universities)
+                .HasForeignKey(z => z.CityId);
+
+            // NonGovProject - City
+            builder.Entity<NonGovProject>()
+                .HasOne(z => z.City)
+                .WithMany(z => z.NonGovProjects)
+                .HasForeignKey(z => z.CityId);
 
 
             //MANY TO MANY

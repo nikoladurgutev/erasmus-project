@@ -2,6 +2,7 @@
 using Erasmus.Domain.Identity;
 using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,55 +11,52 @@ using System.Text;
 
 namespace Erasmus.Repository.Implementation
 {
-    public class UserRepository<T> : IUserRepository<T> where T : BaseEntity
+    public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext context;
-        private DbSet<T> entities;
+        private DbSet<ErasmusUser> entities;
+        private DbSet<IdentityUserRole<string>> userRoles;
+        private RoleManager<IdentityRole> roleManager;
         string errorMessage = string.Empty;
+        private UserManager<ErasmusUser> userManager;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context, UserManager<ErasmusUser> _userManager, RoleManager<IdentityRole> _roleManager)
         {
             this.context = context;
-            entities = context.Set<T>();
-        }
-        public IEnumerable<T> GetAll()
-        {
-            return entities.AsEnumerable();
-        }
-
-        public T Get(Guid id)
-        {
-            return entities
-               .SingleOrDefault(s => s.Id == id);
-        }
-        public void Insert(T entity)
-        {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            entities.Add(entity);
-            context.SaveChanges();
+            entities = context.Set<ErasmusUser>();
+            userManager = _userManager;
+            userRoles = context.Set<IdentityUserRole<string>>();
+            roleManager = _roleManager;
         }
 
-        public void Update(T entity)
+        public void Delete(ErasmusUser entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            entities.Update(entity);
-            context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public void Delete(T entity)
+        public ErasmusUser Get(string id)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            entities.Remove(entity);
-            context.SaveChanges();
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ErasmusUser> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ErasmusUser> GetAllByRole(string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(ErasmusUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ErasmusUser entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
