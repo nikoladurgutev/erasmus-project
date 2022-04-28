@@ -4,6 +4,7 @@ using Erasmus.Domain.DTO;
 using Erasmus.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 
 namespace Erasmus.Web.Controllers
@@ -52,6 +53,60 @@ namespace Erasmus.Web.Controllers
             }
 
             return null;
+
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var project = _nonGovProjectsService.Get(id);
+            var cities = _cityService.GetCityList();
+            var model = new CreateNonGovProjectDto
+            {
+                Deadline = project.Deadline,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                ProjectTitle = project.ProjectTitle,
+                ProjectDescription = project.ProjectDescription,
+                ProjectType = project.ProjectType,
+                Cities = cities,
+                SelectedCityId = project.CityId,
+                ProjectId = id
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(CreateNonGovProjectDto model)
+        {
+            var editSuccessful = _nonGovProjectsService.Edit(model);
+            if(editSuccessful)
+            {
+                _notyfService.Success("Event edited!");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _notyfService.Error("Error updating event!");
+                return View(model);
+            }
+            
+        }
+
+        [HttpGet]
+        public IActionResult Delete(Guid id)
+        {
+            var projectDeleted = _nonGovProjectsService.Delete(id);
+            if (projectDeleted)
+            {
+                _notyfService.Success("Event deleted successfully!");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _notyfService.Error("Error deleting event!");
+                return RedirectToAction("Index");
+            }
 
         }
 

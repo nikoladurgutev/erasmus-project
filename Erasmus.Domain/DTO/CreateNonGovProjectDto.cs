@@ -9,6 +9,7 @@ namespace Erasmus.Domain.DTO
 {
     public class CreateNonGovProjectDto
     {
+        public Guid ProjectId { get; set; }
         public string ProjectTitle { get; set; }
 
         // TODO: create a table for type

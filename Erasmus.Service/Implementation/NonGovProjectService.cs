@@ -16,11 +16,13 @@ namespace Erasmus.Service.Implementation
         private readonly IRepository<NonGovProject> _repository;
         private readonly IOrganizerRepository _organizerRepository;
         private readonly IRepository<NonGovProjectOrganizer> _organizerToProjectRepsoitory;
-        public NonGovProjectService(IRepository<NonGovProject> repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository)
+        private readonly IRepository<City> _cityRepository;
+        public NonGovProjectService(IRepository<NonGovProject> repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository)
         {
             _repository = repository;
             _organizerRepository = organizerRepository;
             _organizerToProjectRepsoitory = organizerToProjectRepository;
+            _cityRepository = cityRepository;
         }
         public bool Create(CreateNonGovProjectDto project)
         {
@@ -55,6 +57,48 @@ namespace Erasmus.Service.Implementation
                 return false;
             }
 
+        }
+
+        public bool Delete(Guid id)
+        {
+            try
+            {
+                var project = _repository.Get(id);
+                _repository.Delete(project);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool Edit(CreateNonGovProjectDto model)
+        {
+            try
+            {
+                var project = _repository.Get(model.ProjectId);
+                var selectedCity = _cityRepository.Get(model.SelectedCityId);
+                project.Deadline = project.Deadline;
+                project.StartDate = project.StartDate;
+                project.EndDate = project.EndDate;
+                project.ProjectTitle = project.ProjectTitle;
+                project.ProjectDescription = project.ProjectDescription;
+                project.ProjectType = project.ProjectType;
+                project.City = selectedCity;
+                _repository.Update(project);
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            
+        }
+
+        public NonGovProject Get(Guid id)
+        {
+            return _repository.Get(id);
         }
 
         public List<NonGovProject> GetAll()

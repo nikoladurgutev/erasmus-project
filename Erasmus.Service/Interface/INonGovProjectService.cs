@@ -10,5 +10,9 @@ namespace Erasmus.Service.Interface
     {
         bool Create(CreateNonGovProjectDto project);
         List<NonGovProject> GetAll();
+        NonGovProject Get(Guid id);
+
+        bool Edit(CreateNonGovProjectDto model);
+        bool Delete(Guid id);
     }
 }
