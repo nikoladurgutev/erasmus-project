@@ -1,0 +1,44 @@
+﻿@using System.Security.Claims
+@model Erasmus.Domain.DTO.NonGovProjectsDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // this view lists all non government projects
+}
+<style>
+    .btn-div{
+        float: right;
+    }
+    .edit-btn, .delete-btn{
+        float: right;
+        margin: 1%;
+    }
+    .btn-create {
+        margin-top: 5%;
+    }
+</style>
+
+<div class="card-deck">
+    @foreach(var project in Model.Projects)
+    {
+      <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <div class="bnt-div"><a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary"  >Edit</a>
+           @{
+               var canEdit = project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+               if(canEdit == false)
+               {
+                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger">Delete</a>
+               }
+           }
+        </div>
+        <h5 class="card-title">@project.ProjectTitle</h5>
+        <p class="card-text">@project.ProjectDescription</p>
+        <a href="#" class="btn btn-primary">See more</a>
+      </div>
+      </div>
+    }
+</div>
+
+<a class="btn-create btn btn-success" asp-controller="NonGovProjects" asp-action="Create">Create a project</a>

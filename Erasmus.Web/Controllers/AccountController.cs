@@ -22,10 +22,11 @@ namespace Erasmus.Web.Controllers
         private readonly IRepository<Participant> participantRepository;
         private readonly IRepository<Coordinator> coordinatorRepository;
         private readonly IRepository<Admin> adminRepository;
+        private readonly IOrganizerRepository organizerRepository;
 
         public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager,
                                  RoleManager<IdentityRole> roleManager, IRepository<Student> studentRepository
-            , IRepository<Participant> participantRepository, IRepository<Coordinator> coordinatorRepository, IRepository<Admin> adminRepository)
+            , IRepository<Participant> participantRepository, IRepository<Coordinator> coordinatorRepository, IRepository<Admin> adminRepository, IOrganizerRepository organizerRepository)
         {
 
             this.userManager = userManager;
@@ -35,6 +36,7 @@ namespace Erasmus.Web.Controllers
             this.participantRepository = participantRepository;
             this.coordinatorRepository = coordinatorRepository;
             this.adminRepository = adminRepository;
+            this.organizerRepository = organizerRepository;
         }
         public IActionResult Index()
         {
@@ -123,6 +125,14 @@ namespace Erasmus.Web.Controllers
                                     UserId = user.Id
                                 };
                                 adminRepository.Insert(admin);
+                                break;
+                            case "Organizer":
+                                Organizer organizer = new Organizer
+                                {
+                                    BaseRecord = user,
+                                    UserId = user.Id
+                                };
+                                organizerRepository.Insert(organizer);
                                 break;
                         }
                         return RedirectToAction("Login");
