@@ -18,7 +18,12 @@ namespace Erasmus.Domain.DTO
         public string ProjectDescription { get; set; }
       
         public DateTime Deadline { get; set; }
+
+        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public string NonGovProjectOrganizerId { get; set; }

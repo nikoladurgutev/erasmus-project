@@ -15,10 +15,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Erasmus.Domain;
 
 namespace Erasmus.Web
 {
@@ -54,8 +56,15 @@ namespace Erasmus.Web
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<PasswordHasherOptions>(options =>
-                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
-            );
+                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2);
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

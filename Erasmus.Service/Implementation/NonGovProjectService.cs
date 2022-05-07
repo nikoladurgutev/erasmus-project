@@ -1,4 +1,5 @@
-﻿using Erasmus.Domain.Domain;
+﻿using AutoMapper;
+using Erasmus.Domain.Domain;
 using Erasmus.Domain.DomainModels;
 using Erasmus.Domain.DTO;
 using Erasmus.Repository.Implementation;
@@ -17,12 +18,14 @@ namespace Erasmus.Service.Implementation
         private readonly IOrganizerRepository _organizerRepository;
         private readonly IRepository<NonGovProjectOrganizer> _organizerToProjectRepsoitory;
         private readonly IRepository<City> _cityRepository;
-        public NonGovProjectService(IRepository<NonGovProject> repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository)
+        private readonly IMapper _mapper;
+        public NonGovProjectService(IRepository<NonGovProject> repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository, IMapper mapper)
         {
             _repository = repository;
             _organizerRepository = organizerRepository;
             _organizerToProjectRepsoitory = organizerToProjectRepository;
             _cityRepository = cityRepository;
+            _mapper = mapper;
         }
         public bool Create(CreateNonGovProjectDto project)
         {
@@ -64,6 +67,14 @@ namespace Erasmus.Service.Implementation
             try
             {
                 var project = _repository.Get(id);
+                
+                // delete all records in M-N project - orgniser table
+                IList<NonGovProjectOrganizer> records = _organizerToProjectRepsoitory.GetAll().Where(z => z.NonGovProjectId == id).ToList();
+                foreach(var record in records)
+                {
+                    _organizerToProjectRepsoitory.Delete(record);
+                }
+
                 _repository.Delete(project);
                 return true;
             }
@@ -79,13 +90,7 @@ namespace Erasmus.Service.Implementation
             {
                 var project = _repository.Get(model.ProjectId);
                 var selectedCity = _cityRepository.Get(model.SelectedCityId);
-                project.Deadline = project.Deadline;
-                project.StartDate = project.StartDate;
-                project.EndDate = project.EndDate;
-                project.ProjectTitle = project.ProjectTitle;
-                project.ProjectDescription = project.ProjectDescription;
-                project.ProjectType = project.ProjectType;
-                project.City = selectedCity;
+                _mapper.Map(model, project);
                 _repository.Update(project);
                 return true;
             }

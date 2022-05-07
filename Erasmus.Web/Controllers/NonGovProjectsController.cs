@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
 using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
 using Erasmus.Service.Interface;
@@ -15,12 +16,14 @@ namespace Erasmus.Web.Controllers
         private readonly INotyfService _notyfService;
         private readonly ICityService _cityService;
         private readonly IOrganizerService _organizerService;
-        public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService)
+        private readonly IMapper _mapper;
+        public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService, IMapper mapper)
         {
             _nonGovProjectsService = nonGovProjectService;
             _notyfService = notyfService;
             _organizerService = organizerService;
             _cityService = cityService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -61,18 +64,9 @@ namespace Erasmus.Web.Controllers
         {
             var project = _nonGovProjectsService.Get(id);
             var cities = _cityService.GetCityList();
-            var model = new CreateNonGovProjectDto
-            {
-                Deadline = project.Deadline,
-                StartDate = project.StartDate,
-                EndDate = project.EndDate,
-                ProjectTitle = project.ProjectTitle,
-                ProjectDescription = project.ProjectDescription,
-                ProjectType = project.ProjectType,
-                Cities = cities,
-                SelectedCityId = project.CityId,
-                ProjectId = id
-            };
+            var model = _mapper.Map<CreateNonGovProjectDto>(project);
+            model.ProjectId = id;
+            model.Cities = cities;
             return View(model);
         }
 
