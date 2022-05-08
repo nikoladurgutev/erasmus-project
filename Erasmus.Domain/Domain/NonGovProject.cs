@@ -12,8 +12,9 @@ namespace Erasmus.Domain.DomainModels
         public string ProjectType { get; set; } // ex. Language learning
 
         public string ProjectDescription { get; set; }
-        //TODO: add city table
-        public string Location { get; set; }
+
+        public Guid CityId { get; set; }
+        public City City { get; set; }
         public DateTime Deadline { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

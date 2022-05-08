@@ -1,0 +1,29 @@
+﻿@model Erasmus.Domain.DTO.CreateNonGovProjectDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .btn-create{
+        margin-top: 5%;
+    }
+</style>
+
+
+<form id="create-project-form" asp-action="Create" asp-controller="NonGovProjects">
+    <label>Title</label>
+    <input class="form-control" asp-for="ProjectTitle" />
+    <label>Description</label>
+    <input class="form-control" asp-for="ProjectDescription" />
+    <label>Start Date</label>
+    <input type="date" class="form-control" asp-for="StartDate" />
+    <label>End Date</label>
+    <input type="date" class="form-control" asp-for="EndDate"/>
+    <label>City</label>
+    @Html.DropDownListFor(z => z.SelectedCityId, new SelectList(Model.Cities, "Value", "Text"), htmlAttributes: new { @class = "form-control"})
+    <button type="submit" class="btn-create btn btn-outline-primary">Create</button>
+</form>
+
+<script>
+</script>

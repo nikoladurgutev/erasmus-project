@@ -1,6 +1,10 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Erasmus.Domain.DomainModels;
 using Erasmus.Repository.Implementation;
 using Erasmus.Repository.Interface;
+using Erasmus.Service.Implementation;
+using Erasmus.Service.Interface;
 using Erasmus.Web.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,10 +15,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Erasmus.Domain;
 
 namespace Erasmus.Web
 {
@@ -33,24 +39,39 @@ namespace Erasmus.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddRoles<IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+
+            // repositories
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IOrganizerRepository), typeof(OrganizerRepository));
+
+            // services
+            services.AddTransient(typeof(ICityService), typeof(CityService));
             //services.AddScoped(typeof(IUserRepository<>), typeof(UserRepository<>));
+            services.AddTransient(typeof(INonGovProjectService), typeof(NonGovProjectService));
+            services.AddTransient(typeof(IOrganizerService), typeof(OrganizerService));
 
             services.AddIdentity<ErasmusUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.Configure<PasswordHasherOptions>(options =>
-                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2
-            );
+                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV2);
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseNotyf();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,6 +87,7 @@ namespace Erasmus.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();
