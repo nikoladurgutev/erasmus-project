@@ -7,15 +7,20 @@
     var roles = Enum.GetValues(typeof(Role));
 }
 
-<form id="role-form" asp-controller="Account" asp-action="RegisterAsChoice" method="post">
-  <input id="chosenRole" type="hidden" name="chosenRole"/>
-  <input id="chosenRoleIndex" type="hidden"/>
-  @for(var i = 0; i < roles.Length; i++)
-  {
-        var role = roles.GetValue(i);
-        <button class="choose-role-btn" data-index="@i" type="button">@role.ToString()</button>
-  }
-</form>
+<div class="container w-50 align-content-center text-center">
+
+    <img src="~/images/logo1.png" style="width:300px; height:300px;"/>
+    <form id="role-form" asp-controller="Account" asp-action="RegisterAsChoice" method="post">
+      <input id="chosenRole" type="hidden" name="chosenRole"/>
+      <input id="chosenRoleIndex" type="hidden"/>
+      @for(var i = 0; i < roles.Length; i++)
+      {
+            var role = roles.GetValue(i);
+            <button class="choose-role-btn btn btn-outline-primary btn-lg btn-block" data-index="@i" type="button">@role.ToString()</button>
+      }
+    </form>
+</div>
+
 
 <script>
     $(function() {
