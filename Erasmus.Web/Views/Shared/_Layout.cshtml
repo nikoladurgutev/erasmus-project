@@ -17,7 +17,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Erasmus.Web</a>
+                <img src="~/images/logo.png" style="width:50px; height:50px;"/>
+                <a class="navbar-brand text-primary" asp-area="" asp-controller="Home" asp-action="Index">Erasmus.Web</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,10 +27,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-primary" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="NonGovProjects" asp-action="Index">Active Projects</a>
+                            <a class="nav-link text-primary" asp-area="" asp-controller="NonGovProjects" asp-action="Index">
+                                <i class="fa fa-bullhorn" aria-hidden="true"></i> Active Projects</a>
                         </li>
                     </ul>
                 </div>
@@ -42,8 +44,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted" style="background-color: #41B8F0;">
+        <div class="container text-light text-center">
             &copy; 2022 - Erasmus.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
