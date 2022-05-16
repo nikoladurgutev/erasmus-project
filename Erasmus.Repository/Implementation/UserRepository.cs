@@ -36,7 +36,7 @@ namespace Erasmus.Repository.Implementation
 
         public ErasmusUser Get(string id)
         {
-            throw new NotImplementedException();
+            return entities.FirstOrDefault(z => z.Id == id);
         }
 
         public IEnumerable<ErasmusUser> GetAll()

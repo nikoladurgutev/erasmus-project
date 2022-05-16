@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Erasmus.Service\Erasmus.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ProjectFiles\" />
+  </ItemGroup>
+
 </Project>

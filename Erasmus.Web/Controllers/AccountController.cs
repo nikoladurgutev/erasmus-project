@@ -62,11 +62,19 @@ namespace Erasmus.Web.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            UserRegisterDto model = new UserRegisterDto
+            UserRegisterDto model;
+            if (TempData["Role"] != null)
             {
-                Role = (Role)TempData["Role"]
-            };
-            return View(model);
+                model = new UserRegisterDto
+                {
+                    Role = (Role)TempData["Role"]
+                };
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("RegisterAsChoice", "Account");
+            }
         }
 
         [HttpPost, AllowAnonymous]

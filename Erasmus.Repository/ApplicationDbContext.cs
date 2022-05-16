@@ -27,6 +27,8 @@ namespace Erasmus.Web.Data
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<UploadedFile> UploadedFiles { get; set; }
+
         private void SeedUsers(ModelBuilder builder)
         {
             PasswordHasher<ErasmusUser> passwordHasher = new PasswordHasher<ErasmusUser>();

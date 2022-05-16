@@ -27,7 +27,7 @@ namespace Erasmus.Service.Implementation
             _cityRepository = cityRepository;
             _mapper = mapper;
         }
-        public bool Create(CreateNonGovProjectDto project)
+        public bool Create(NonGovProjectDto project)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Erasmus.Service.Implementation
             }
         }
 
-        public bool Edit(CreateNonGovProjectDto model)
+        public bool Edit(NonGovProjectDto model)
         {
             try
             {

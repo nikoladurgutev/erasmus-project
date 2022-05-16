@@ -24,18 +24,21 @@
     {
       <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <div class="bnt-div"><a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary"  >Edit</a>
-           @{
-               var canEdit = project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
-               if(canEdit == false)
-               {
-                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger">Delete</a>
+          @if(User.IsInRole("Organizer"))
+          {
+               <div class="btn-div"><a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary"  >Edit</a>
+               @{
+                   var canEdit = project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                   if(canEdit == false)
+                   {
+                      <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger">Delete</a>
+                   }
                }
-           }
         </div>
+          }
         <h5 class="card-title">@project.ProjectTitle</h5>
         <p class="card-text">@project.ProjectDescription</p>
-        <a href="#" class="btn btn-primary">See more</a>
+        <a asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id" class="btn btn-primary">See more</a>
       </div>
       </div>
     }

@@ -11,10 +11,15 @@ namespace Erasmus.Domain
     {
         public MappingProfile()
         {
-            CreateMap<NonGovProject, CreateNonGovProjectDto>()
-                .ForMember(z => z.SelectedCityId, o => o.MapFrom(z => z.CityId));
-            CreateMap<CreateNonGovProjectDto, NonGovProject>()
+            CreateMap<NonGovProject, NonGovProjectDto>()
+                .ForMember(z => z.SelectedCityId, o => o.MapFrom(z => z.CityId))
+                .ForMember(z => z.ProjectId, o => o.MapFrom(z => z.Id));
+            CreateMap<NonGovProjectDto, NonGovProject>()
                 .ForMember(z => z.CityId, o => o.MapFrom(z => z.SelectedCityId));
+
+            CreateMap<NonGovProject, ProjectDetailsDto>()
+                 .ForMember(z => z.SelectedCityId, o => o.MapFrom(z => z.CityId))
+                 .ForMember(z => z.ProjectId, o => o.MapFrom(z => z.Id));
         }
     }
 }

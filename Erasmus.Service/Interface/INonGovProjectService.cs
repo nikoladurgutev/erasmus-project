@@ -8,11 +8,11 @@ namespace Erasmus.Service.Interface
 {
     public interface INonGovProjectService
     {
-        bool Create(CreateNonGovProjectDto project);
+        bool Create(NonGovProjectDto project);
         List<NonGovProject> GetAll();
         NonGovProject Get(Guid id);
 
-        bool Edit(CreateNonGovProjectDto model);
+        bool Edit(NonGovProjectDto model);
         bool Delete(Guid id);
     }
 }

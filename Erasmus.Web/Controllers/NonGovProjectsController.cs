@@ -2,6 +2,7 @@
 using AutoMapper;
 using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
+using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,15 @@ namespace Erasmus.Web.Controllers
         private readonly ICityService _cityService;
         private readonly IOrganizerService _organizerService;
         private readonly IMapper _mapper;
-        public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService, IMapper mapper)
+        private readonly IUploadedFileRepository _uploadedFileRepository;
+        public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService, IMapper mapper,
+            IUploadedFileRepository uploadedFileRepository)
         {
             _nonGovProjectsService = nonGovProjectService;
             _notyfService = notyfService;
             _organizerService = organizerService;
             _cityService = cityService;
+            _uploadedFileRepository = uploadedFileRepository;
             _mapper = mapper;
         }
         public IActionResult Index()
@@ -38,13 +42,13 @@ namespace Erasmus.Web.Controllers
         public IActionResult Create()
         {
             var cities = _cityService.GetCityList(); 
-            var model = new CreateNonGovProjectDto { Cities = cities };
+            var model = new NonGovProjectDto { Cities = cities };
             return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Organizer")]
-        public IActionResult Create(CreateNonGovProjectDto model)
+        public IActionResult Create(NonGovProjectDto model)
         {
             var organizerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             model.NonGovProjectOrganizerId = organizerId;
@@ -64,14 +68,14 @@ namespace Erasmus.Web.Controllers
         {
             var project = _nonGovProjectsService.Get(id);
             var cities = _cityService.GetCityList();
-            var model = _mapper.Map<CreateNonGovProjectDto>(project);
+            var model = _mapper.Map<NonGovProjectDto>(project);
             model.ProjectId = id;
             model.Cities = cities;
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(CreateNonGovProjectDto model)
+        public IActionResult Edit(NonGovProjectDto model)
         {
             var editSuccessful = _nonGovProjectsService.Edit(model);
             if(editSuccessful)
@@ -104,5 +108,15 @@ namespace Erasmus.Web.Controllers
 
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Details(Guid id)
+        {
+            var project = _nonGovProjectsService.Get(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var model = _mapper.Map<ProjectDetailsDto>(project);
+            model.UploadedFilesForUser = _uploadedFileRepository.GetFilesForUserAndEvent(userId, id);
+            return View(model);
+        }
     }
 }
