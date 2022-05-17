@@ -84,7 +84,11 @@ namespace Erasmus.Web.Data
 
             builder.Entity<City>().HasData(new City { Id = Guid.Parse("415c3843-4bf9-4a21-8696-6781a66204e2"), Name = "Skopje", CountryId = Guid.Parse("57242f19-0405-494c-b4bc-bdb52a725442") },
                                            new City { Id = Guid.Parse("6c3175f9-55e1-423c-a721-ee2ce7af688c"), Name = "London", CountryId = Guid.Parse("cbec8be4-6325-4b2f-b08e-22d709c27688") });
-            
+
+            builder.Entity<ProjectType>().HasData(new ProjectType { Id = Guid.NewGuid(), Type = "Language Learning" },
+                                                 new ProjectType { Id = Guid.NewGuid(), Type = "Computer Science Learning" },
+                                                 new ProjectType { Id = Guid.NewGuid(), Type = "Business and Marketing" },
+                                                 new ProjectType { Id = Guid.NewGuid(), Type = "Politics" });
 
             builder.Entity<Admin>()
                    .HasOne<ErasmusUser>(s => s.BaseRecord)
@@ -151,6 +155,12 @@ namespace Erasmus.Web.Data
                 .HasOne(z => z.City)
                 .WithMany(z => z.NonGovProjects)
                 .HasForeignKey(z => z.CityId);
+
+            //NonGovProject - ProjectType
+            builder.Entity<NonGovProject>()
+                .HasOne<ProjectType>(z => z.ProjectType)
+                .WithMany(z => z.NonGovProjects)
+                .HasForeignKey(z => z.ProjectTypeId);
 
 
             //MANY TO MANY

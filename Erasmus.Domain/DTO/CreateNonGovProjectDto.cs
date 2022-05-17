@@ -13,7 +13,7 @@ namespace Erasmus.Domain.DTO
         public string ProjectTitle { get; set; }
 
         // TODO: create a table for type
-        public string ProjectType { get; set; } // ex. Language learning
+        public ProjectType ProjectType { get; set; } // ex. Language learning
 
         public string ProjectDescription { get; set; }
       
