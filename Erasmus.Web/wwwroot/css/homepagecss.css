@@ -1,0 +1,78 @@
+.home-pic-box {
+    background-image: url(/images/home-pic2.jpg);
+    height: 30rem;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quote-box{
+    background-color: rgb(255, 255, 255,.5);
+    width: 70%;
+    height: 70%;
+    text-align: center;
+
+}
+
+.quote {
+    font-size: 2rem;
+    padding: 3rem 6rem;
+    font-weight: 700;
+}
+
+.icon-link {
+    background-color: #f3f7f6;
+    height: 30rem;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-box {
+    background-color: #cae6e6;
+    height: 15rem;
+    width: 15rem;
+    margin: 5rem;
+    border-radius: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-image-1 {
+    background-image: url(/images/lightbulb.png);
+    width: 9rem;
+    height: 9rem;
+    background-size: cover;
+    
+}
+
+.icon-image-2 {
+    background-image: url(/images/monitor.png);
+    width: 8rem;
+    height: 8rem;
+    background-size: cover;
+}
+
+.icon-image-3 {
+    background-image: url(/images/globe.png);
+    width: 8rem;
+    height: 8rem;
+    background-size: cover;
+}
+
+.homepage-logo-box {
+    display: flex;
+    justify-content: center;
+
+}
+
+.homepage-logo {
+    width: 25rem;
+    height: 12rem;
+    background-image:url(/images/erasmus.png);
+    background-size: 100% 100%;
+}
+

@@ -1,8 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+<link href="/css/homepagecss.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="home-pic-box">
+        <div class="quote-box">
+            <div class="quote">"Volounteers don't get paid, not because they're worthless, but because they're priceless." - Sharry Anderson</div>
+        </div>
+    </div>
+    <div class="icon-link">
+        <div class="icon-box">
+            <div class="icon-image-1"></div>
+        </div>
+        <div class="icon-box">
+            <div class="icon-image-2"></div>
+        </div>
+        <div class="icon-box">
+            <div class="icon-image-3"></div>
+        </div>
+    </div>
+</body>
+</html>
