@@ -4,13 +4,47 @@
 *@
 @{
 }
+@await Component.InvokeAsync("Notyf") 
+
 <form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data">
     <input type="hidden" asp-for="ProjectId"/>
     <h1>Applying to @Model.Project.ProjectTitle</h1>
     <div>
-        <label>Attach a CV</label>
-        <input type="file" class="file-input" asp-for="CV"/>
+        Please use the template file for CV for applying to these events
     </div>
+    @if (Model.UploadedCV == null)
+    {
+        <div>
+            <a asp-controller="Participant" asp-action="DownloadCvTemplate" asp-route-id="@Model.ProjectId" >CV Template</a>
+            <label>Attach a CV</label>
+            <input type="file" class="file-input" asp-for="CV"/>
+        </div>
+    }
+    else
+    {
+        <label>Uploaded CV: @Model.UploadedCV.FileName</label>
+        <div>
+            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><label>Download</label></a>
+            <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id">Delete</a>
+        </div>
+
+    }
+
+    @if(Model.UploadedMotivation == null)
+    {
+         <div>
+            <label>Attach a Motivation Letter</label>
+            <input type="file" class="file-input" asp-for="MotivationLetter"/>
+        </div>
+    }
+    else
+    {
+        <div>
+            <h1>Your Motivation Letter</h1>
+            <a asp-controller="Participant" asp-action="ShowUploadedFile" asp-route--id="@Model.UploadedMotivation.Id"><label>@Model.UploadedMotivation.FileName</label></a>
+            <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id">Delete</a>
+        </div>
+    }
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
 

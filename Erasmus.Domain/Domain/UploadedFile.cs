@@ -12,5 +12,6 @@ namespace Erasmus.Domain.Domain
         public string UserId { get; set; }
         public Participant User { get; set; }
         public string PathOnDisk { get; set; }
-    }
+        public FileType FileType { get; set; }
+    } 
 }

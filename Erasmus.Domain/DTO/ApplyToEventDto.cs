@@ -1,4 +1,5 @@
-﻿using Erasmus.Domain.DomainModels;
+﻿using Erasmus.Domain.Domain;
+using Erasmus.Domain.DomainModels;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,10 @@ namespace Erasmus.Domain.DTO
         public NonGovProject Project { get; set; }
         public Guid ProjectId { get; set; }
         public IFormFile CV { get; set; }
+        public UploadedFile UploadedCV { get; set; }
+        public IFormFile MotivationLetter { get; set; }
+        public UploadedFile UploadedMotivation { get; set; }
+        public List<UploadedFile> UploadedFilesForUser { get; set; }
+
     }
 }

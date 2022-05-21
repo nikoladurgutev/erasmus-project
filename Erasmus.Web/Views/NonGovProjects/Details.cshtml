@@ -4,22 +4,25 @@
 *@
 @{
 }
+@await Component.InvokeAsync("Notyf") 
+
 
 <div>
     <h1>@Model.ProjectTitle</h1>
     <h2>@Model.ProjectDescription</h2>
+    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-primary">Apply</a>
     <hr />
+    <h1>Uploaded files</h1>
     @{
-        if(Model.UploadedFilesForUser.Count != 0)
+        foreach(var file in Model.UploadedFilesForUser)
         {
-            // add foreach
-            var fileId = Model.UploadedFilesForUser[3].Id;
-            <h1>You have already applied</h1>
-            <h1>@Model.UploadedFilesForUser[0].FileName</h1>
+            var fileId = file.Id;
+            <h1>@file.FileType</h1>
+            <hr />
+            <h1>@file.FileName</h1>
             <a asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@fileId">Download</a>
         }
     }
-    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-primary">Apply</a>
 </div>
 
 

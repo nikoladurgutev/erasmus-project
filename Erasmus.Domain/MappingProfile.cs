@@ -20,6 +20,9 @@ namespace Erasmus.Domain
             CreateMap<NonGovProject, ProjectDetailsDto>()
                  .ForMember(z => z.SelectedCityId, o => o.MapFrom(z => z.CityId))
                  .ForMember(z => z.ProjectId, o => o.MapFrom(z => z.Id));
+
+            CreateMap<NonGovProject, ApplyToEventDto>()
+                .ForMember(z => z.ProjectId, o => o.MapFrom(z => z.Id));
         }
     }
 }

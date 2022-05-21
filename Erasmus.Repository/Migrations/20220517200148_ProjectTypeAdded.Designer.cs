@@ -4,14 +4,16 @@ using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517200148_ProjectTypeAdded")]
+    partial class ProjectTypeAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,22 +223,22 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8622dd75-63a5-48ca-bf28-b259a7a41398"),
+                            Id = new Guid("6893ea1d-d7fd-43c1-b418-127b152d2099"),
                             Type = "Language Learning"
                         },
                         new
                         {
-                            Id = new Guid("81e0db78-1eed-4e24-bc27-580c4a5cdb5a"),
+                            Id = new Guid("d6c7f124-273c-4436-bc6d-da58ecc76cf5"),
                             Type = "Computer Science Learning"
                         },
                         new
                         {
-                            Id = new Guid("231adf35-9d04-4db8-9d3f-d3d9ad14950e"),
+                            Id = new Guid("0b7c5ef1-3d52-48c9-a300-63286d498c91"),
                             Type = "Business and Marketing"
                         },
                         new
                         {
-                            Id = new Guid("44d8271f-a85e-4677-b01f-15eca0ac4179"),
+                            Id = new Guid("7e11f989-e6ca-4fa3-a9ed-1d734feb7afd"),
                             Type = "Politics"
                         });
                 });
@@ -258,37 +260,6 @@ namespace Erasmus.Repository.Migrations
                     b.HasIndex("FacultyId");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("Erasmus.Domain.Domain.UploadedFile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FileType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PathOnDisk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("UploadedFiles");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.DomainModels.ErasmusProject", b =>
@@ -427,15 +398,15 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "729b35e7-d9a6-4401-9050-25b2315e450c",
+                            ConcurrencyStamp = "f89164d4-5b5d-460a-b6e6-78533e559e9d",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPo9ABsQYieHRxF0N40jTOPD55fFzUt3B4fotJWc61ce1QmGLHqH66ALvG0mdUI70g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPzq/JvB6ebs3WEXLXT80YNo6x5smc4MR7tC7Rrq4Ly4qCmbGehSY2tzazNUgDmKtg==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "29cae6c5-8893-4545-b781-2fb012ee92c9",
+                            SecurityStamp = "c15cb1a3-829a-428d-8ed6-a76e9bf94e03",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -548,28 +519,28 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
-                            ConcurrencyStamp = "a7b94b77-3985-4be7-8a32-141061f09f64",
+                            ConcurrencyStamp = "07c1302a-3b74-4eb2-b17c-572a79ee6582",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
-                            ConcurrencyStamp = "2a2c5f5c-d176-4eca-97d9-764703dc5afd",
+                            ConcurrencyStamp = "dc3a73c3-3757-4a27-9a27-132596e67bd9",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
-                            ConcurrencyStamp = "b68659a2-4240-4981-9096-691a8a79e9ae",
+                            ConcurrencyStamp = "f6cefcea-e058-4432-8c03-b97c10344cfe",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         },
                         new
                         {
                             Id = "a06137ff-e363-4441-a340-569663a0cc0e",
-                            ConcurrencyStamp = "5bacc238-0515-4cf2-91a8-76337883627c",
+                            ConcurrencyStamp = "301bd5ba-c8c7-465a-9680-6684d784d461",
                             Name = "Organizer",
                             NormalizedName = "ORGANIZER"
                         });
@@ -744,13 +715,6 @@ namespace Erasmus.Repository.Migrations
                     b.HasOne("Erasmus.Domain.DomainModels.Faculty", "Faculty")
                         .WithMany("Students")
                         .HasForeignKey("FacultyId");
-                });
-
-            modelBuilder.Entity("Erasmus.Domain.Domain.UploadedFile", b =>
-                {
-                    b.HasOne("Erasmus.Domain.Domain.Participant", "User")
-                        .WithMany("UploadedFiles")
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.DomainModels.ErasmusUser", b =>
