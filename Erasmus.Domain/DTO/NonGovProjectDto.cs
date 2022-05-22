@@ -1,4 +1,5 @@
 ﻿using Erasmus.Domain.Domain;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Erasmus.Domain.DTO
 {
-    public class CreateNonGovProjectDto
+    public class NonGovProjectDto
     {
         public Guid ProjectId { get; set; }
         public string ProjectTitle { get; set; }

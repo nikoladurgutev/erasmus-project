@@ -12,12 +12,16 @@
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="GemBox.Document" Version="35.0.1000" />
+    <PackageReference Include="GemBox.Pdf" Version="17.0.1158" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.21" />
+    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="20.1.0.56" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="20.1.0.56" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ProjectFiles\" />
     <Folder Include="wwwroot\css\NewFolder\" />
   </ItemGroup>
 

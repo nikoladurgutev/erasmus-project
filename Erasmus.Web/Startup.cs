@@ -45,10 +45,13 @@ namespace Erasmus.Web
             // repositories
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IOrganizerRepository), typeof(OrganizerRepository));
+            services.AddScoped(typeof(IParticipantsRepository), typeof(ParticipantRepository));
+            services.AddScoped(typeof(IUploadedFileRepository), typeof(UploadedFileRepository));
+            services.AddScoped(typeof(INonGovProjectRepository), typeof(NonGovProjectRepository));
 
             // services
             services.AddTransient(typeof(ICityService), typeof(CityService));
-            //services.AddScoped(typeof(IUserRepository<>), typeof(UserRepository<>));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddTransient(typeof(INonGovProjectService), typeof(NonGovProjectService));
             services.AddTransient(typeof(IOrganizerService), typeof(OrganizerService));
 
@@ -70,7 +73,9 @@ namespace Erasmus.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseNotyf();
+
 
             if (env.IsDevelopment())
             {
@@ -86,11 +91,13 @@ namespace Erasmus.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
             app.UseRouting();
             app.UseStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

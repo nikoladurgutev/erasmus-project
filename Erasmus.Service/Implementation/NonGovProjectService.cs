@@ -14,12 +14,12 @@ namespace Erasmus.Service.Implementation
 {
     public class NonGovProjectService : INonGovProjectService
     {
-        private readonly IRepository<NonGovProject> _repository;
+        private readonly INonGovProjectRepository _repository;
         private readonly IOrganizerRepository _organizerRepository;
         private readonly IRepository<NonGovProjectOrganizer> _organizerToProjectRepsoitory;
         private readonly IRepository<City> _cityRepository;
         private readonly IMapper _mapper;
-        public NonGovProjectService(IRepository<NonGovProject> repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository, IMapper mapper)
+        public NonGovProjectService(INonGovProjectRepository repository, IOrganizerRepository organizerRepository, IRepository<NonGovProjectOrganizer> organizerToProjectRepository, IRepository<City> cityRepository, IMapper mapper)
         {
             _repository = repository;
             _organizerRepository = organizerRepository;
@@ -27,7 +27,7 @@ namespace Erasmus.Service.Implementation
             _cityRepository = cityRepository;
             _mapper = mapper;
         }
-        public bool Create(CreateNonGovProjectDto project)
+        public bool Create(NonGovProjectDto project)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Erasmus.Service.Implementation
             }
         }
 
-        public bool Edit(CreateNonGovProjectDto model)
+        public bool Edit(NonGovProjectDto model)
         {
             try
             {
