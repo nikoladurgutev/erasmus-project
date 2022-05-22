@@ -4,7 +4,6 @@
 *@
 @{
 }
-@await Component.InvokeAsync("Notyf") 
 
 <form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data">
     <input type="hidden" asp-for="ProjectId"/>
@@ -24,7 +23,7 @@
     {
         <label>Uploaded CV: @Model.UploadedCV.FileName</label>
         <div>
-            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><label>Download</label></a>
+            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary">Download</a>
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id">Delete</a>
         </div>
 
@@ -41,7 +40,7 @@
     {
         <div>
             <h1>Your Motivation Letter</h1>
-            <a asp-controller="Participant" asp-action="ShowUploadedFile" asp-route--id="@Model.UploadedMotivation.Id"><label>@Model.UploadedMotivation.FileName</label></a>
+            <a asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"><label>@Model.UploadedMotivation.FileName</label></a>
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id">Delete</a>
         </div>
     }

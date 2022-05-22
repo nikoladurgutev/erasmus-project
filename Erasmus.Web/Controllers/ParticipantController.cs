@@ -120,7 +120,8 @@ namespace Erasmus.Web.Controllers
                     };
                     _uploadedFileRepository.Insert(userToFile);
                 }
-                _notyfService.Success("Files uploaded!");
+                if(model.CV != null || model.UploadedCV != null)
+                     _notyfService.Success("Files uploaded!");
                 return RedirectToAction("Details", "NonGovProjects", new { id = model.ProjectId });
 
             }

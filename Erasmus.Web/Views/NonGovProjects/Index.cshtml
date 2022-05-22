@@ -32,9 +32,14 @@
                 <div class="row w-100">
                      <div class="">
                        <a asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more</a>
-                       <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
-                   @{
-                       var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Email == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                       @{
+                            if(!User.IsInRole("Organizer"))
+                            {
+                                <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
+                            }
+                       }
+                       @{
+                       var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
                        if(canEdit)
                        {
                           <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  >Edit</a>

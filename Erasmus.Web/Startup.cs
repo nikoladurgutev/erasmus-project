@@ -47,6 +47,7 @@ namespace Erasmus.Web
             services.AddScoped(typeof(IOrganizerRepository), typeof(OrganizerRepository));
             services.AddScoped(typeof(IParticipantsRepository), typeof(ParticipantRepository));
             services.AddScoped(typeof(IUploadedFileRepository), typeof(UploadedFileRepository));
+            services.AddScoped(typeof(INonGovProjectRepository), typeof(NonGovProjectRepository));
 
             // services
             services.AddTransient(typeof(ICityService), typeof(CityService));
