@@ -7,7 +7,7 @@
 
 @if(!string.IsNullOrEmpty(Model.ProfilePhotoPath))
 {
-    <img src="@Model.ProfilePhotoPath"/>
+    <img src="~/images/@Model.ProfilePhotoPath"/>
 }
 
 <form method="post" asp-controller="Organizer" asp-action="UploadPhoto" enctype="multipart/form-data">

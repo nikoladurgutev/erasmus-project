@@ -87,7 +87,7 @@ namespace Erasmus.Web.Controllers
             var model = new EditProfilePictureDto
             {
                 UserId = organizerId,
-                ProfilePhotoPath = profilePhoto !=null?  profilePhoto.PathOnDisk : ""
+                ProfilePhotoPath = user.Photo !=null?  user.Photo.PathOnDisk : ""
             };
             return View(model);
         }

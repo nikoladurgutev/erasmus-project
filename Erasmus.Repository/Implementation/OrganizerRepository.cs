@@ -39,7 +39,7 @@ namespace Erasmus.Repository.Implementation
 
         public ErasmusUser GetOrganizerFromBase(string organizerId)
         {
-            return context.Users.FirstOrDefault(z => z.OrganizerId == organizerId);
+            return context.Users.Include(z => z.Photo).FirstOrDefault(z => z.OrganizerId == organizerId);
         }
 
         public ErasmusUser GetUser(string organizerId)
