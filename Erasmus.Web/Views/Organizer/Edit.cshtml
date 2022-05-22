@@ -1,0 +1,27 @@
+﻿@model Erasmus.Domain.DTO.OrganizerProfileDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form method="post" asp-controller="Organizer" asp-action="EditProfile">
+    <input type="hidden" asp-for="OrganizerId"/>
+    <div class="form-group">
+        @Html.LabelFor(z => z.FirstName)
+        <input type="text" asp-for="FirstName"/>
+    </div>
+     <div class="form-group">
+        @Html.LabelFor(z => z.LastName)
+        <input type="text" asp-for="LastName"/>
+    </div>
+     <div class="form-group">
+        @Html.LabelFor(z => z.OrganizationName)
+        <input type="text" asp-for="OrganizationName"/>
+    </div>
+     <div class="form-group">
+        @Html.LabelFor(z => z.OrganizationContact)
+        <input type="text" asp-for="OrganizationContact"/>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+</form>

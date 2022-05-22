@@ -36,7 +36,7 @@ namespace Erasmus.Repository.Implementation
 
         public ErasmusUser Get(string id)
         {
-            return entities.FirstOrDefault(z => z.Id == id);
+            return entities.Include(z => z.Photo).FirstOrDefault(z => z.Id == id);
         }
 
         public IEnumerable<ErasmusUser> GetAll()
@@ -56,7 +56,8 @@ namespace Erasmus.Repository.Implementation
 
         public void Update(ErasmusUser entity)
         {
-            throw new NotImplementedException();
+            entities.Update(entity);
+            context.SaveChanges();
         }
     }
 }

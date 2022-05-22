@@ -28,6 +28,7 @@ namespace Erasmus.Web.Data
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<UploadedFile> UploadedFiles { get; set; }
+        public virtual DbSet<ProfilePhoto> ProfilePics { get; set; }
 
         private void SeedUsers(ModelBuilder builder)
         {
@@ -121,6 +122,12 @@ namespace Erasmus.Web.Data
                 .HasOne<Coordinator>(z => z.Coordinator)
                 .WithOne(z => z.Faculty)
                 .HasForeignKey<Coordinator>(z => z.FacultyId);
+
+            // ErasmusUser - ProfilePhoto
+            builder.Entity<ErasmusUser>()
+                .HasOne(z => z.Photo)
+                .WithOne(z => z.User)
+                .HasForeignKey<ErasmusUser>(z => z.ProfilePhotoId);
 
             //ONE TO MANY
             //Student - Faculty

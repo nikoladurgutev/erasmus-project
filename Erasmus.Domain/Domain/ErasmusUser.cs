@@ -31,5 +31,8 @@ namespace Erasmus.Domain.DomainModels
         public virtual Organizer Organizer { get; set; }
         public virtual string OrganizerId { get; set; }
 
+        public Guid? ProfilePhotoId { get; set; }
+        public ProfilePhoto Photo { get; set; }
+
     }
 }

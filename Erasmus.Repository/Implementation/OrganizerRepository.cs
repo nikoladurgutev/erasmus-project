@@ -1,4 +1,6 @@
 ﻿using Erasmus.Domain.Domain;
+using Erasmus.Domain.DomainModels;
+using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;
 using Microsoft.AspNetCore.Identity;
@@ -35,9 +37,27 @@ namespace Erasmus.Repository.Implementation
             return entities.Include(z => z.BaseRecord).SingleOrDefault(z => z.BaseRecord.Email == mail);
         }
 
+        public ErasmusUser GetOrganizerFromBase(string organizerId)
+        {
+            return context.Users.FirstOrDefault(z => z.OrganizerId == organizerId);
+        }
+
+        public ErasmusUser GetUser(string organizerId)
+        {
+            var organizer = entities.Include(z => z.BaseRecord).FirstOrDefault(z => z.UserId == organizerId);
+            return organizer.BaseRecord;
+        }
+
         public void Insert(Organizer entity)
         {
             entities.Add(entity);
+            context.SaveChanges();
+        }
+
+
+        public void Update(Organizer entity)
+        {
+            entities.Update(entity);
             context.SaveChanges();
         }
     }
