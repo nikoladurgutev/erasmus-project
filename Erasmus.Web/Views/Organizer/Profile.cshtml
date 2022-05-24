@@ -1,0 +1,70 @@
+﻿@model Erasmus.Domain.DTO.OrganizerProfileDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .profile-picture{
+        width: 300px;
+        height: 200px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+                <div class="row profile-picture">
+                        @if(Model.ProfilePicture != null)
+                        {
+                            <img src="~/images/@Model.ProfilePicture.PathOnDisk"/>
+                        }
+                </div>
+                <div class="row w-50 align-content-center">
+                    <a asp-controller="Organizer" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn btn-success">Upload a profile picture</a>
+                </div>
+        </div>
+        <div class="col-9">
+                <h1>First Name</h1>
+                @if(!string.IsNullOrEmpty(Model.FirstName))
+                {
+                    <p>@Model.FirstName</p>
+                }
+                else{
+                    <p>First Name is not inserted</p>
+                }
+                
+                <h2>Last Name</h2>
+                @if(!string.IsNullOrEmpty(Model.LastName))
+                {
+                    <p>@Model.LastName</p>
+                }
+                else{
+                    <p>Last Name not inserted</p>
+                }
+
+                <hr />
+
+                <h1>Organization Name</h1>
+                @if(!string.IsNullOrEmpty(Model.OrganizationName))
+                {
+                    <p>@Model.OrganizationName</p>
+                }
+                else
+                {
+                    <p>Organization Name not inserted</p>
+                }
+
+                <h2>Organization Contact</h2>
+                @if(!string.IsNullOrEmpty(Model.OrganizationContact))
+                {
+                    <p>@Model.OrganizationContact</p>   
+                } 
+                else
+                {
+                    <p>Organization Contact not inserted</p>
+                }
+                <a asp-controller="Organizer" asp-action="Edit" asp-route-id="@Model.OrganizerId" class="btn btn-outline-success">Edit Profile</a>
+        </div>
+    </div>
+</div>

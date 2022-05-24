@@ -55,7 +55,10 @@
       </div>
     }
 </div>
-<a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
+@if(User.IsInRole("Organizer"))
+{
+   <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
+}
 
 <div class="mt-5 text-primary mb-5 ">
     <h1 class="h1">How to apply?</h1>

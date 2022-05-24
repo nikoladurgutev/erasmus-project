@@ -209,5 +209,10 @@ namespace Erasmus.Web.Controllers
             _notyfService.Success("File deleted");
             return RedirectToAction("UploadFiles", "Participant", new { eventId = id});
         }
+
+        public IActionResult Profile()
+        {
+            return View();
+        }
     }
 }

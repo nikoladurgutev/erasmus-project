@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20220326112134_AddedClassesForusers.Designer.cs" />
     <Compile Remove="Migrations\20220424161303_ConfiguredProjectToOrganizerRelation.cs" />
     <Compile Remove="Migrations\20220424161303_ConfiguredProjectToOrganizerRelation.Designer.cs" />
+    <Compile Remove="Migrations\20220522123426_AddProfilePhotoEntity.cs" />
+    <Compile Remove="Migrations\20220522123426_AddProfilePhotoEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
