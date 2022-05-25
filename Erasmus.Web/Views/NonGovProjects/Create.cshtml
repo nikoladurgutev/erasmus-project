@@ -11,7 +11,7 @@
 </style>
 
 
-<form id="create-project-form" asp-action="Create" asp-controller="NonGovProjects">
+<form id="create-project-form" asp-action="Create" asp-controller="NonGovProjects" class="text-primary">
     <label>Title</label>
     <input class="form-control" asp-for="ProjectTitle" />
     <label>Description</label>
@@ -22,7 +22,7 @@
     <input type="date" class="form-control" asp-for="EndDate"/>
     <label>City</label>
     @Html.DropDownListFor(z => z.SelectedCityId, new SelectList(Model.Cities, "Value", "Text"), htmlAttributes: new { @class = "form-control"})
-    <button type="submit" class="btn-create btn btn-outline-primary">Create</button>
+    <button type="submit" class="btn-create btn btn-lg btn-outline-primary">Create</button>
 </form>
 
 <script>

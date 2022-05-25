@@ -24,6 +24,7 @@
           <div class="col-2 mr-5">
             <div style="width: 200px; height: 200px; background-color: gray;"></div>
 @*           <img src="" alt="..." class="img-thumbnail" style="width: 200px; height: 200px;" />
+            mesto za slikata od proektot
 *@
           </div>
           <div class="col-6 ml-5" style="margin-left:100px;">
@@ -31,7 +32,7 @@
                 <p class="card-text text-primary">@project.ProjectDescription</p>
                 <div class="row w-100">
                      <div class="">
-                       <a asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more</a>
+                       <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
                        @{
                             if(!User.IsInRole("Organizer"))
                             {
@@ -42,8 +43,8 @@
                        var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
                        if(canEdit)
                        {
-                          <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  >Edit</a>
-                          <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3">Delete</a>
+                          <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                          <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                        }
                    }
 
@@ -57,17 +58,16 @@
 </div>
 <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
 
-<div class="mt-5 text-primary mb-5 ">
-    <h1 class="h1">How to apply?</h1>
+<div class="mt-5 text-primary mb-5">
+    <h1 class="h1 mb-3">How to apply?</h1>
     <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-    Aliquam eget sem quis augue aliquam molestie dictum ut tellus.
-    Morbi sed pellentesque odio, vel tincidunt elit. Donec maximus, quam a suscipit vestibulum,
-    risus lorem dapibus tortor, ut ultricies nunc odio id lectus. Quisque imperdiet nunc at purus molestie, 
-    ut tempus massa consectetur. Curabitur congue urna et porttitor ultrices. Nulla mattis, odio faucibus elementum tempor
-    , neque mauris pulvinar massa, 
-    quis molestie enim lorem sed risus. Sed et quam enim. Donec a ante justo.
+    Now it's easy to be part of the Erasmus community. All you need to have is a good mood and motivation.
     </p>
+    <p>
+    In order to apply to an event organized by some non-government organization,
+    you need to attach your <b>CV</b> and <b>motivational letter</b>. 
+    </p>
+    <br/>
 </div>
 </div>
 
