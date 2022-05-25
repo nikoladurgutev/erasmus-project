@@ -7,20 +7,40 @@
 @await Component.InvokeAsync("Notyf") 
 
 
-<div>
-    <h1>@Model.ProjectTitle</h1>
-    <h2>@Model.ProjectDescription</h2>
-    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-primary">Apply</a>
+<div class="alert alert-light w-75 justify-content-center mx-auto">
+    <div class="justify-content-center text-center">
+     <img src="~/images/projectpic.png" style="width:200px; height:200px;"/>
+
+    @*
+        smetam deka slika ke ima
+    *@
+    <div>   
+    <h1 class="h3 text-warning">@Model.ProjectTitle</h1>
+    <h2 class="h4 text-info">@Model.ProjectDescription</h2>
+    </div>
+
+    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-outline-warning  btn-lg">Apply <i class="fa fa-check-circle" aria-hidden="true"></i></a>
     <hr />
-    <h1>Uploaded files</h1>
+        <h2 class="h3 text-info">Uploaded files</h2>
+    </div>
+   
     @{
         foreach(var file in Model.UploadedFilesForUser)
         {
             var fileId = file.Id;
-            <h1>@file.FileType</h1>
-            <hr />
-            <h1>@file.FileName</h1>
-            <a asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@fileId">Download</a>
+            <h4 class="text-info mt-3 mb-3">@file.FileType</h4>
+            <div class="row">
+            <div class="col-4">
+             <label class="text-warning">@file.FileName</label>
+            </div>
+            <div class="col-2">
+             <a class="btn btn-outline-info btn-lg" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@fileId"> 
+                        <i class="fa fa-download" aria-hidden="true"></i>
+             </a>
+            </div>
+            </div>
+            <hr/>
+           
         }
     }
 </div>
