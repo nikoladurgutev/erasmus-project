@@ -4,28 +4,28 @@
 *@
 @{
 }
-<style>
-    .profile-picture{
-        width: 300px;
-        height: 200px;
-    }
-</style>
+
+<head>
+    <link rel="stylesheet" href="~/css/organizer-profile.css" />
+    
+</head>
 
 <div class="container">
-    <div class="row">
-        <div class="col-3">
-                <div class="row profile-picture">
+    
+    <div class="row main-row">
+        <div class="col-3 left">
+                <div class="row profile-picture profile-picture">
                         @if(Model.ProfilePicture != null)
                         {
-                            <img src="~/images/@Model.ProfilePicture.PathOnDisk"/>
+                            <img class="shape" src="~/images/@Model.ProfilePicture.PathOnDisk"/>
                         }
                 </div>
-                <div class="row w-50 align-content-center">
-                    <a asp-controller="Organizer" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn btn-success">Upload a profile picture</a>
+                <div class="row">
+                    <a asp-controller="Organizer" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
                 </div>
         </div>
         <div class="col-9">
-                <h1>First Name</h1>
+                <label form-control>First Name</label>
                 @if(!string.IsNullOrEmpty(Model.FirstName))
                 {
                     <p>@Model.FirstName</p>
@@ -34,7 +34,7 @@
                     <p>First Name is not inserted</p>
                 }
                 
-                <h2>Last Name</h2>
+                 <label form-control>Last Name</label>
                 @if(!string.IsNullOrEmpty(Model.LastName))
                 {
                     <p>@Model.LastName</p>
@@ -45,7 +45,7 @@
 
                 <hr />
 
-                <h1>Organization Name</h1>
+                 <label form-control>Organization Name</label>
                 @if(!string.IsNullOrEmpty(Model.OrganizationName))
                 {
                     <p>@Model.OrganizationName</p>
@@ -55,7 +55,7 @@
                     <p>Organization Name not inserted</p>
                 }
 
-                <h2>Organization Contact</h2>
+                 <label form-control>Organization Contact</label>
                 @if(!string.IsNullOrEmpty(Model.OrganizationContact))
                 {
                     <p>@Model.OrganizationContact</p>   
@@ -64,7 +64,8 @@
                 {
                     <p>Organization Contact not inserted</p>
                 }
-                <a asp-controller="Organizer" asp-action="Edit" asp-route-id="@Model.OrganizerId" class="btn btn-outline-success">Edit Profile</a>
+                <a asp-controller="Organizer" asp-action="Edit" asp-route-id="@Model.OrganizerId" class="btn btn-outline-success btn-edit">Edit Profile</a>
         </div>
     </div>
+    
 </div>
