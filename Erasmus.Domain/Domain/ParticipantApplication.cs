@@ -17,6 +17,7 @@ namespace Erasmus.Domain.Domain
         public NonGovProject NonGovProject { get; set; }
         public ICollection<UploadedFile> UploadedFiles { get; set; }
         // the participant application can be either approved, rejected or in review
+        // if this is NotCompleted, the user still hasn't applied but might have some documents
         public ApplicationStatus ReviewStatus { get; set; }
     }
 }

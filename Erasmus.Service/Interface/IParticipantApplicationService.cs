@@ -9,5 +9,7 @@ namespace Erasmus.Service.Interface
     {
         ParticipantApplication Get(Guid id);
         ParticipantApplication GetForParticipantAndProject(string participantId, Guid projectId);
+        void Insert(ParticipantApplication application);
+        void Update(ParticipantApplication application);
     }
 }

@@ -23,5 +23,15 @@ namespace Erasmus.Service.Implementation
         {
             return _repository.GetForParticipantAndProject(participantId, projectId);
         }
+
+        public void Insert(ParticipantApplication application)
+        {
+            _repository.Insert(application);
+        }
+
+        public void Update(ParticipantApplication application)
+        {
+            _repository.Update(application);
+        }
     }
 }

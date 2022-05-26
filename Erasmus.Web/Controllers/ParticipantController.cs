@@ -55,9 +55,17 @@ namespace Erasmus.Web.Controllers
                     Project = project,
                     UploadedCV = uploadedCv,
                     UploadedMotivation = uploadedMotivation,
-                    ParticipantId = userId,
-                    ReviewStatus = application.ReviewStatus
+                    ParticipantId = userId
                 };
+
+                if(application != null)
+                {
+                    model.ReviewStatus = application.ReviewStatus;
+                }
+                else
+                {
+                    model.ReviewStatus = ApplicationStatus.NotCompleted;
+                }
                 return View(model);
             }
             else
@@ -203,6 +211,11 @@ namespace Erasmus.Web.Controllers
             // delete the record
             _uploadedFileRepository.Delete(id);
             // delete the actual file
+            var participantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var application = _participantApplicationService.GetForParticipantAndProject(participantId, file.ProjectId);
+            application.ReviewStatus = ApplicationStatus.NotCompleted;
+            _participantApplicationService.Update(application);
+
             System.IO.File.Delete(file.PathOnDisk);
             _notyfService.Success("File deleted");
             return RedirectToAction("UploadFiles", "Participant", new { eventId = file.ProjectId});

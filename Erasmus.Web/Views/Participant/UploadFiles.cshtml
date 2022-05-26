@@ -48,7 +48,7 @@
         </div>
         <div class="col-6">
         <div>
-            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
+            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </div>
         </div>
@@ -73,7 +73,7 @@
         <div class="row justify-content-center">
             <label class="col-4 text-primary ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-6">
-                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
                 <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
         </div>
@@ -81,23 +81,62 @@
     <button id="btn-submit" type="submit" class="btn btn-success" style="display:none">Upload files</button>
 </form>
 
-@if (Model.ReviewStatus == ApplicationStatus.InReview)
+@if (Model.ReviewStatus == ApplicationStatus.NotCompleted)
 {
-     <form asp-method="post" asp-action="Apply" asp-controller="Participant">
-        <input type="hidden" asp-for="ParticipantId" />
-        <input type="hidden" asp-for="ProjectId" />
-        <button type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-5">Submit application for review</button>
-    </form>  
+    <div class="row">
+         <form asp-method="post" asp-action="Apply" asp-controller="Participant">
+            <input type="hidden" asp-for="ParticipantId" />
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="submit-div">
+                <button id="submit-application-btn" type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-5" title="Please upload CV and Motivaton Letter to apply">Submit application for review</button>
+            </div>    
+        </form> 
+    </div>
 }
 
 
 @section Scripts{
     <script>
         $(document).ready(function(){
+            debugger;
+            var canSubmitApplication = true;
+            checkIfDocumentsAreUploaded();
+            if(!canSubmitApplication)
+            {
+                disableElement($("#submit-application-btn"));
+            }
+            else{
+                enableElement()
+            }
             $('.file-input').click(function(){
-                debugger;
-               $('#btn-submit').show();
+                $('#btn-submit').show();
             });
+             
+             $("input.file-input").change(function(){
+                 checkIfDocumentsAreUploaded();
+                 if(!canSubmitApplication)
+                 {
+                      disableElement(("#submit-application-btn"));
+                 }
+             });
+
+             function checkIfDocumentsAreUploaded(){
+                if($(".fa-download").length != 2){
+                    // if the user didn't upload all files
+                    canSubmitApplication = false;
+                    $("#submit-div").tooltip();
+                }
+             }
+
+             function disableElement(element)
+             {
+                 $(element).attr("disabled", "true");
+             }
+
+             function enableEleemnt(element)
+             {
+                 $(element).attr("disabled", "false");
+             }
            
         });
     </script>

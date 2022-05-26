@@ -1,6 +1,8 @@
-﻿using Erasmus.Domain.Domain;
+﻿
+using Erasmus.Domain.Domain;
 using Erasmus.Service.Interface;
 using MailKit.Security;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 using Syncfusion.Pdf.Parsing;
@@ -15,9 +17,11 @@ namespace Erasmus.Service.Implementation
     public class EmailService : IEmailService
     {
         private readonly EmailSettings _settings;
-        public EmailService(EmailSettings settings)
+        private readonly IConfiguration _config;
+        public EmailService(EmailSettings settings, IConfiguration configuration)
         {
             _settings = settings;
+            _config = configuration;
         }
         public async Task SendMailAsync(Email email, ICollection<UploadedFile> uploadedFiles)
         {
@@ -54,7 +58,7 @@ namespace Erasmus.Service.Implementation
 
                     if(!string.IsNullOrEmpty(_settings.SmtpUserName))
                     {
-                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _settings.SmtpPassword);
+                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _config.GetSection("MailKit").Value.ToString());
                     }
 
                     await smtp.SendAsync(emailMessage);
