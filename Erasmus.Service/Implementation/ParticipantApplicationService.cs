@@ -19,6 +19,9 @@ namespace Erasmus.Service.Implementation
             return _repository.GetApplication(id);
         }
 
-
+        public ParticipantApplication GetForParticipantAndProject(string participantId, Guid projectId)
+        {
+            return _repository.GetForParticipantAndProject(participantId, projectId);
+        }
     }
 }

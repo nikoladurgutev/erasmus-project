@@ -1,4 +1,6 @@
 ﻿@model Erasmus.Domain.DTO.ApplyToEventDto
+@using Erasmus.Domain.Domain
+
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -71,20 +73,23 @@
         <div class="row justify-content-center">
             <label class="col-4 text-primary ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-6">
-            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
-            <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
-        
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
+                <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
-           </div>
+        </div>
     }
     <button id="btn-submit" type="submit" class="btn btn-success" style="display:none">Upload files</button>
 </form>
 
-<form asp-method="post" asp-action="Apply" asp-controller="Participant">
-    <input type="hidden" asp-for="ParticipantId" />
-    <input type="hidden" asp-for="ProjectId" />
-    <button type="submit" class="btn btn-outline-info">Submit application for review</button>
-</form>
+@if (Model.ReviewStatus == ApplicationStatus.InReview)
+{
+     <form asp-method="post" asp-action="Apply" asp-controller="Participant">
+        <input type="hidden" asp-for="ParticipantId" />
+        <input type="hidden" asp-for="ProjectId" />
+        <button type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-5">Submit application for review</button>
+    </form>  
+}
+
 
 @section Scripts{
     <script>

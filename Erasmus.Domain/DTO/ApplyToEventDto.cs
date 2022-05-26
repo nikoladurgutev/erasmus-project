@@ -17,6 +17,6 @@ namespace Erasmus.Domain.DTO
         public IFormFile MotivationLetter { get; set; }
         public UploadedFile UploadedMotivation { get; set; }
         public List<UploadedFile> UploadedFilesForUser { get; set; }
-
+        public ApplicationStatus ReviewStatus { get; set; }
     }
 }

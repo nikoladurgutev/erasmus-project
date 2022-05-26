@@ -44,7 +44,8 @@ namespace Erasmus.Service.Implementation
                 Participant = participant,
                 ParticipantId = participant.Id,
                 ParticipantUserId = participant.UserId,
-                UploadedFiles = files
+                UploadedFiles = files,
+                ReviewStatus = ApplicationStatus.InReview
             };
             _participantApplicationRepository.Insert(application);
 
@@ -69,13 +70,7 @@ namespace Erasmus.Service.Implementation
             email.MailTo = participant.BaseRecord.Email;
             var application = _participantApplicationRepository.GetForParticipantAndProject(participant.UserId, project.Id);
             sb.AppendLine("The application for the event: " + string.Concat("'", project.ProjectTitle, ",") + "has been successfully sent");
-            sb.AppendLine("Uploaded files for the event:<br/>");
-
-            foreach (var file in uploadedFiles)
-            {
-                sb.AppendLine(file.FileName + "<br/>");
-            }
-
+           
             email.Content = sb.ToString();
             email.Subject = "Application submitted";
             email.Sent = true;

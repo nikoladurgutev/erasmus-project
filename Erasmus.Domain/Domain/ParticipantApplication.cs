@@ -16,7 +16,7 @@ namespace Erasmus.Domain.Domain
         public Guid NonGovProjectId { get; set; }
         public NonGovProject NonGovProject { get; set; }
         public ICollection<UploadedFile> UploadedFiles { get; set; }
-        public bool? IsReviewed { get; set; }
-        public bool? IsApproved { get; set; }
+        // the participant application can be either approved, rejected or in review
+        public ApplicationStatus ReviewStatus { get; set; }
     }
 }

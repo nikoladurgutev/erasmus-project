@@ -19,15 +19,17 @@ namespace Erasmus.Web.Controllers
         private readonly INonGovProjectService _projectService;
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IParticipantApplicationService _participantApplicationService;
         private readonly IParticipantService _participantService;
         private readonly INotyfService _notyfService;
         public ParticipantController(INonGovProjectService projectService, IUploadedFileRepository uploadedFileRepository, IUserRepository userRepository,
-            IParticipantService participantService, INotyfService notyfService)
+            IParticipantService participantService, INotyfService notyfService, IParticipantApplicationService participantApplicationService)
         {
             _notyfService = notyfService;
             _projectService = projectService;
             _uploadedFileRepository = uploadedFileRepository;
             _userRepository = userRepository;
+            _participantApplicationService = participantApplicationService;
             _participantService = participantService;
             GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             GemBox.Pdf.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
@@ -42,6 +44,7 @@ namespace Erasmus.Web.Controllers
         {
             var project = _projectService.Get(eventId);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var application = _participantApplicationService.GetForParticipantAndProject(userId, eventId);
             var uploadedCv = _uploadedFileRepository.UploadedCvForEvent(userId, eventId);
             var uploadedMotivation = _uploadedFileRepository.UploadedMotivationalLetterForEvent(userId, eventId);
             if (project != null)
@@ -52,7 +55,8 @@ namespace Erasmus.Web.Controllers
                     Project = project,
                     UploadedCV = uploadedCv,
                     UploadedMotivation = uploadedMotivation,
-                    ParticipantId = userId
+                    ParticipantId = userId,
+                    ReviewStatus = application.ReviewStatus
                 };
                 return View(model);
             }
@@ -201,7 +205,7 @@ namespace Erasmus.Web.Controllers
             // delete the actual file
             System.IO.File.Delete(file.PathOnDisk);
             _notyfService.Success("File deleted");
-            return RedirectToAction("UploadFiles", "Participant", new { eventId = id});
+            return RedirectToAction("UploadFiles", "Participant", new { eventId = file.ProjectId});
         }
 
         public IActionResult Profile()

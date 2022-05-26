@@ -21,8 +21,7 @@ namespace Erasmus.Repository.Implementation
 
         public void Approve(ParticipantApplication application)
         {
-            application.IsReviewed = true;
-            application.IsApproved = true;
+            application.ReviewStatus = ApplicationStatus.Approved;
             context.SaveChanges();
         }
 
@@ -49,14 +48,14 @@ namespace Erasmus.Repository.Implementation
 
         public void Insert(ParticipantApplication application)
         {
+            application.ReviewStatus = ApplicationStatus.InReview;
             entities.Add(application);
             context.SaveChanges();
         }
 
         public void Reject(ParticipantApplication application)
         {
-            application.IsReviewed = true;
-            application.IsApproved = false;
+            application.ReviewStatus = ApplicationStatus.Rejected;
             context.SaveChanges();
         }
 

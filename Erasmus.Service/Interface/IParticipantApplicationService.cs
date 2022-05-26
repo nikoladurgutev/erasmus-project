@@ -8,5 +8,6 @@ namespace Erasmus.Service.Interface
     public interface IParticipantApplicationService
     {
         ParticipantApplication Get(Guid id);
+        ParticipantApplication GetForParticipantAndProject(string participantId, Guid projectId);
     }
 }
