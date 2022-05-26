@@ -9,7 +9,7 @@ namespace Erasmus.Domain.DTO
 {
     public class ApplyToEventDto
     {
-        public Guid ParticipantId { get; set; }
+        public string ParticipantId { get; set; }
         public NonGovProject Project { get; set; }
         public Guid ProjectId { get; set; }
         public IFormFile CV { get; set; }

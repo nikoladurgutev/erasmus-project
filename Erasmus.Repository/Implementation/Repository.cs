@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Erasmus.Domain.DomainModels;
+using Erasmus.Domain.Domain;
 using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;

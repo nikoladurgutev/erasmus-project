@@ -1,16 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Erasmus.Domain.Domain;
-using Erasmus.Domain.DomainModels;
 using Erasmus.Domain.DTO;
-using Erasmus.Repository.Implementation;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
-using GemBox.Document;
-using GemBox.Pdf;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using Syncfusion.Pdf.Parsing;
@@ -25,16 +19,16 @@ namespace Erasmus.Web.Controllers
         private readonly INonGovProjectService _projectService;
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IParticipantsRepository _participantRepository;
+        private readonly IParticipantService _participantService;
         private readonly INotyfService _notyfService;
         public ParticipantController(INonGovProjectService projectService, IUploadedFileRepository uploadedFileRepository, IUserRepository userRepository,
-            IParticipantsRepository participantRepository, INotyfService notyfService)
+            IParticipantService participantService, INotyfService notyfService)
         {
             _notyfService = notyfService;
             _projectService = projectService;
             _uploadedFileRepository = uploadedFileRepository;
             _userRepository = userRepository;
-            _participantRepository = participantRepository;
+            _participantService = participantService;
             GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             GemBox.Pdf.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
         }
@@ -57,9 +51,9 @@ namespace Erasmus.Web.Controllers
                     ProjectId = project.Id,
                     Project = project,
                     UploadedCV = uploadedCv,
-                    UploadedMotivation = uploadedMotivation
+                    UploadedMotivation = uploadedMotivation,
+                    ParticipantId = userId
                 };
-                //model.UploadedFilesForUser = _uploadedFileRepository.GetFilesForUserAndEvent(userId, eventId);
                 return View(model);
             }
             else
@@ -74,7 +68,7 @@ namespace Erasmus.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier).ToString();
             var project = _projectService.Get(model.ProjectId);
             model.Project = project;
-            var participant = _participantRepository.Get(userId);
+            var participant = _participantService.Get(userId);
             try
             {
                 if (model.CV != null)
@@ -122,7 +116,7 @@ namespace Erasmus.Web.Controllers
                 }
                 if(model.CV != null || model.UploadedCV != null)
                      _notyfService.Success("Files uploaded!");
-                return RedirectToAction("Details", "NonGovProjects", new { id = model.ProjectId });
+                return RedirectToAction("UploadFiles", "Participant", new { eventId = model.ProjectId });
 
             }
             catch
@@ -213,6 +207,13 @@ namespace Erasmus.Web.Controllers
         public IActionResult Profile()
         {
             return View();
+        }
+
+        public IActionResult Apply(ApplyToEventDto model)
+        {
+            // create application in db
+            _participantService.Apply(model.ParticipantId, model.ProjectId);
+            return RedirectToAction("UploadFiles", new { eventId = model.ProjectId});
         }
     }
 }

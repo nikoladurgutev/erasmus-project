@@ -1,4 +1,4 @@
-﻿using Erasmus.Domain.DomainModels;
+﻿using Erasmus.Domain.Domain;
 using Erasmus.Domain.Identity;
 using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;

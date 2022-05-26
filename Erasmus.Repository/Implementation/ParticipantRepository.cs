@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Erasmus.Repository.Implementation
 {
-    public class ParticipantRepository : IParticipantsRepository
+    public class ParticipantRepository : IParticipantRepository
     {
         private readonly ApplicationDbContext context;
         private DbSet<Participant> entities;

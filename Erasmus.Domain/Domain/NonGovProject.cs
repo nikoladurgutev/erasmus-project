@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Erasmus.Domain.DomainModels
+namespace Erasmus.Domain.Domain
 {
     public class NonGovProject : BaseEntity
     {
@@ -21,7 +21,6 @@ namespace Erasmus.Domain.DomainModels
         public DateTime EndDate { get; set; }
 
         public ICollection<NonGovProjectOrganizer> NonGovProjectOrganizers { get; set; }
-
-
+        public ICollection<ParticipantApplication> Applications { get; set; }
     }
 }

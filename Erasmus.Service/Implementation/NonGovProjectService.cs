@@ -110,5 +110,10 @@ namespace Erasmus.Service.Implementation
         {
             return _repository.GetAll().ToList();
         }
+
+        public List<NonGovProject> GetProjectsOrganizer(string organizerId)
+        {
+            return _repository.GetProjectsForOrganizer(organizerId); 
+        }
     }
 }

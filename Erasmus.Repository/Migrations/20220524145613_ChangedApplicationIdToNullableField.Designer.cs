@@ -4,14 +4,16 @@ using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Erasmus.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220524145613_ChangedApplicationIdToNullableField")]
+    partial class ChangedApplicationIdToNullableField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,29 +130,6 @@ namespace Erasmus.Repository.Migrations
                             Id = new Guid("cbec8be4-6325-4b2f-b08e-22d709c27688"),
                             Name = "UK"
                         });
-                });
-
-            modelBuilder.Entity("Erasmus.Domain.Domain.Email", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MailTo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Sent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmailMessage");
                 });
 
             modelBuilder.Entity("Erasmus.Domain.Domain.ErasmusProject", b =>
@@ -317,15 +296,15 @@ namespace Erasmus.Repository.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "506c6368-edb4-46e8-bab1-e2fba216194f",
+                            ConcurrencyStamp = "b1ca064d-c7b2-4469-b050-233ad883894e",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOuCxqfOYbiGqnA7dtHaNtqPkurVLcl6jQ4krVxwzIVdAX5QoBXxXxiWHYavNgS8fQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFOz4BuBruS0MTG4HGgfZot5CFEByrFv84NcGnI5Q7AVHqwniWKmvJ2Cnm7tXFpsig==",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "61b11165-e6b7-45a5-85a0-09f8e14a136d",
+                            SecurityStamp = "6c9d959e-a0b0-4b52-bb3c-05fd2c38411e",
                             TwoFactorEnabled = false,
                             UserName = "admin@gmail.com"
                         });
@@ -449,24 +428,26 @@ namespace Erasmus.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("IsApproved")
+                    b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsReviewed")
+                    b.Property<bool>("IsReviewed")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("NonGovProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ParticipantId")
+                    b.Property<Guid?>("ParticipantApplicationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ParticipantUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NonGovProjectId");
+
+                    b.HasIndex("ParticipantApplicationId");
 
                     b.HasIndex("ParticipantId");
 
@@ -503,22 +484,22 @@ namespace Erasmus.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("878d1649-5f9b-47c0-bef8-abcbd3ca366a"),
+                            Id = new Guid("1857b2fa-e169-4330-b55e-3868c760608f"),
                             Type = "Language Learning"
                         },
                         new
                         {
-                            Id = new Guid("e3f4d178-5f5d-4661-ad3b-915e949556b7"),
+                            Id = new Guid("3ff4ba80-1e81-497a-996a-009c67488837"),
                             Type = "Computer Science Learning"
                         },
                         new
                         {
-                            Id = new Guid("454e9a60-8b87-4024-8dfd-83dbccad1e89"),
+                            Id = new Guid("53178d9e-bd18-46d8-a173-6f0d7591f8bd"),
                             Type = "Business and Marketing"
                         },
                         new
                         {
-                            Id = new Guid("192f9820-f7c4-4ecf-b6a5-6a24d24f373d"),
+                            Id = new Guid("80d221cf-02d3-4952-bf5f-856d6bbb880a"),
                             Type = "Politics"
                         });
                 });
@@ -557,9 +538,6 @@ namespace Erasmus.Repository.Migrations
                     b.Property<int>("FileType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ParticipantApplicationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("PathOnDisk")
                         .HasColumnType("nvarchar(max)");
 
@@ -575,8 +553,6 @@ namespace Erasmus.Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");
-
-                    b.HasIndex("ParticipantApplicationId");
 
                     b.HasIndex("UserId1");
 
@@ -632,28 +608,28 @@ namespace Erasmus.Repository.Migrations
                         new
                         {
                             Id = "d5057dbb-cb98-476a-8f85-f27d6e6d7ec7",
-                            ConcurrencyStamp = "bbb2477f-9ab6-4b22-b2a1-7bbfc99a342a",
+                            ConcurrencyStamp = "0fdd9e4b-cc99-47f6-92df-c5e6b1a31467",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "4eb6f781-cba6-4873-ac70-7539916f1a17",
-                            ConcurrencyStamp = "cb8ed04c-3ac0-4d13-a9c5-91a576232042",
+                            ConcurrencyStamp = "b836b5ca-b4b3-436b-b828-e81a4ddc7418",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = "94a5b35b-ef16-434d-b99c-6ecf3c88b40a",
-                            ConcurrencyStamp = "67a0bc7f-89e0-4dd1-9ebf-ed4189de7cc8",
+                            ConcurrencyStamp = "f754ab0a-3b0d-42f8-9a55-d6b6142a09fe",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         },
                         new
                         {
                             Id = "a06137ff-e363-4441-a340-569663a0cc0e",
-                            ConcurrencyStamp = "808be2f6-c4aa-434b-a23a-336cab9287f5",
+                            ConcurrencyStamp = "77aca149-be73-491d-af60-4c6820826104",
                             Name = "Organizer",
                             NormalizedName = "ORGANIZER"
                         });
@@ -878,6 +854,10 @@ namespace Erasmus.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Erasmus.Domain.Domain.ParticipantApplication", null)
+                        .WithMany("Applications")
+                        .HasForeignKey("ParticipantApplicationId");
+
                     b.HasOne("Erasmus.Domain.Domain.Participant", "Participant")
                         .WithMany("ErasmusApplications")
                         .HasForeignKey("ParticipantId")
@@ -897,10 +877,6 @@ namespace Erasmus.Repository.Migrations
                     b.HasOne("Erasmus.Domain.Domain.ParticipantApplication", "Application")
                         .WithMany("UploadedFiles")
                         .HasForeignKey("ApplicationId");
-
-                    b.HasOne("Erasmus.Domain.Domain.ParticipantApplication", null)
-                        .WithMany("Files")
-                        .HasForeignKey("ParticipantApplicationId");
 
                     b.HasOne("Erasmus.Domain.Domain.Participant", "User")
                         .WithMany("UploadedFiles")

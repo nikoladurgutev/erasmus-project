@@ -5,16 +5,19 @@
 @{
 }
 
-<form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data">
+<form id="file-form" method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data">
     <input type="hidden" asp-for="ProjectId"/>
     <h1>Applying to @Model.Project.ProjectTitle</h1>
+    <h2>Date: @Model.Project.StartDate</h2>
+    <h3>Location: @Model.Project.City</h3>
+    <hr />
     <div>
         Please use the template file for CV for applying to these events
+        <a asp-controller="Participant" asp-action="DownloadCvTemplate" asp-route-id="@Model.ProjectId" >CV Template</a>
     </div>
     @if (Model.UploadedCV == null)
     {
         <div>
-            <a asp-controller="Participant" asp-action="DownloadCvTemplate" asp-route-id="@Model.ProjectId" >CV Template</a>
             <label>Attach a CV</label>
             <input type="file" class="file-input" asp-for="CV"/>
         </div>
@@ -44,16 +47,23 @@
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id">Delete</a>
         </div>
     }
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button id="btn-submit" type="submit" class="btn btn-success" style="display:none">Upload files</button>
+</form>
+
+<form asp-method="post" asp-action="Apply" asp-controller="Participant">
+    <input type="hidden" asp-for="ParticipantId" />
+    <input type="hidden" asp-for="ProjectId" />
+    <button type="submit" class="btn btn-outline-info">Submit application for review</button>
 </form>
 
 @section Scripts{
     <script>
         $(document).ready(function(){
-            $('.file-input').change(function(){
-                var fileName = $(this).val().split("\\").pop();
-                $(this).next('file-name').html(fileName);
+            $('.file-input').click(function(){
+                debugger;
+               $('#btn-submit').show();
             });
+           
         });
     </script>
 }

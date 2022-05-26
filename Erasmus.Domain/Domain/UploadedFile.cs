@@ -13,5 +13,7 @@ namespace Erasmus.Domain.Domain
         public Participant User { get; set; }
         public string PathOnDisk { get; set; }
         public FileType FileType { get; set; }
+        public Guid? ApplicationId { get; set; }
+        public ParticipantApplication Application { get; set; }
     } 
 }
