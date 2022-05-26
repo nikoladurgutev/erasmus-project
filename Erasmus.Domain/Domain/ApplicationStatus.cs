@@ -6,6 +6,6 @@ namespace Erasmus.Domain.Domain
 {
     public enum ApplicationStatus
     {
-        Approved, Rejected, InReview
+        Approved, Rejected, InReview, NotCompleted
     }
 }
