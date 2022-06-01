@@ -5,7 +5,11 @@
 @{
 }
 @await Component.InvokeAsync("Notyf") 
-
+<style>
+    .text-blue {
+        color: #263F6B;
+    }
+</style>
 
 <div class="alert alert-light w-75 justify-content-center mx-auto">
     <div class="justify-content-center text-center">
@@ -16,17 +20,17 @@
     *@
     <div>   
     <h1 class="h3 text-warning">@Model.ProjectTitle</h1>
-    <h2 class="h4 text-info">@Model.ProjectDescription</h2>
+    <h2 class="h4 text-blue">@Model.ProjectDescription</h2>
     </div>
 
     <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-outline-warning  btn-lg">Apply <i class="fa fa-check-circle" aria-hidden="true"></i></a>
     <hr />
-        <h2 class="h3 text-info">Uploaded files</h2>
+     @{
+            <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId"  class="btn btn-outline-primary btn-lg">See your application for event</a>
+    }
     </div>
    
-    @{
-            <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId">See your application for event</a>
-    }
+   
 </div>
 
 

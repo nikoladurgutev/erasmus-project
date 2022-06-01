@@ -10,6 +10,9 @@
     .btn-create {
         margin-top: 5%;
     }
+    .text-blue {
+        color: #263F6B;
+    }
 </style>
 <div class="container w-75">
     <form class="form-inline my-2 my-lg-0 mb-5">
@@ -28,8 +31,8 @@
 *@
           </div>
           <div class="col-6 ml-5" style="margin-left:100px;">
-                <h5 class="card-title text-primary">@project.ProjectTitle</h5>
-                <p class="card-text text-primary">@project.ProjectDescription</p>
+                <h5 class="card-title text-blue">@project.ProjectTitle</h5>
+                <p class="card-text text-blue">@project.ProjectDescription</p>
                 <div class="row w-100">
                      <div class="">
                        <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
@@ -61,7 +64,7 @@
    <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
 }
 
-<div class="mt-5 text-primary mb-5">
+<div class="mt-5 text-blue mb-5">
     <h1 class="h1 mb-3">How to apply?</h1>
     <p>
     Now it's easy to be part of the Erasmus community. All you need to have is a good mood and motivation.
