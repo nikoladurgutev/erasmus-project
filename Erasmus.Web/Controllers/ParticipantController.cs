@@ -38,6 +38,9 @@ namespace Erasmus.Web.Controllers
             GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             GemBox.Pdf.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
         }
+
+        //TODO:
+        //Edit profile page
         public IActionResult Index()
         {
             return View();
