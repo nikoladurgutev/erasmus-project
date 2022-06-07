@@ -18,6 +18,10 @@
     @Html.EditorFor(z => z.EndDate, new { htmlAttributes = new { @class="form-control" }})    <label>City</label>
     @Html.DropDownListFor(z => z.SelectedCityId, new SelectList(Model.Cities, "Value", "Text"), htmlAttributes: new { @class = "form-control", @Value = Model.SelectedCityId })
     <label>Project Photo:</label>
+     @if (Model.ProjectPhotoPath != null)
+    {
+        <img class="shape" src="~/projectimages/@Model.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+    }
     <input type="file" asp-for="ProjectPhoto" class="ml-2 mb-3 mt-3"/>
     <input asp-for="ProjectPhotoPath" type="hidden" />
     <button type="submit" class="btn btn-lg btn-outline-primary mt-2 btn-block">Save</button>

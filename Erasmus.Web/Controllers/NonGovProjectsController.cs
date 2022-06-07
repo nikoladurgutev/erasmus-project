@@ -98,31 +98,29 @@ namespace Erasmus.Web.Controllers
         [HttpPost]
         public IActionResult Edit(NonGovProjectDto model)
         {
-
+            var project = _nonGovProjectsService.Get(model.ProjectId);
             if (model.ProjectPhoto != null)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "projectimages");
-                string uniqueFileName = model.ProjectId + "_" + model.ProjectPhoto.FileName;
+                string uniqueFileName = Guid.NewGuid() + "_" + model.ProjectId + "_" + model.ProjectPhoto.FileName;
 
-                if (uniqueFileName != model.ProjectPhotoPath) {
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        model.ProjectPhoto.CopyTo(fileStream);
-                    }
-
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProjectPhoto.CopyTo(fileStream);
+                }
+                
+                if(!string.IsNullOrEmpty(model.ProjectPhotoPath))
+                {
                     FileInfo previousPhoto = new FileInfo(Path.Combine(uploadsFolder, model.ProjectPhotoPath));
                     if (previousPhoto.Exists)
                     {
                         previousPhoto.Delete();
                     }
-                   
-                    model.ProjectPhotoPath = uniqueFileName;
-
                 }
-                
+               
+                model.ProjectPhotoPath = uniqueFileName;
             }
-
 
             var editSuccessful = _nonGovProjectsService.Edit(model);
             if(editSuccessful)

@@ -26,7 +26,10 @@
     <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-outline-warning  btn-lg">Apply <i class="fa fa-check-circle" aria-hidden="true"></i></a>
     <hr />
      @{
+         if(User.IsInRole("Participant"))
+         {
             <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId"  class="btn btn-outline-primary btn-lg">See your application for event</a>
+         }
     }
     </div>
    
