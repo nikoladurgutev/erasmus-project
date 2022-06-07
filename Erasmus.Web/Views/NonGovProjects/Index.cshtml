@@ -22,14 +22,16 @@
     <div class="mt-5 ">
     @foreach(var project in Model.Projects)
     {
-      <div class="card border-primary mb-3 w-100" style="width: 18rem;">
-      <div class="card-body row">
-          <div class="col-2 mr-5">
-            <div style="width: 200px; height: 200px; background-color: gray;"></div>
-@*           <img src="" alt="..." class="img-thumbnail" style="width: 200px; height: 200px;" />
-            mesto za slikata od proektot
-*@
-          </div>
+            <div class="card border-primary mb-3 w-100" style="width: 18rem;">
+                <div class="card-body row">
+                    <div class="col-2 mr-5">
+                        <div style="width: 200px; height: 200px;">
+                                @if (project.ProjectPhotoPath != null)
+                            {
+                                <img class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+                            }
+                        </div>
+                    </div>
           <div class="col-6 ml-5" style="margin-left:100px;">
                 <h5 class="card-title text-blue">@project.ProjectTitle</h5>
                 <p class="card-text text-blue">@project.ProjectDescription</p>

@@ -5,9 +5,12 @@ using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Security.Claims;
+
 
 namespace Erasmus.Web.Controllers
 {
@@ -19,8 +22,9 @@ namespace Erasmus.Web.Controllers
         private readonly IOrganizerService _organizerService;
         private readonly IMapper _mapper;
         private readonly IUploadedFileRepository _uploadedFileRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService, IMapper mapper,
-            IUploadedFileRepository uploadedFileRepository)
+            IUploadedFileRepository uploadedFileRepository, IWebHostEnvironment webHostEnvironment)
         {
             _nonGovProjectsService = nonGovProjectService;
             _notyfService = notyfService;
@@ -28,6 +32,7 @@ namespace Erasmus.Web.Controllers
             _cityService = cityService;
             _uploadedFileRepository = uploadedFileRepository;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -50,6 +55,20 @@ namespace Erasmus.Web.Controllers
         [Authorize(Roles = "Organizer")]
         public IActionResult Create(NonGovProjectDto model)
         {
+            string uniqueFileName = null;
+
+            if (model.ProjectPhoto != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "projectimages");
+                uniqueFileName = model.ProjectId + "_" + model.ProjectPhoto.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProjectPhoto.CopyTo(fileStream);
+                }
+
+               model.ProjectPhotoPath = uniqueFileName;
+            }
             var organizerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             model.NonGovProjectOrganizerId = organizerId;
             var projectCreated = _nonGovProjectsService.Create(model);
@@ -71,12 +90,40 @@ namespace Erasmus.Web.Controllers
             var model = _mapper.Map<NonGovProjectDto>(project);
             model.ProjectId = id;
             model.Cities = cities;
+ 
+
             return View(model);
         }
 
         [HttpPost]
         public IActionResult Edit(NonGovProjectDto model)
         {
+
+            if (model.ProjectPhoto != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "projectimages");
+                string uniqueFileName = model.ProjectId + "_" + model.ProjectPhoto.FileName;
+
+                if (uniqueFileName != model.ProjectPhotoPath) {
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.ProjectPhoto.CopyTo(fileStream);
+                    }
+
+                    FileInfo previousPhoto = new FileInfo(Path.Combine(uploadsFolder, model.ProjectPhotoPath));
+                    if (previousPhoto.Exists)
+                    {
+                        previousPhoto.Delete();
+                    }
+                   
+                    model.ProjectPhotoPath = uniqueFileName;
+
+                }
+                
+            }
+
+
             var editSuccessful = _nonGovProjectsService.Edit(model);
             if(editSuccessful)
             {

@@ -19,6 +19,7 @@ namespace Erasmus.Domain.Domain
         public DateTime Deadline { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string ProjectPhotoPath { get; set; }
 
         public ICollection<NonGovProjectOrganizer> NonGovProjectOrganizers { get; set; }
         public ICollection<ParticipantApplication> Applications { get; set; }
