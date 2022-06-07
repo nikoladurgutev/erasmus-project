@@ -4,17 +4,20 @@
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="container text-center align-content-center w-75">
-
-    <h1 class="h1 text-primary">Register</h1>
-    <div class="text-primary "><i class="fa fa-user-circle-o fa-5x" aria-hidden="true"></i></div>
-
-   
+<head>
+    <link href="/css/registration.css" rel="stylesheet" type="text/css">
+</head>
+<div class="container-register">
+   <img class="image" src="~/images/transparent-erasmus-logo.png" alt="logo"/>
     @Html.ValidationSummary()
     <form asp-action="Register" asp-controller="Account" method="post">
     <input type="hidden" asp-for="@Model.Role"/>
         <div class="registerdiv align-content-center text-center">
+            <div class="title">
+                <h1>Register</h1>
+                <p>Create your new account!</p>
+            </div>
+            
              <div class="form-group">
                 <div>
                     @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name", @class = "form-control" })
@@ -49,8 +52,8 @@
             </div>
 
             <div class="form-group ">
-                <div class=" btn-submit">
-                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                <div class=" btn-submit ">
+                    <button type="submit" class="btn btn-primary btn-block button-signup">Sign Up</button>
                 </div>
             </div>
         </div>
