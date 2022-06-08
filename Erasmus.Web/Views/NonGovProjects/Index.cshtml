@@ -15,9 +15,9 @@
     }
 </style>
 <div class="container w-75 text-blue">
-    <form class="form-inline my-2 my-lg-0 mb-5">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <form class="form-inline my-2 my-lg-0 mb-5" asp-controller="NonGovProjects" asp-action="Index" method="get">
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="SearchString">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Filter"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     <div class="mt-5 ">
     @foreach(var project in Model.Projects)
@@ -30,7 +30,7 @@
             mesto za slikata od proektot
 *@
           </div>
-          <div class="col-6 ml-5" style="margin-left:100px;">
+          <div class="col-6 ml-5" style="margin-left:100px;" id="box">
                 <h5 class="card-title">@project.ProjectTitle</h5>
                 <p class="card-text">@project.ProjectDescription</p>
                 <div class="row w-100">

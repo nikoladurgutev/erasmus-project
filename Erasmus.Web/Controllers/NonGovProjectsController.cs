@@ -7,6 +7,7 @@ using Erasmus.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Erasmus.Web.Controllers
@@ -29,9 +30,15 @@ namespace Erasmus.Web.Controllers
             _uploadedFileRepository = uploadedFileRepository;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var projects = _nonGovProjectsService.GetAll();
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var project1 = from p in projects where p.ProjectTitle.Contains(searchString) || p.ProjectDescription.Contains(searchString) select p;
+                projects = project1.ToList();
+            }
             var model = new NonGovProjectsDto
             {
                 Projects = projects
