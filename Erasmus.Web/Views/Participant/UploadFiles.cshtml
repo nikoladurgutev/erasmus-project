@@ -78,7 +78,7 @@
         <div class="row justify-content-center">
             <label class="col-4 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-6">
-                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV?.Id" aria-hidden="true"></i></a>
                 <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
         </div>

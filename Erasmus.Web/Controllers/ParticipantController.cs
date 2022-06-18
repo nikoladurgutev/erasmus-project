@@ -213,7 +213,8 @@ namespace Erasmus.Web.Controllers
             // delete the actual file
             var participantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var application = _participantApplicationService.GetForParticipantAndProject(participantId, file.ProjectId);
-            application.ReviewStatus = ApplicationStatus.NotCompleted;
+            if(application != null)
+                application.ReviewStatus = ApplicationStatus.NotCompleted;
             _participantApplicationService.Update(application);
 
             System.IO.File.Delete(file.PathOnDisk);
@@ -230,6 +231,7 @@ namespace Erasmus.Web.Controllers
         {
             // create application in db
             _participantService.Apply(model.ParticipantId, model.ProjectId);
+            _notyfService.Success("Your application for the event is successful!");
             return RedirectToAction("UploadFiles", new { eventId = model.ProjectId});
         }
     }
