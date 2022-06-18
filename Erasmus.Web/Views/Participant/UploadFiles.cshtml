@@ -1,14 +1,21 @@
 ﻿@model Erasmus.Domain.DTO.ApplyToEventDto
+@using Erasmus.Domain.Domain
+
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+<style>
+    .text-blue {
+        color: #263F6B;
+    }
+</style> 
 
-<form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data" class="w-75 justify-content-center mx-auto">
+<form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data" class="w-75 justify-content-center mx-auto text-blue">
     <input type="hidden" asp-for="ProjectId"/>
     <div class="justify-content-center text-center">
-        <h1 class="text-warning h1 text-center">Applying to @Model.Project.ProjectTitle</h1>
+        <h1 class=" h1 text-center">Applying to @Model.Project.ProjectTitle</h1>
         <img src="~/images/applyToproject.png" style="width:200px; height:200px;" class="text-center justify-content-center"/>
     </div>
     
@@ -17,9 +24,9 @@
  
     @if (Model.UploadedCV == null)
     {
-            <div class="row justify-content-center text-center">
+            <div class="row justify-content-center text-center mt-3">
                 <div class="col-7">
-                     <label class="text-primary">
+                     <label>
                            Please use the template file for CV for applying to these events!
                     </label>
                 </div>
@@ -31,10 +38,10 @@
             </div>
          
             <div class="row mt-5 justify-content-center">
-                <div class="col-3">
-                     <label class="text-primary">Attach a CV file here: </label>
+                <div class="col-4">
+                     <label>Attach a CV file here: </label>
                 </div>
-                <div class="col-2">
+                <div class="col-6">
                     <input type="file" class="file-input" asp-for="CV"/>
                 </div>
             </div>
@@ -42,11 +49,11 @@
     else
     {   <div class="row justify-content-center m-3">
         <div class="col-4">
-          <label class="text-primary text-center">Uploaded CV: @Model.UploadedCV.FileName</label>
+          <label class=" text-center">Uploaded CV: @Model.UploadedCV.FileName</label>
         </div>
         <div class="col-6">
         <div>
-            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
+            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </div>
         </div>
@@ -58,10 +65,10 @@
     @if(Model.UploadedMotivation == null)
     {
          <div class="row justify-content-center">
-             <div class="col-3">
-                <label class="text-warning">Attach a Motivation Letter</label>
+             <div class="col-4">
+                <label>Attach a Motivation Letter</label>
              </div>
-             <div class="col-2">
+             <div class="col-6">
                 <input type="file" class="file-input" asp-for="MotivationLetter"/>
              </div>
         </div>
@@ -69,24 +76,73 @@
     else
     {
         <div class="row justify-content-center">
-            <label class="col-4 text-primary ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
+            <label class="col-4 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
             <div class="col-6">
-            <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" aria-hidden="true"></i></a>
-            <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
-        
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV?.Id" aria-hidden="true"></i></a>
+                <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
-           </div>
+        </div>
     }
-    <button type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-5">Upload</button>
+    <button id="btn-submit" type="submit" class="btn text-center text-light justify-content-center mt-3" style="display:none; background-color:#263F6B; margin-left: 410px;">Upload files</button>
 </form>
+
+@if (Model.ReviewStatus == ApplicationStatus.NotCompleted)
+{
+    <div class="row">
+         <form asp-method="post" asp-action="Apply" asp-controller="Participant">
+            <input type="hidden" asp-for="ParticipantId" />
+            <input type="hidden" asp-for="ProjectId" />
+            <div class="submit-div">
+                <button id="submit-application-btn" type="submit" class="btn btn-outline-primary btn-lg btn-block justify-content-center mt-3" title="Please upload CV and Motivaton Letter to apply">Submit application for review</button>
+            </div>    
+        </form> 
+    </div>
+}
+
 
 @section Scripts{
     <script>
         $(document).ready(function(){
-            $('.file-input').change(function(){
-                var fileName = $(this).val().split("\\").pop();
-                $(this).next('file-name').html(fileName);
+            debugger;
+            var canSubmitApplication = true;
+            checkIfDocumentsAreUploaded();
+            if(!canSubmitApplication)
+            {
+                disableElement($("#submit-application-btn"));
+            }
+            else{
+                enableElement()
+            }
+            $('.file-input').click(function(){
+                $('#btn-submit').show();
             });
+             
+             $("input.file-input").change(function(){
+                 checkIfDocumentsAreUploaded();
+                 if(!canSubmitApplication)
+                 {
+                      disableElement(("#submit-application-btn"));
+                 }
+             });
+
+             function checkIfDocumentsAreUploaded(){
+                if($(".fa-download").length != 2){
+                    // if the user didn't upload all files
+                    canSubmitApplication = false;
+                    $("#submit-div").tooltip();
+                }
+             }
+
+             function disableElement(element)
+             {
+                 $(element).attr("disabled", "true");
+             }
+
+             function enableEleemnt(element)
+             {
+                 $(element).attr("disabled", "false");
+             }
+           
         });
     </script>
 }

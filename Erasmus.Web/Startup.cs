@@ -1,6 +1,6 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using Erasmus.Domain.DomainModels;
+using Erasmus.Domain.Domain;
 using Erasmus.Repository.Implementation;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Implementation;
@@ -8,27 +8,25 @@ using Erasmus.Service.Interface;
 using Erasmus.Web.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Erasmus.Domain;
 
 namespace Erasmus.Web
 {
     public class Startup
     {
+        private EmailSettings emailService;
+
         public Startup(IConfiguration configuration)
         {
+            emailService = new EmailSettings();
             Configuration = configuration;
+            Configuration.GetSection("EmailSettings").Bind(emailService);
         }
 
         public IConfiguration Configuration { get; }
@@ -45,15 +43,20 @@ namespace Erasmus.Web
             // repositories
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IOrganizerRepository), typeof(OrganizerRepository));
-            services.AddScoped(typeof(IParticipantsRepository), typeof(ParticipantRepository));
+            services.AddScoped(typeof(IParticipantRepository), typeof(ParticipantRepository));
             services.AddScoped(typeof(IUploadedFileRepository), typeof(UploadedFileRepository));
             services.AddScoped(typeof(INonGovProjectRepository), typeof(NonGovProjectRepository));
+            services.AddScoped(typeof(IParticipantApplicationRepository), typeof(ParticipantApplicationRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped<EmailSettings>(email => emailService);
+            services.AddScoped<IEmailService, EmailService>();
 
             // services
             services.AddTransient(typeof(ICityService), typeof(CityService));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddTransient(typeof(INonGovProjectService), typeof(NonGovProjectService));
             services.AddTransient(typeof(IOrganizerService), typeof(OrganizerService));
+            services.AddTransient(typeof(IParticipantService), typeof(ParticipantService));
+            services.AddTransient(typeof(IParticipantApplicationService), typeof(ParticipantApplicationService));
 
             services.AddIdentity<ErasmusUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

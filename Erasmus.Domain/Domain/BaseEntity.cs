@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Erasmus.Domain.DomainModels
+namespace Erasmus.Domain.Domain
 {
     public class BaseEntity
     {

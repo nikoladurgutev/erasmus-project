@@ -29,6 +29,8 @@ namespace Erasmus.Web.Data
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<UploadedFile> UploadedFiles { get; set; }
         public virtual DbSet<ProfilePhoto> ProfilePics { get; set; }
+        public virtual DbSet<ParticipantApplication> Applications { get; set; }
+        public virtual DbSet<Email> EmailMessage { get; set; }
 
         private void SeedUsers(ModelBuilder builder)
         {
@@ -171,6 +173,11 @@ namespace Erasmus.Web.Data
                 .WithMany(z => z.NonGovProjects)
                 .HasForeignKey(z => z.ProjectTypeId);
 
+            // Application - UploadedFiles
+            builder.Entity<UploadedFile>()
+                .HasOne(z => z.Application)
+                .WithMany(z => z.UploadedFiles)
+                .HasForeignKey(z => z.ApplicationId);
 
             //MANY TO MANY
             //Organizer - NonGovProject
@@ -199,6 +206,17 @@ namespace Erasmus.Web.Data
                 .WithMany(z => z.ErasmusProjectUniversities)
                 .HasForeignKey(z => z.ErasmusProjectId)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
+            // Participant - NonGovProject
+            builder.Entity<ParticipantApplication>()
+                .HasOne(z => z.Participant)
+                .WithMany(z => z.ErasmusApplications)
+                .HasForeignKey(z => z.ParticipantId);
+
+            builder.Entity<ParticipantApplication>()
+                .HasOne(z => z.NonGovProject)
+                .WithMany(z => z.Applications)
+                .HasForeignKey(z => z.NonGovProjectId);
 
         }
     }

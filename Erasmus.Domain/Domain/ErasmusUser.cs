@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Erasmus.Domain.DomainModels
+namespace Erasmus.Domain.Domain
 {
     // User can be a young person who appies for Erasmus projects
     // the roles is not kept here, because it is a many to many table configired by .net

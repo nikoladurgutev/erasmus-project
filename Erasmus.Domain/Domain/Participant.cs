@@ -11,5 +11,6 @@ namespace Erasmus.Domain.Domain
         public string UserId { get; set; }
         public ErasmusUser BaseRecord { get; set; }
         public virtual ICollection<UploadedFile> UploadedFiles { get; set; }
+        public virtual ICollection<ParticipantApplication> ErasmusApplications { get; set; }
     }
 }

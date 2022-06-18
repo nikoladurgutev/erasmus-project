@@ -1,4 +1,4 @@
-﻿using Erasmus.Domain.DomainModels;
+﻿using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace Erasmus.Service.Interface
         bool Create(NonGovProjectDto project);
         List<NonGovProject> GetAll();
         NonGovProject Get(Guid id);
-
         bool Edit(NonGovProjectDto model);
         bool Delete(Guid id);
+        List<NonGovProject> GetProjectsOrganizer(string organizerId);
     }
 }

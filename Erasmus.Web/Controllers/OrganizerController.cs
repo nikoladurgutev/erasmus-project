@@ -20,11 +20,14 @@ namespace Erasmus.Web.Controllers
         private readonly IUserRepository _userRepository;
         private readonly INotyfService _notyfService;
         private readonly IRepository<ProfilePhoto> _profilePhotoRepository;
+        private readonly INonGovProjectService _nonGovProjectService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public OrganizerController(IOrganizerRepository organizerRepository, IMapper mapper,
            IOrganizerService organizerService, IUserRepository userRepository, INotyfService notyfService,
-           IRepository<ProfilePhoto> profilePhotoRepository, IWebHostEnvironment webHostEnvironment)
+           IRepository<ProfilePhoto> profilePhotoRepository,
+           INonGovProjectService nonGovProjectService,
+           IWebHostEnvironment webHostEnvironment)
         {
             _organizerRepository = organizerRepository;
             _organizerService = organizerService;
@@ -32,12 +35,13 @@ namespace Erasmus.Web.Controllers
             _mapper = mapper;
             _notyfService = notyfService;
             _profilePhotoRepository = profilePhotoRepository;
+            _nonGovProjectService = nonGovProjectService;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Profile()
         {
-            // id is tne id of the logged user
+            // id is the id of the logged user
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userRepository.Get(userId);
             // get the organizer
@@ -123,6 +127,27 @@ namespace Erasmus.Web.Controllers
                 return RedirectToAction("Profile");
             }
             return RedirectToAction("Profile");
+        }
+
+        /*
+         This endpoint shows all applications for projects created by the organizer
+         */
+        [HttpGet]
+        public IActionResult Projects(string organizerId)
+        {
+            var projects = _nonGovProjectService.GetProjectsOrganizer(organizerId);
+            var model = new ProjectsForOrganizerDto
+            {
+                Projects = projects,
+                OrganizerId = organizerId
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ApplicationsForProject(Guid projectId)
+        {
+            return View();
         }
     }
 }

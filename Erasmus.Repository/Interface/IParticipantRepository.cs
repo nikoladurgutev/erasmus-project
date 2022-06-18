@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Erasmus.Repository.Interface
 {
-    public interface IParticipantsRepository
+    public interface IParticipantRepository
     {
         List<Participant> GetAll();
         Participant Get(string id);
