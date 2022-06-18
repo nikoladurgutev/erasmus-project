@@ -26,9 +26,9 @@
                 <div class="card-body row">
                     <div class="col-2 mr-5">
                         <div style="width: 200px; height: 200px;">
-                                @if (project.ProjectPhotoPath != null)
+                            @if (project.ProjectPhotoPath != null)
                             {
-                                <img class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+                                <img class="project-photo" data-imgurl="@project.ProjectPhotoPath" class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
                             }
                         </div>
                     </div>
@@ -79,4 +79,26 @@
 </div>
 </div>
 
+
+@section Scripts{
+    <script>
+    $(".project-photo").each(function(){
+        // check if the photo exists if not add a default cover
+        var url = $(this).attr("data-imgurl");
+        addDefaultPhotoIfPhotoNotFound($(this));
+    });
+
+    function addDefaultPhotoIfPhotoNotFound(image){
+        $.get($(image).attr("data-imgurl"))
+        .done(function() { 
+            // Do something now you know the image exists.
+
+        }).fail(function() { 
+            // Image doesn't exist - do something else.
+            $(image).attr("src", "/projectimages/erasmus.png");
+        });
+    }
+    
+    </script>
+}
 
