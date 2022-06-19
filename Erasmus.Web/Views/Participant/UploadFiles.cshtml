@@ -10,12 +10,11 @@
     .text-blue {
         color: #263F6B;
     }
-</style> 
-
-<form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data" class="w-75 justify-content-center mx-auto text-blue">
+</style>
+<form method="post" asp-controller="Participant" asp-action="UploadFiles" enctype="multipart/form-data" class="w-75 justify-content-center mx-auto text-blue text-center">
     <input type="hidden" asp-for="ProjectId"/>
     <div class="justify-content-center text-center">
-        <h1 class=" h1 text-center">Applying to @Model.Project.ProjectTitle</h1>
+        <h1 class="h1 text-center">Applying to @Model.Project.ProjectTitle</h1>
         <img src="~/images/applyToproject.png" style="width:200px; height:200px;" class="text-center justify-content-center"/>
     </div>
     
@@ -38,20 +37,20 @@
             </div>
          
             <div class="row mt-5 justify-content-center">
-                <div class="col-4">
+                <div class="col-3">
                      <label>Attach a CV file here: </label>
                 </div>
-                <div class="col-6">
+                <div class="col-5">
                     <input type="file" class="file-input" asp-for="CV"/>
                 </div>
             </div>
     }
     else
     {   <div class="row justify-content-center m-3">
-        <div class="col-4">
-          <label class=" text-center">Uploaded CV: @Model.UploadedCV.FileName</label>
+        <div class="col-3">
+          <label class="text-center">Uploaded CV: @Model.UploadedCV.FileName</label>
         </div>
-        <div class="col-6">
+        <div class="col-5">
         <div>
             <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedCV.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
             <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedCV.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -65,10 +64,10 @@
     @if(Model.UploadedMotivation == null)
     {
          <div class="row justify-content-center">
-             <div class="col-4">
+             <div class="col-3">
                 <label>Attach a Motivation Letter</label>
              </div>
-             <div class="col-6">
+             <div class="col-5">
                 <input type="file" class="file-input" asp-for="MotivationLetter"/>
              </div>
         </div>
@@ -76,9 +75,9 @@
     else
     {
         <div class="row justify-content-center">
-            <label class="col-4 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
-            <div class="col-6">
-                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV?.Id" aria-hidden="true"></i></a>
+            <label class="col-3 ml-5">Your Motivation Letter: @Model.UploadedMotivation.FileName</label>
+            <div class="col-5">
+                <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@Model.UploadedCV.Id" aria-hidden="true"></i></a>
                 <a class="btn btn-danger" asp-controller="Participant" asp-action="DeleteUploadedFile" asp-route-id="@Model.UploadedMotivation.Id"> <i class="fa fa-trash" aria-hidden="true"></i></a>
             </div>
         </div>
@@ -88,7 +87,7 @@
 
 @if (Model.ReviewStatus == ApplicationStatus.NotCompleted)
 {
-    <div class="row">
+    <div class="row justify-content-center">
          <form asp-method="post" asp-action="Apply" asp-controller="Participant">
             <input type="hidden" asp-for="ParticipantId" />
             <input type="hidden" asp-for="ProjectId" />

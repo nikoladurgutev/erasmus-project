@@ -14,10 +14,10 @@
         color: #263F6B;
     }
 </style>
-<div class="container w-75">
-    <form class="form-inline my-2 my-lg-0 mb-5">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+<div class="container w-75 text-blue">
+    <form class="form-inline my-2 my-lg-0 mb-5" asp-controller="NonGovProjects" asp-action="Index" method="get">
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="SearchString">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Filter"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     <div class="mt-5 ">
     @foreach(var project in Model.Projects)
