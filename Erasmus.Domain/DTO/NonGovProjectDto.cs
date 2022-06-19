@@ -32,5 +32,7 @@ namespace Erasmus.Domain.DTO
         public List<SelectListItem> Cities { get; set; }
         [Required]
         public Guid SelectedCityId { get; set; }
+        public string ProjectPhotoPath { get; set; }
+        public IFormFile ProjectPhoto { get; set; }
     }
 }

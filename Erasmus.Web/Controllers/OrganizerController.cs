@@ -41,7 +41,7 @@ namespace Erasmus.Web.Controllers
 
         public IActionResult Profile()
         {
-            // id is tne id of the logged user
+            // id is the id of the logged user
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userRepository.Get(userId);
             // get the organizer

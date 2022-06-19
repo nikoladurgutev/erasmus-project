@@ -22,17 +22,19 @@
     <div class="mt-5 ">
     @foreach(var project in Model.Projects)
     {
-      <div class="card border-primary mb-3 w-100" style="width: 18rem;">
-      <div class="card-body row">
-          <div class="col-2 mr-5">
-            <div style="width: 200px; height: 200px; background-color: gray;"></div>
-@*           <img src="" alt="..." class="img-thumbnail" style="width: 200px; height: 200px;" />
-            mesto za slikata od proektot
-*@
-          </div>
+            <div class="card border-primary mb-3 w-100" style="width: 18rem;">
+                <div class="card-body row">
+                    <div class="col-2 mr-5">
+                        <div style="width: 200px; height: 200px;">
+                                @if (project.ProjectPhotoPath != null)
+                            {
+                                <img class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+                            }
+                        </div>
+                    </div>
           <div class="col-6 ml-5" style="margin-left:100px;">
-                <h5 class="card-title">@project.ProjectTitle</h5>
-                <p class="card-text">@project.ProjectDescription</p>
+                <h5 class="card-title text-blue">@project.ProjectTitle</h5>
+                <p class="card-text text-blue">@project.ProjectDescription</p>
                 <div class="row w-100">
                      <div class="">
                        <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
@@ -64,7 +66,7 @@
    <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
 }
 
-<div class="mt-5  mb-5">
+<div class="mt-5 text-blue mb-5">
     <h1 class="h1 mb-3">How to apply?</h1>
     <p>
     Now it's easy to be part of the Erasmus community. All you need to have is a good mood and motivation.
