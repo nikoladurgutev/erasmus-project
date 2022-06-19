@@ -5,6 +5,7 @@ using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
@@ -25,9 +26,14 @@ namespace Erasmus.Web.Controllers
         private readonly IMapper _mapper;
         private readonly INotyfService _notyfService;
         private readonly IParticipantRepository _participantRepository;
+        private readonly IRepository<ProfilePhoto> _profilePhotoRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+
         public ParticipantController(INonGovProjectService projectService, IUploadedFileRepository uploadedFileRepository, IUserRepository userRepository,
             IParticipantService participantService, INotyfService notyfService, IParticipantApplicationService participantApplicationService,
-            IParticipantRepository participantRepository, IMapper mapper)
+            IParticipantRepository participantRepository, IMapper mapper, IRepository<ProfilePhoto> profilePhotoRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _notyfService = notyfService;
             _projectService = projectService;
@@ -36,7 +42,9 @@ namespace Erasmus.Web.Controllers
             _participantApplicationService = participantApplicationService;
             _participantService = participantService;
             _participantRepository = participantRepository;
+            _profilePhotoRepository = profilePhotoRepository;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
             GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             GemBox.Pdf.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
         }
@@ -77,6 +85,51 @@ namespace Erasmus.Web.Controllers
                 _notyfService.Error("Error updating profile. Please try again later!");
                 return View("Profile", model);
             }
+        }
+        [HttpGet]
+        public IActionResult EditProfilePhoto(string participantId)
+        {
+            var user = _participantRepository.GetParticipantFromBase(participantId);
+            var profilePhoto = _profilePhotoRepository.Get(user.ProfilePhotoId);
+            var model = new EditProfilePictureDto
+            {
+                UserId = participantId,
+                ProfilePhotoPath = user.Photo != null ? user.Photo.PathOnDisk : ""
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UploadPhoto(EditProfilePictureDto model)
+        {
+            string uniqueFileName = null;
+
+            if (model.ProfilePhoto != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = model.UserId + "_" + model.ProfilePhoto.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfilePhoto.CopyTo(fileStream);
+                }
+
+                var organizer = _participantRepository.Get(model.UserId);
+                var user = _participantRepository.GetParticipantFromBase(model.UserId);
+                var photo = new ProfilePhoto
+                {
+                    PathOnDisk = uniqueFileName,
+                    User = user
+                };
+                _profilePhotoRepository.Insert(photo);
+
+                user.Photo = photo;
+                user.ProfilePhotoId = photo.Id;
+                _userRepository.Update(user);
+                _notyfService.Success("Profile Picture updated successfully");
+                return RedirectToAction("Profile");
+            }
+            return RedirectToAction("Profile");
         }
         public IActionResult Index()
         {

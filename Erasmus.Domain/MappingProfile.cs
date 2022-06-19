@@ -32,7 +32,8 @@ namespace Erasmus.Domain
                 .ForMember(z => z.ProfilePicture , o=> o.MapFrom(z => z.Photo));
 
             CreateMap<ErasmusUser, ParticipantProfileDto>()
-                .ForMember(z => z.ParticipantId, o => o.Ignore());
+                .ForMember(z => z.ParticipantId, o => o.Ignore())
+                .ForMember(z => z.ProfilePicture, o => o.MapFrom(z=>z.Photo));
 
             CreateMap<Organizer, OrganizerProfileDto>()
                 .ForMember(z => z.OrganizerId, o => o.MapFrom(z => z.UserId));

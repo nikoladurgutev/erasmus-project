@@ -14,15 +14,15 @@
     
     <div class="row main-row">
         <div class="col-3 left">
-                @*<div class="row profile-picture profile-picture">
+                <div class="row profile-picture profile-picture">
                         @if(Model.ProfilePicture != null)
                         {
                             <img class="shape" src="~/images/@Model.ProfilePicture.PathOnDisk"/>
                         }
-                </div>*@
-               @* <div class="row">
-                    <a asp-controller="Participant" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
-                </div>*@
+                </div>
+                <div class="row">
+                    <a asp-controller="Participant" asp-action="EditProfilePhoto" asp-route-participantId="@Model.ParticipantId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
+                </div>
         </div>
         <div class="col-9">
                 <label form-control>First Name</label>
