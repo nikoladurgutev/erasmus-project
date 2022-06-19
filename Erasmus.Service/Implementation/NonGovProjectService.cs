@@ -36,6 +36,7 @@ namespace Erasmus.Service.Implementation
                 nonGovProject.ProjectTitle = project.ProjectTitle;
                 nonGovProject.ProjectDescription = project.ProjectDescription;
                 nonGovProject.ProjectType = project.ProjectType;
+                nonGovProject.ProjectPhotoPath = project.ProjectPhotoPath;
                 Organizer organizer = _organizerRepository.Get(project.NonGovProjectOrganizerId);
 
                 // save the project

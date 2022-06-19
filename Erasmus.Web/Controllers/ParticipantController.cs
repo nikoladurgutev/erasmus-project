@@ -213,10 +213,12 @@ namespace Erasmus.Web.Controllers
             // delete the actual file
             var participantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var application = _participantApplicationService.GetForParticipantAndProject(participantId, file.ProjectId);
-            application.ReviewStatus = ApplicationStatus.NotCompleted;
+            if(application != null)
+                application.ReviewStatus = ApplicationStatus.NotCompleted;
             _participantApplicationService.Update(application);
 
-            System.IO.File.Delete(file.PathOnDisk);
+            if(!IsFileLocked(file.PathOnDisk))
+                System.IO.File.Delete(file.PathOnDisk);
             _notyfService.Success("File deleted");
             return RedirectToAction("UploadFiles", "Participant", new { eventId = file.ProjectId});
         }
@@ -230,7 +232,30 @@ namespace Erasmus.Web.Controllers
         {
             // create application in db
             _participantService.Apply(model.ParticipantId, model.ProjectId);
+            _notyfService.Success("Your application for the event is successful!");
             return RedirectToAction("UploadFiles", new { eventId = model.ProjectId});
+        }
+
+        protected virtual bool IsFileLocked(string path)
+        {
+            try
+            {
+                using (FileStream stream = System.IO.File.Open(path, FileMode.Open))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+
+            //file is not locked
+            return false;
         }
     }
 }
