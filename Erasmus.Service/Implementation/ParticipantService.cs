@@ -70,8 +70,14 @@ namespace Erasmus.Service.Implementation
             email.MailTo = participant.BaseRecord.Email;
             var application = _participantApplicationRepository.GetForParticipantAndProject(participant.UserId, project.Id);
             sb.AppendLine("The application for the event: " + string.Concat("'", project.ProjectTitle, ",") + "has been successfully sent");
-           
-            email.Content = sb.ToString();
+            string Content = sb.ToString();
+            //string cid = "~/images/logo1.png";
+            string Htmlcontent = "<html><style> p {color: #263F6B;} </style><body>" +
+                "<p>Hi 👋,</p>" +
+                "<p>" + Content + "</p>" +
+                //"<p><img style='width: 100px; height: 100px;' src ='cid:" + cid + "'/></p>" +
+                "</body></html>";
+            email.Content = Htmlcontent;
             email.Subject = "Application submitted";
             email.Sent = true;
             _emailRepository.Insert(email);

@@ -45,7 +45,8 @@ namespace Erasmus.Service.Implementation
                     b.Attachments.Add(file.FileName, ms.ToArray());
                 }
             }
-            b.TextBody = email.Content;
+           
+            b.HtmlBody = email.Content;
             emailMessage.Body = b.ToMessageBody();
 
             emailMessage.To.Add(new MailboxAddress(email.MailTo, _settings.SmtpUserName));
