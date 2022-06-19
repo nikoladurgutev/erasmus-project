@@ -29,5 +29,28 @@ namespace Erasmus.Repository.Implementation
         {
             throw new NotImplementedException();
         }
+
+        public ErasmusUser GetParticipantFromBase(string participantId)
+        {
+            return context.Users.Include(z=>z.Photo).FirstOrDefault(z => z.ParticipantId == participantId);
+        }
+
+        public ErasmusUser GetUser(string participantId)
+        {
+            var participant = entities.Include(z => z.BaseRecord).FirstOrDefault(z => z.UserId == participantId);
+            return participant.BaseRecord;
+        }
+
+        public void Insert(Participant entity)
+        {
+            entities.Add(entity);
+            context.SaveChanges();
+        }
+
+        public void Update(Participant entity)
+        {
+            entities.Update(entity);
+            context.SaveChanges();
+        }
     }
 }

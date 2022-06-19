@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AutoMapper;
 using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
@@ -21,9 +22,12 @@ namespace Erasmus.Web.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IParticipantApplicationService _participantApplicationService;
         private readonly IParticipantService _participantService;
+        private readonly IMapper _mapper;
         private readonly INotyfService _notyfService;
+        private readonly IParticipantRepository _participantRepository;
         public ParticipantController(INonGovProjectService projectService, IUploadedFileRepository uploadedFileRepository, IUserRepository userRepository,
-            IParticipantService participantService, INotyfService notyfService, IParticipantApplicationService participantApplicationService)
+            IParticipantService participantService, INotyfService notyfService, IParticipantApplicationService participantApplicationService,
+            IParticipantRepository participantRepository, IMapper mapper)
         {
             _notyfService = notyfService;
             _projectService = projectService;
@@ -31,12 +35,49 @@ namespace Erasmus.Web.Controllers
             _userRepository = userRepository;
             _participantApplicationService = participantApplicationService;
             _participantService = participantService;
+            _participantRepository = participantRepository;
+            _mapper = mapper;
             GemBox.Document.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
             GemBox.Pdf.ComponentInfo.SetLicense("FREE-LIMITED-KEY");
         }
 
         //TODO:
         //Edit profile page
+
+        public IActionResult Profile()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _userRepository.Get(userId);
+            var participant = _participantRepository.Get(userId);
+            var model = _mapper.Map<ParticipantProfileDto>(user);
+            _mapper.Map(participant, model);
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var participant = _participantService.Get(id);
+            var model = new ParticipantProfileDto();
+            var user = _participantService.GetUser(id);
+            _mapper.Map(participant, model);
+            _mapper.Map(user, model);
+            return View(model);
+        }
+        public IActionResult EditProfile(ParticipantProfileDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                _participantService.Edit(model);
+                _notyfService.Success("Profile Saved!");
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                _notyfService.Error("Error updating profile. Please try again later!");
+                return View("Profile", model);
+            }
+        }
         public IActionResult Index()
         {
             return View();
@@ -226,10 +267,7 @@ namespace Erasmus.Web.Controllers
             return RedirectToAction("UploadFiles", "Participant", new { eventId = file.ProjectId});
         }
 
-        public IActionResult Profile()
-        {
-            return View();
-        }
+       
 
         public IActionResult Apply(ApplyToEventDto model)
         {

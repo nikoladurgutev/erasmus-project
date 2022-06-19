@@ -10,7 +10,7 @@ namespace Erasmus.Domain.Domain
     // Application - Uploaded File - 1 - N
     public class ParticipantApplication : BaseEntity
     {
-        public Guid ParticipantId { get; set; }
+        public string ParticipantId { get; set; }
         public string ParticipantUserId { get; set; }
         public Participant Participant { get; set; }
         public Guid NonGovProjectId { get; set; }

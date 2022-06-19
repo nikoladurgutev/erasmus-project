@@ -1,4 +1,5 @@
-﻿using Erasmus.Domain.Domain;
+﻿using AutoMapper;
+using Erasmus.Domain.Domain;
 using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
@@ -20,9 +21,13 @@ namespace Erasmus.Service.Implementation
         private readonly IUploadedFileRepository _uploadedFileRepository;
         private readonly IRepository<Email> _emailRepository;
         private readonly IEmailService _emailService;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+
+
         public ParticipantService(IParticipantRepository participantRepository, INonGovProjectRepository nonGovProjectRepository,
             IParticipantApplicationRepository participantApplicationRepository, IUploadedFileRepository uploadedFileRepository,
-            IRepository<Email> emailRepository, IEmailService emailService)
+            IRepository<Email> emailRepository, IEmailService emailService, IMapper mapper, IUserRepository userRepository)
         {
             _participantRepository = participantRepository;
             _nonGovProjectRepository = nonGovProjectRepository;
@@ -30,6 +35,8 @@ namespace Erasmus.Service.Implementation
             _uploadedFileRepository = uploadedFileRepository;
             _emailRepository = emailRepository;
             _emailService = emailService;
+            _mapper = mapper;   
+            _userRepository = userRepository;
         }
 
         public async Task<bool> Apply(string participantId, Guid projectId)
@@ -42,7 +49,7 @@ namespace Erasmus.Service.Implementation
                 NonGovProject = project,
                 NonGovProjectId = projectId,
                 Participant = participant,
-                ParticipantId = participant.Id,
+                ParticipantId = participantId,
                 ParticipantUserId = participant.UserId,
                 UploadedFiles = files,
                 ReviewStatus = ApplicationStatus.InReview
@@ -53,9 +60,24 @@ namespace Erasmus.Service.Implementation
             return true;
         }
 
+        public void Edit(ParticipantProfileDto model)
+        {
+            var participant = _participantRepository.Get(model.ParticipantId);
+            var user = _participantRepository.GetParticipantFromBase(model.ParticipantId);
+            _mapper.Map(model, participant);
+            _mapper.Map(model, user);
+            _participantRepository.Update(participant);
+            _userRepository.Update(user);
+        }
+
         public Participant Get(string participantId)
         {
             return _participantRepository.Get(participantId);
+        }
+
+        public ErasmusUser GetUser(string participantId)
+        {
+             return _participantRepository.GetUser(participantId);
         }
 
         public bool SendMailToOrganizer(string mail)

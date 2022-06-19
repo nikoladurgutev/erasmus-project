@@ -1,0 +1,51 @@
+﻿@model Erasmus.Domain.DTO.ParticipantProfileDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/participant-profile.css" />
+    
+</head>
+
+<div class="container">
+    
+    <div class="row main-row">
+        <div class="col-3 left">
+                @*<div class="row profile-picture profile-picture">
+                        @if(Model.ProfilePicture != null)
+                        {
+                            <img class="shape" src="~/images/@Model.ProfilePicture.PathOnDisk"/>
+                        }
+                </div>*@
+               @* <div class="row">
+                    <a asp-controller="Participant" asp-action="EditProfilePhoto" asp-route-organizerId="@Model.OrganizerId" class="btn button-upload btn-edit btn-outline-success">Upload a profile picture</a>
+                </div>*@
+        </div>
+        <div class="col-9">
+                <label form-control>First Name</label>
+                @if(!string.IsNullOrEmpty(Model.FirstName))
+                {
+                    <p>@Model.FirstName</p>
+                }
+                else{
+                    <p>First Name is not inserted</p>
+                }
+                
+                 <label form-control>Last Name</label>
+                @if(!string.IsNullOrEmpty(Model.LastName))
+                {
+                    <p>@Model.LastName</p>
+                }
+                else{
+                    <p>Last Name not inserted</p>
+                }
+
+                <hr />
+                <a asp-controller="Participant" asp-action="Edit" asp-route-id="@Model.ParticipantId" class="btn btn-outline-success btn-edit">Edit Profile</a>
+        </div>
+    </div>
+    
+</div>

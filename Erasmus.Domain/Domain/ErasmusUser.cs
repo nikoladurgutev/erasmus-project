@@ -22,7 +22,7 @@ namespace Erasmus.Domain.Domain
 
         //only for participants these properties will be present
         public virtual Participant Participant { get; set; }
-        public Guid? ParticipantId { get; set; }
+        public virtual string ParticipantId { get; set; }
 
         // only for students these properties will be present
         public virtual Student Student { get; set; }

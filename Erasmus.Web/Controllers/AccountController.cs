@@ -19,14 +19,14 @@ namespace Erasmus.Web.Controllers
         private readonly SignInManager<ErasmusUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRepository<Student> studentRepository;
-        private readonly IRepository<Participant> participantRepository;
         private readonly IRepository<Coordinator> coordinatorRepository;
         private readonly IRepository<Admin> adminRepository;
+        private readonly IParticipantRepository participantRepository;
         private readonly IOrganizerRepository organizerRepository;
 
         public AccountController(UserManager<ErasmusUser> userManager, SignInManager<ErasmusUser> signInManager,
                                  RoleManager<IdentityRole> roleManager, IRepository<Student> studentRepository
-            , IRepository<Participant> participantRepository, IRepository<Coordinator> coordinatorRepository, IRepository<Admin> adminRepository, IOrganizerRepository organizerRepository)
+            , IParticipantRepository participantRepository, IRepository<Coordinator> coordinatorRepository, IRepository<Admin> adminRepository, IOrganizerRepository organizerRepository)
         {
 
             this.userManager = userManager;

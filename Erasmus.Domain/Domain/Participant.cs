@@ -6,8 +6,9 @@ using System.Text;
 
 namespace Erasmus.Domain.Domain
 {
-    public class Participant : BaseEntity
+    public class Participant
     {
+        [Key]
         public string UserId { get; set; }
         public ErasmusUser BaseRecord { get; set; }
         public virtual ICollection<UploadedFile> UploadedFiles { get; set; }
