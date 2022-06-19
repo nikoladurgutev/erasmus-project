@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 
 
@@ -34,9 +35,15 @@ namespace Erasmus.Web.Controllers
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var projects = _nonGovProjectsService.GetAll();
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var project1 = from p in projects where p.ProjectTitle.Contains(searchString) || p.ProjectDescription.Contains(searchString) select p;
+                projects = project1.ToList();
+            }
             var model = new NonGovProjectsDto
             {
                 Projects = projects

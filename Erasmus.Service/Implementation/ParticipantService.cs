@@ -4,6 +4,7 @@ using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
 using MimeKit;
+using MimeKit.Utils;
 using Syncfusion.Pdf.Parsing;
 using System;
 using System.Collections.Generic;
@@ -92,8 +93,8 @@ namespace Erasmus.Service.Implementation
             email.MailTo = participant.BaseRecord.Email;
             var application = _participantApplicationRepository.GetForParticipantAndProject(participant.UserId, project.Id);
             sb.AppendLine("The application for the event: " + string.Concat("'", project.ProjectTitle, ",") + "has been successfully sent");
-           
-            email.Content = sb.ToString();
+            string Content = sb.ToString();
+            email.Content = Content;
             email.Subject = "Application submitted";
             email.Sent = true;
             _emailRepository.Insert(email);
