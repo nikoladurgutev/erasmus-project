@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="DotNetEnv" Version="2.3.0" />
     <PackageReference Include="GemBox.Document" Version="35.0.1000" />
     <PackageReference Include="GemBox.Pdf" Version="17.0.1158" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.8" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <Folder Include="ProjectFiles\" />
     <Folder Include="wwwroot\css\NewFolder\" />
+    <Folder Include="wwwroot\projectimages\" />
   </ItemGroup>
 
 </Project>

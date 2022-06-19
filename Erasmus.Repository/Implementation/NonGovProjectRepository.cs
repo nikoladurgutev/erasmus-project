@@ -1,4 +1,4 @@
-﻿using Erasmus.Domain.DomainModels;
+﻿using Erasmus.Domain.Domain;
 using Erasmus.Repository.Interface;
 using Erasmus.Web.Data;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +33,11 @@ namespace Erasmus.Repository.Implementation
         public List<NonGovProject> GetAll()
         {
             return entities.Include(z => z.NonGovProjectOrganizers).ThenInclude(z=> z.Organizer).ThenInclude(z => z.BaseRecord).ToList();
+        }
+
+        public List<NonGovProject> GetProjectsForOrganizer(string organizerId)
+        {
+            return entities.Include(z => z.NonGovProjectOrganizers).ThenInclude(z => z.Organizer).Where(z => z.NonGovProjectOrganizers.Any(z => z.Organizer.UserId == organizerId)).ToList();
         }
 
         public void Insert(NonGovProject project)

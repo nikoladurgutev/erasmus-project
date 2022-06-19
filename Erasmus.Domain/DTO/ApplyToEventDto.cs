@@ -9,7 +9,7 @@ namespace Erasmus.Domain.DTO
 {
     public class ApplyToEventDto
     {
-        public Guid ParticipantId { get; set; }
+        public string ParticipantId { get; set; }
         public NonGovProject Project { get; set; }
         public Guid ProjectId { get; set; }
         public IFormFile CV { get; set; }
@@ -17,6 +17,6 @@ namespace Erasmus.Domain.DTO
         public IFormFile MotivationLetter { get; set; }
         public UploadedFile UploadedMotivation { get; set; }
         public List<UploadedFile> UploadedFilesForUser { get; set; }
-
+        public ApplicationStatus ReviewStatus { get; set; }
     }
 }
