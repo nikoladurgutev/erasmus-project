@@ -11,6 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Net.Mime;
+using MimeKit.Utils;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Erasmus.Service.Implementation
 {
@@ -45,10 +50,17 @@ namespace Erasmus.Service.Implementation
                     b.Attachments.Add(file.FileName, ms.ToArray());
                 }
             }
-           
-            b.HtmlBody = email.Content;
-            emailMessage.Body = b.ToMessageBody();
+            b.TextBody = @"Hi 👋," + email.Content;
+            string path2 = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\logo.png";
+            var image = b.LinkedResources.Add(@path2);
 
+            image.ContentId = MimeUtils.GenerateMessageId();
+            b.HtmlBody = string.Format(@"<body><p>Hi 👋,</p>
+                    <p>""{1}""</p><br>
+                    <p>Good luck,<br/>
+                    Erasmus team</p>
+                    <img width='150px' height='150x' src=""cid:{0}""/></body>",image.ContentId, email.Content);
+            emailMessage.Body = b.ToMessageBody();
             emailMessage.To.Add(new MailboxAddress(email.MailTo, _settings.SmtpUserName));
             try
             {

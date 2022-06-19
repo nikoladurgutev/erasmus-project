@@ -3,6 +3,7 @@ using Erasmus.Domain.DTO;
 using Erasmus.Repository.Interface;
 using Erasmus.Service.Interface;
 using MimeKit;
+using MimeKit.Utils;
 using Syncfusion.Pdf.Parsing;
 using System;
 using System.Collections.Generic;
@@ -71,13 +72,7 @@ namespace Erasmus.Service.Implementation
             var application = _participantApplicationRepository.GetForParticipantAndProject(participant.UserId, project.Id);
             sb.AppendLine("The application for the event: " + string.Concat("'", project.ProjectTitle, ",") + "has been successfully sent");
             string Content = sb.ToString();
-            //string cid = "~/images/logo1.png";
-            string Htmlcontent = "<html><style> p {color: #263F6B;} </style><body>" +
-                "<p>Hi 👋,</p>" +
-                "<p>" + Content + "</p>" +
-                //"<p><img style='width: 100px; height: 100px;' src ='cid:" + cid + "'/></p>" +
-                "</body></html>";
-            email.Content = Htmlcontent;
+            email.Content = Content;
             email.Subject = "Application submitted";
             email.Sent = true;
             _emailRepository.Insert(email);
