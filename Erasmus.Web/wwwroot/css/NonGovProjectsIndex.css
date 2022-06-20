@@ -1,6 +1,41 @@
-﻿body {
+﻿.card-group {
+    padding: 10%;
+}
+.btn-create {
+    margin-top: 5%;
 }
 
-.card-group {
-    padding: 10%;
+.text-blue {
+    color: #263F6B;
+}
+
+.width{
+    width:20%;
+}
+
+.create-button {
+    font-size: 20px;
+}
+
+
+.btn-create {
+    width:25%;
+    display:block;
+    margin:auto;
+    margin-top:5%;
+}
+
+.create-form {
+    width: 50%;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 50%;
+    margin: auto;
+    color: #263F6B;
+}
+
+.create-title {
+    margin-left:8rem;
+    margin-bottom:1rem;
+    color: #263F6B;
 }

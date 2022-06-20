@@ -4,24 +4,51 @@
 *@
 @{
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/edit-profile.css" />
+</head>
+<div class="">
+    
+    <div class="form">
+       
 <form method="post" asp-controller="Organizer" asp-action="EditProfile">
+    <div class="title">
+        Edit your profile
+    </div>
     <input type="hidden" asp-for="OrganizerId"/>
     <div class="form-group">
         @Html.LabelFor(z => z.FirstName)
-        <input type="text" asp-for="FirstName"/>
+        <input class="form-control" type="text" asp-for="FirstName"/>
     </div>
      <div class="form-group">
-        @Html.LabelFor(z => z.LastName)
-        <input type="text" asp-for="LastName"/>
+        @Html.LabelFor(z => z.LastName) 
+        <input class="form-control" type="text" asp-for="LastName"/>
     </div>
      <div class="form-group">
         @Html.LabelFor(z => z.OrganizationName)
-        <input type="text" asp-for="OrganizationName"/>
+        <input class="form-control" type="text" asp-for="OrganizationName"/>
     </div>
      <div class="form-group">
         @Html.LabelFor(z => z.OrganizationContact)
-        <input type="text" asp-for="OrganizationContact"/>
+        <input class="form-control" type="text" asp-for="OrganizationContact"/>
     </div>
-    <button type="submit" class="btn btn-outline-primary">Save</button>
+
+    <div class="center">
+    <button type="submit" class="btn btn-outline-success">Save changes</button>
+    </div>
 </form>
+
+<div class="right">
+<div class="profile-picture">
+    @if(Model.ProfilePicture != null)
+    {
+        <img class="shape" src="~/images/@Model.ProfilePicture.PathOnDisk"/>
+    }
+</div>
+<button type="submit" class="btn btn-outline-primary">Change Photo</button>
+</div>
+
+
+</div>
+
+</div>
