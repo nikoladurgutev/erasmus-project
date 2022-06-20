@@ -97,6 +97,18 @@
         </form> 
     </div>
 }
+else if(Model.ReviewStatus == ApplicationStatus.InReview)
+{
+    <h1>Your application is sent for review.</h1>
+}
+else if(Model.ReviewStatus == ApplicationStatus.Approved)
+{
+    <h1>Your application is approved. Please be ready by the start date.</h1>
+}
+else if(Model.ReviewStatus == ApplicationStatus.Rejected)
+{
+    <h1>Your application is rejected. Please stay up to date with new events.</h1>
+}
 
 
 @section Scripts{
@@ -110,8 +122,9 @@
                 disableElement($("#submit-application-btn"));
             }
             else{
-                enableElement()
+                enableElement($("#submit-application-btn"));
             }
+
             $('.file-input').click(function(){
                 $('#btn-submit').show();
             });

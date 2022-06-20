@@ -23,12 +23,14 @@ namespace Erasmus.Service.Implementation
     {
         private readonly EmailSettings _settings;
         private readonly IConfiguration _config;
+
         public EmailService(EmailSettings settings, IConfiguration configuration)
         {
             _settings = settings;
             _config = configuration;
         }
-        public async Task SendMailAsync(Email email, ICollection<UploadedFile> uploadedFiles)
+
+        public async Task SendMailAsync(Email email, string message, ICollection<UploadedFile> uploadedFiles)
         {
             var emailMessage = new MimeMessage
             {
@@ -57,9 +59,9 @@ namespace Erasmus.Service.Implementation
             image.ContentId = MimeUtils.GenerateMessageId();
             b.HtmlBody = string.Format(@"<body><p>Hi 👋,</p>
                     <p>""{1}""</p><br>
-                    <p>Good luck,<br/>
+                    <p>{2}, <br/>
                     Erasmus team</p>
-                    <img width='150px' height='150x' src=""cid:{0}""/></body>",image.ContentId, email.Content);
+                    <img width='150px' height='150x' src=""cid:{0}""/></body>",image.ContentId, email.Content, message);
             emailMessage.Body = b.ToMessageBody();
             emailMessage.To.Add(new MailboxAddress(email.MailTo, _settings.SmtpUserName));
             try
@@ -71,7 +73,7 @@ namespace Erasmus.Service.Implementation
 
                     if(!string.IsNullOrEmpty(_settings.SmtpUserName))
                     {
-                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _config.GetSection("MailKit").Value.ToString());
+                        await smtp.AuthenticateAsync(_settings.SmtpUserName, "diqfeibjinzockmq");
                     }
 
                     await smtp.SendAsync(emailMessage);

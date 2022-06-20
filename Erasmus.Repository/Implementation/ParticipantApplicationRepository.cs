@@ -33,17 +33,17 @@ namespace Erasmus.Repository.Implementation
 
         public List<ParticipantApplication> GetAllForProject(Guid id)
         {
-            return entities.Where(z => z.NonGovProjectId == id).ToList();
+            return entities.Include(z => z.UploadedFiles).Include(z => z.NonGovProject).Include(z => z.Participant).ThenInclude(z => z.BaseRecord).Where(z => z.NonGovProjectId == id && z.ReviewStatus < ApplicationStatus.NotCompleted).ToList();
         }
 
         public ParticipantApplication GetApplication(Guid id)
         {
-            return entities.FirstOrDefault(z => z.Id == id);
+            return entities.Include(z => z.NonGovProject).Include(z => z.Participant).ThenInclude(z => z.BaseRecord).FirstOrDefault(z => z.Id == id);
         }
 
         public ParticipantApplication GetForParticipantAndProject(string participantId, Guid projectId)
         {
-            return entities.Include(z => z.UploadedFiles).FirstOrDefault(z => z.ParticipantUserId == participantId && z.NonGovProjectId == projectId);
+            return entities.Include(z => z.Participant).Include(z => z.UploadedFiles).FirstOrDefault(z => z.ParticipantUserId == participantId && z.NonGovProjectId == projectId);
         }
 
         public void Insert(ParticipantApplication application)

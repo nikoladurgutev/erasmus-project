@@ -7,6 +7,7 @@ using Erasmus.Service.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Erasmus.Service.Implementation
 {
@@ -15,12 +16,18 @@ namespace Erasmus.Service.Implementation
         private readonly IOrganizerRepository _organizerRepository;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private readonly IRepository<Email> _emailRepository;
+        private readonly IEmailService _emailService;
+
         public OrganizerService(IOrganizerRepository organizerRepository,
-            IMapper mapper, IUserRepository userRepository)
+            IMapper mapper, IUserRepository userRepository, IRepository<Email> emailRepository,
+            IEmailService emailService)
         {
             _mapper = mapper;   
             _organizerRepository = organizerRepository;
             _userRepository = userRepository;
+            _emailRepository = emailRepository;
+            _emailService = emailService;
         }
 
         public void Edit(OrganizerProfileDto model)
@@ -46,6 +53,21 @@ namespace Erasmus.Service.Implementation
         public ErasmusUser GetUser(string organizerId)
         {
             return _organizerRepository.GetUser(organizerId);
+        }
+
+        public async Task<bool> SendMailForApprovedApplicationAsync(ParticipantApplication application)
+        {
+            Email email = new Email();
+            StringBuilder sb = new StringBuilder();
+            email.MailTo = application.Participant.BaseRecord.Email;
+            sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
+            string Content = sb.ToString();
+            email.Content = Content;
+            email.Subject = "Application approved";
+            email.Sent = true;
+            _emailRepository.Insert(email);
+            await _emailService.SendMailAsync(email, "See you soon,", null);
+            return true;
         }
     }
 }

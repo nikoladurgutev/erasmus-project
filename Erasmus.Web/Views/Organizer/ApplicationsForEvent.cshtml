@@ -1,0 +1,51 @@
+﻿@model Erasmus.Domain.DTO.ApplicationsForProjectDto
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .project-photo
+    {
+        max-width: 300px;
+    }
+</style>
+<h1>Applications for @Model.ProjectName</h1>
+<hr />
+@if(Model.Applications.Count == 0)
+{
+    <h2>There are currently no applications for this event.
+       Please check your email for any new applications.
+    </h2>
+}
+else
+{
+    foreach(var application in Model.Applications)
+    {
+        <div class="row application">
+            <div class="col-3">
+                <img class="project-photo" src="~/projectimages/@application.NonGovProject.ProjectPhotoPath"/>
+            </div>
+            <div class="col-6">
+                <p>@application.Participant.BaseRecord.Email</p>
+                <p>@application.Participant.BaseRecord.FirstName</p>
+                <p>@application.Participant.BaseRecord.LastName</p>
+                @foreach(var file in @application.UploadedFiles)
+                {
+                    <label>@file.FileName</label>
+                   <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@file.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@file.Id" aria-hidden="true"></i></a>
+                }
+                @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.InReview)
+                {
+                    <a asp-controller="Organizer" asp-action="Approve" asp-route-id="@application.Id" class="btn btn-success">Approve</a>
+                    <a asp-controller="Organizer" asp-action="Reject" asp-route-id="@application.Id" class="btn btn-danger">Reject</a>
+                }
+                else
+                {
+                    <h1>@application.ReviewStatus</h1>
+                }
+            </div>
+        </div>
+
+    }
+}

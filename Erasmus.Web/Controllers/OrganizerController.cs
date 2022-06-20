@@ -21,12 +21,14 @@ namespace Erasmus.Web.Controllers
         private readonly INotyfService _notyfService;
         private readonly IRepository<ProfilePhoto> _profilePhotoRepository;
         private readonly INonGovProjectService _nonGovProjectService;
+        private readonly IParticipantApplicationService _applicationService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public OrganizerController(IOrganizerRepository organizerRepository, IMapper mapper,
            IOrganizerService organizerService, IUserRepository userRepository, INotyfService notyfService,
            IRepository<ProfilePhoto> profilePhotoRepository,
            INonGovProjectService nonGovProjectService,
+           IParticipantApplicationService applicationService,
            IWebHostEnvironment webHostEnvironment)
         {
             _organizerRepository = organizerRepository;
@@ -36,6 +38,7 @@ namespace Erasmus.Web.Controllers
             _notyfService = notyfService;
             _profilePhotoRepository = profilePhotoRepository;
             _nonGovProjectService = nonGovProjectService;
+            _applicationService = applicationService;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -148,6 +151,34 @@ namespace Erasmus.Web.Controllers
         public IActionResult ApplicationsForProject(Guid projectId)
         {
             return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult ApplicationsForEvent(Guid id)
+        {
+            var applications = _applicationService.GetAllForProject(id);
+            var project = _nonGovProjectService.Get(id);
+            var model = _mapper.Map<ApplicationsForProjectDto>(project);
+            model.Applications = applications;
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Approve(Guid id)
+        {
+            var application = _applicationService.Get(id);
+            try
+            {
+                _applicationService.Approve(application);
+                _notyfService.Success("Application approved");
+            }
+            catch (Exception ex)
+            {
+                _notyfService.Error("Something went wrong, try again later.");
+            }
+
+            return RedirectToAction("ApplicationsForEvent", new { id = application.NonGovProject.Id });
         }
     }
 }

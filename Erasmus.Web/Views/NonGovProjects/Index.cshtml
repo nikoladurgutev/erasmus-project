@@ -32,33 +32,32 @@
                             }
                         </div>
                     </div>
-          <div class="col-6 ml-5" style="margin-left:100px;">
-                <h5 class="card-title text-blue">@project.ProjectTitle</h5>
-                <p class="card-text text-blue">@project.ProjectDescription</p>
-                <div class="row w-100">
-                     <div class="">
-                       <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-id="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
-                       @{
-                            if(!User.IsInRole("Organizer"))
-                            {
-                                <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
+                    <div class="col-6 ml-5" style="margin-left:100px;">
+                        <h5 class="card-title text-blue">@project.ProjectTitle</h5>
+                        <p class="card-text text-blue">@project.ProjectDescription</p>
+                        <div class="row w-100">
+                             <div class="">
+                               <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-eventid="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
+                               @{
+                                    if(!User.IsInRole("Organizer"))
+                                    {
+                                        <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
+                                    }
+                               }
+                               @{
+                               var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                               if(canEdit)
+                               {
+                                  <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                  <a asp-controller="Organizer" asp-action="ApplicationsForEvent" class="btn btn-info" asp-route-id="@project.Id">See all applications</a>
+                               }
                             }
-                       }
-                       @{
-                       var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
-                       if(canEdit)
-                       {
-                          <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                          <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                       }
-                   }
-
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-              
-          </div>
-      </div>
-      </div>
+            </div>
     }
 </div>
 @if(User.IsInRole("Organizer"))

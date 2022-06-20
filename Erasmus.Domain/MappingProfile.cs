@@ -39,6 +39,10 @@ namespace Erasmus.Domain
 
             CreateMap<OrganizerProfileDto, ErasmusUser>()
                 .ForMember(z => z.OrganizerId, o => o.Ignore());
+
+            CreateMap<NonGovProject, ApplicationsForProjectDto>()
+                .ForMember(z => z.Applications, o => o.Ignore())
+                .ForMember(z => z.ProjectName, o => o.MapFrom(s => s.ProjectTitle));
         }
     }
 }

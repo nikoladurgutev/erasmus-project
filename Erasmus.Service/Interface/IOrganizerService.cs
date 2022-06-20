@@ -4,6 +4,7 @@ using Erasmus.Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Erasmus.Service.Interface
 {
@@ -13,5 +14,6 @@ namespace Erasmus.Service.Interface
         Organizer Get(string id);
         ErasmusUser GetUser(string organizerId);
         public void Edit(OrganizerProfileDto model);
+        Task<bool> SendMailForApprovedApplicationAsync(ParticipantApplication application);
     }
 }

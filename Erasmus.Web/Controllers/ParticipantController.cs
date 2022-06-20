@@ -201,7 +201,7 @@ namespace Erasmus.Web.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Details", "NonGovProjects", new { id = id });
+                return RedirectToAction("Details", "NonGovProjects", new { eventid = id });
             }
         }
 

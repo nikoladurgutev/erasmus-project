@@ -11,5 +11,7 @@ namespace Erasmus.Service.Interface
         ParticipantApplication GetForParticipantAndProject(string participantId, Guid projectId);
         void Insert(ParticipantApplication application);
         void Update(ParticipantApplication application);
+        List<ParticipantApplication> GetAllForProject(Guid projectId);
+        ParticipantApplication Approve(ParticipantApplication application);
     }
 }

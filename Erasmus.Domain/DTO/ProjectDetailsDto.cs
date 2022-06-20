@@ -29,5 +29,6 @@ namespace Erasmus.Domain.DTO
         [Required]
         public Guid SelectedCityId { get; set; }
         public List<UploadedFile> UploadedFilesForUser { get; set; }
+        public string ProjectPhotoPath { get; set; }
     }
 }

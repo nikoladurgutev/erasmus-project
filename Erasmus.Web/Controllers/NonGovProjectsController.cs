@@ -162,12 +162,12 @@ namespace Erasmus.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Details(Guid id)
+        public IActionResult Details(Guid eventid)
         {
-            var project = _nonGovProjectsService.Get(id);
+            var project = _nonGovProjectsService.Get(eventid);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var model = _mapper.Map<ProjectDetailsDto>(project);
-            model.UploadedFilesForUser = _uploadedFileRepository.GetFilesForUserAndEvent(userId, id);
+            model.UploadedFilesForUser = _uploadedFileRepository.GetFilesForUserAndEvent(userId, eventid);
             return View(model);
         }
     }

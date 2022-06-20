@@ -13,17 +13,13 @@
 
 <div class="alert alert-light w-75 justify-content-center mx-auto">
     <div class="justify-content-center text-center">
-     <img src="~/images/projectpic.png" style="width:200px; height:200px;"/>
-
-    @*
-        smetam deka slika ke ima
-    *@
+    <img src="@Model.ProjectPhotoPath" style="width:200px; height:200px;"/>
     <div>   
     <h1 class="h3 text-warning">@Model.ProjectTitle</h1>
     <h2 class="h4 text-blue">@Model.ProjectDescription</h2>
     </div>
 
-    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-outline-warning btn-lg">Apply     <i class="fa fa-check-circle" aria-hidden="true"></i></a>
+    <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventId="@Model.ProjectId" class="btn btn-outline-warning btn-lg">Apply<i class="fa fa-check-circle" aria-hidden="true"></i></a>
     <hr />
      @{
          if(User.IsInRole("Participant"))
