@@ -3,6 +3,11 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+   .field-validation-error { 
+    color: red;
+   }
+</style>
 
 <head>
     <link href="/css/login-page.css" rel="stylesheet" type="text/css">
@@ -11,7 +16,6 @@
 <div class="container-login">
     <img class="image" src="~/images/transparent-erasmus-logo.png" alt="logo"/>
 
-    @Html.ValidationSummary()
     <form asp-action="Login" asp-controller="Account" method="post">
 
         <div class="logindiv">
