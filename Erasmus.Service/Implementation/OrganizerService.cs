@@ -69,5 +69,20 @@ namespace Erasmus.Service.Implementation
             await _emailService.SendMailAsync(email, "See you soon,", null);
             return true;
         }
+
+        public async Task<bool> SendMailForRejectedApplicationAsync(ParticipantApplication application)
+        {
+            Email email = new Email();
+            StringBuilder sb = new StringBuilder();
+            email.MailTo = application.Participant.BaseRecord.Email;
+            sb.AppendLine("The application for the event: " + string.Concat("'", application.NonGovProject.ProjectTitle, ",") + "has been approved by the organizer");
+            string Content = sb.ToString();
+            email.Content = Content;
+            email.Subject = "Application rejected";
+            email.Sent = true;
+            _emailRepository.Insert(email);
+            await _emailService.SendMailAsync(email, "Kind regards,", null);
+            return true;
+        }
     }
 }

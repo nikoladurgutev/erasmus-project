@@ -20,39 +20,48 @@
           <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Filter"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     <div class="mt-5 ">
-    @foreach(var project in Model.Projects)
+    @foreach(var record in Model.Projects)
     {
             <div class="card border-primary mb-3 w-100" style="width: 18rem;">
                 <div class="card-body row">
                     <div class="col-2 mr-5">
                         <div style="width: 200px; height: 200px;">
-                                @if (project.ProjectPhotoPath != null)
+                                @if (record.Project.ProjectPhotoPath != null)
                             {
-                                <img class="shape" src="~/projectimages/@project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
+                                <img class="shape" src="~/projectimages/@record.Project.ProjectPhotoPath" style="width: 200px; height: 200px;"/>
                             }
                         </div>
                     </div>
                     <div class="col-6 ml-5" style="margin-left:100px;">
-                        <h5 class="card-title text-blue">@project.ProjectTitle</h5>
-                        <p class="card-text text-blue">@project.ProjectDescription</p>
+                        <h5 class="card-title text-blue">@record.Project.ProjectTitle</h5>
+                        <p class="card-text text-blue">@record.Project.ProjectDescription</p>
                         <div class="row w-100">
                              <div class="">
-                               <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-eventid="@project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
+                               <a  class="btn btn-outline-primary col-4" asp-controller="NonGovProjects" asp-action="Details" asp-route-eventid="@record.Project.Id">See more <i class="fa fa-info" aria-hidden="true"></i></a>
                                @{
                                     if(!User.IsInRole("Organizer"))
                                     {
-                                        <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@project.Id" class="btn btn-primary col-4">Apply now</a>
+                                        if(!@record.UserHasApplied)
+                                        {
+                                            <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@record.Project.Id" class="btn btn-primary col-4">Apply now</a>
+                                        }
+                                        else
+                                        {
+                                           <a asp-controller="Participant" asp-action="UploadFiles" asp-route-eventid="@record.Project.Id" class="btn btn-primary col-4">See application</a>
+                                        }
                                     }
                                }
                                @{
-                               var canEdit = User.IsInRole("Organizer") && project.NonGovProjectOrganizers !=null && project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                               // ORGANIZERS
+                               var canEdit = User.IsInRole("Organizer") && record.Project.NonGovProjectOrganizers !=null && record.Project.NonGovProjectOrganizers.Any(z => z.Organizer.BaseRecord.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
                                if(canEdit)
                                {
-                                  <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                  <a asp-controller="Organizer" asp-action="ApplicationsForEvent" class="btn btn-info" asp-route-id="@project.Id">See all applications</a>
+                                  <a asp-controller="NonGovProjects" asp-action="Edit" asp-route-id="@record.Project.Id" class="edit-btn btn btn-outline-primary col-3"  ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                  <a asp-controller="NonGovProjects" asp-action="Delete" asp-route-id="@record.Project.Id" class="delete-btn btn btn-outline-danger col-3"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                  <a asp-controller="Organizer" asp-action="ApplicationsForEvent" class="btn btn-info" asp-route-id="@record.Project.Id">See all applications</a>
                                }
                             }
+
                             </div>
                         </div>
                     </div>

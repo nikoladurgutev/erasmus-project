@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Erasmus.Domain.DTO
 {
-    public class NonGovProjectsDto
+    public class ProjectDto
     {
-        public List<ProjectDto> Projects { get; set; }
+        public NonGovProject Project { get; set; }
+        public bool UserHasApplied { get; set; }
     }
 }

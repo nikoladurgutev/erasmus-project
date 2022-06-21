@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -23,30 +24,48 @@ namespace Erasmus.Web.Controllers
         private readonly IOrganizerService _organizerService;
         private readonly IMapper _mapper;
         private readonly IUploadedFileRepository _uploadedFileRepository;
+        private readonly IParticipantApplicationService _participantApplicationService;
+        private readonly IParticipantService _participantService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public NonGovProjectsController(INonGovProjectService nonGovProjectService, INotyfService notyfService, ICityService cityService, IOrganizerService organizerService, IMapper mapper,
-            IUploadedFileRepository uploadedFileRepository, IWebHostEnvironment webHostEnvironment)
+            IUploadedFileRepository uploadedFileRepository, IParticipantApplicationService participantApplciationService,
+            IParticipantService participantService, IWebHostEnvironment webHostEnvironment)
         {
             _nonGovProjectsService = nonGovProjectService;
             _notyfService = notyfService;
             _organizerService = organizerService;
             _cityService = cityService;
             _uploadedFileRepository = uploadedFileRepository;
+            _participantApplicationService = participantApplciationService;
+            _participantService = participantService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index(string searchString)
         {
             var projects = _nonGovProjectsService.GetAll();
-            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var participant = _participantService.Get(userId);
             if (!String.IsNullOrEmpty(searchString))
             {
                 var project1 = from p in projects where p.ProjectTitle.Contains(searchString) || p.ProjectDescription.Contains(searchString) select p;
                 projects = project1.ToList();
             }
+
+            var projectsDto = new List<ProjectDto>();
+            foreach(var project in projects)
+            {
+                // check with a call to the repository
+                var userHasApplied = User.IsInRole("Participant") && _participantApplicationService.GetForParticipantAndProject(userId, project.Id) != null;
+                projectsDto.Add(new ProjectDto
+                {
+                    Project = project,
+                    UserHasApplied = userHasApplied
+                });
+            }
             var model = new NonGovProjectsDto
             {
-                Projects = projects
+                Projects = projectsDto
             };
             return View(model);
         }

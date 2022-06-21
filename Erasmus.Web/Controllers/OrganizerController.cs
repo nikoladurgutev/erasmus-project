@@ -180,5 +180,22 @@ namespace Erasmus.Web.Controllers
 
             return RedirectToAction("ApplicationsForEvent", new { id = application.NonGovProject.Id });
         }
+
+        [HttpGet]
+        public IActionResult Reject(Guid id)
+        {
+            var application = _applicationService.Get(id);
+            try
+            {
+                _applicationService.Reject(application);
+                _notyfService.Success("Application rejected");
+            }
+            catch (Exception ex)
+            {
+                _notyfService.Error("Something went wrong, try again later.");
+            }
+            return RedirectToAction("ApplicationsForEvent", new { id = application.NonGovProject.Id });
+
+        }
     }
 }

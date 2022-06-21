@@ -50,6 +50,15 @@ namespace Erasmus.Service.Implementation
             _repository.Insert(application);
         }
 
+        public ParticipantApplication Reject(ParticipantApplication application)
+        {
+            application.ReviewStatus = ApplicationStatus.Rejected;
+            _repository.Update(application);
+            // send mail to participant
+            _organizerService.SendMailForApprovedApplicationAsync(application);
+            return application;
+        }
+
         public void Update(ParticipantApplication application)
         {
             _repository.Update(application);

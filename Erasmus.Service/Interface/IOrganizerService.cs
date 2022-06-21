@@ -15,5 +15,6 @@ namespace Erasmus.Service.Interface
         ErasmusUser GetUser(string organizerId);
         public void Edit(OrganizerProfileDto model);
         Task<bool> SendMailForApprovedApplicationAsync(ParticipantApplication application);
+        Task<bool> SendMailForRejectedApplicationAsync(ParticipantApplication application);
     }
 }

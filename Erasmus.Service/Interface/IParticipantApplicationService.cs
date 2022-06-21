@@ -13,5 +13,7 @@ namespace Erasmus.Service.Interface
         void Update(ParticipantApplication application);
         List<ParticipantApplication> GetAllForProject(Guid projectId);
         ParticipantApplication Approve(ParticipantApplication application);
+
+        ParticipantApplication Reject(ParticipantApplication application);
     }
 }
