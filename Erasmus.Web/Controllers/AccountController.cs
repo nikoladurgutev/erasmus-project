@@ -91,7 +91,9 @@ namespace Erasmus.Web.Controllers
                         NormalizedUserName = request.Email,
                         Email = request.Email,
                         EmailConfirmed = true,
-                        PhoneNumberConfirmed = true
+                        PhoneNumberConfirmed = true,
+                        FirstName = request.FirstName,
+                        LastName = request.LastName
                     };
                     var result = await userManager.CreateAsync(user, request.Password);
                     
