@@ -14,5 +14,6 @@ namespace Erasmus.Service.Interface
         bool Edit(NonGovProjectDto model);
         bool Delete(Guid id);
         List<NonGovProject> GetProjectsOrganizer(string organizerId);
+        NonGovProjectOrganizer GetNonGovProjectOrganizer(Guid projectId);
     }
 }

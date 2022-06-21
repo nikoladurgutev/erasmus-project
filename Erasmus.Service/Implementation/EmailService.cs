@@ -84,6 +84,51 @@ namespace Erasmus.Service.Implementation
 
             }
         }
+        public async Task SendMailToOrganizerAsync(Email email)
+        {
+            var emailMessage = new MimeMessage
+            {
+                Sender = new MailboxAddress(_settings.SendersName, _settings.SmtpUserName),
+                Subject = email.Subject
+            };
+
+            emailMessage.From.Add(new MailboxAddress(_settings.EmailDisplayName, _settings.SmtpUserName));
+
+            var b = new BodyBuilder();
+            b.TextBody = @"Hi 👋," + email.Content;
+            string path2 = Directory.GetCurrentDirectory() + "\\wwwroot\\images\\logo.png";
+            var image = b.LinkedResources.Add(@path2);
+
+            image.ContentId = MimeUtils.GenerateMessageId();
+            b.HtmlBody = string.Format(@"<body><p>Hi 👋,</p>
+                    <p>""{1}""</p><br>
+                    <p>Good luck,<br/>
+                    Erasmus team</p>
+                    <img width='150px' height='150x' src=""cid:{0}""/></body>", image.ContentId, email.Content);
+            emailMessage.Body = b.ToMessageBody();
+            emailMessage.To.Add(new MailboxAddress(email.MailTo, _settings.SmtpUserName));
+            try
+            {
+                using (var smtp = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    var socketOption = _settings.EnableSsl ? SecureSocketOptions.StartTls : SecureSocketOptions.Auto;
+                    await smtp.ConnectAsync(_settings.SmtpServer, _settings.SmtpServerPort, socketOption);
+
+                    if (!string.IsNullOrEmpty(_settings.SmtpUserName))
+                    {
+                        await smtp.AuthenticateAsync(_settings.SmtpUserName, _config.GetSection("MailKit").Value.ToString());
+                    }
+
+                    await smtp.SendAsync(emailMessage);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
 
         public Task SendUnsentMailsAsync(List<Email> emails)
         {
