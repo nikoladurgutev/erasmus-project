@@ -187,6 +187,7 @@ namespace Erasmus.Web.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var model = _mapper.Map<ProjectDetailsDto>(project);
             model.UploadedFilesForUser = _uploadedFileRepository.GetFilesForUserAndEvent(userId, eventid);
+            model.UserHasApplied = _participantApplicationService.GetForParticipantAndProject(userId, eventid) != null;
             return View(model);
         }
     }
