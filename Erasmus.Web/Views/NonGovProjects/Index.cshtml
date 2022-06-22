@@ -6,16 +6,16 @@
 @{
     // this view lists all non government projects
 }
+<head>
+    <link href="/css/NonGovProjectsIndex.css" rel="stylesheet" type="text/css">
+</head>
 <style>
-    .btn-create {
-        margin-top: 5%;
-    }
-    .text-blue {
-        color: #263F6B;
+    .text-blue{
+           color: #263F6B;
     }
 </style>
 <div class="container w-75 text-blue">
-    <form class="form-inline my-2 my-lg-0 mb-5" asp-controller="NonGovProjects" asp-action="Index" method="get">
+    <form class="form-inline my-2 my-lg-0 mb-5 text-blue" asp-controller="NonGovProjects" asp-action="Index" method="get">
           <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="SearchString">
           <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Filter"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
@@ -61,10 +61,6 @@
       </div>
     }
 </div>
-@if(User.IsInRole("Organizer"))
-{
-   <a class="btn-create btn btn-lg btn-block btn-outline-primary " asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
-}
 
 <div class="mt-5 text-blue mb-5">
     <h1 class="h1 mb-3">How to apply?</h1>
@@ -77,6 +73,12 @@
     </p>
     <br/>
 </div>
+@if(User.IsInRole("Organizer"))
+{
+   <a class="btn btn-outline-primary create-button" asp-controller="NonGovProjects" asp-action="Create">Create a project</a>
+}
+
+
 </div>
 
 

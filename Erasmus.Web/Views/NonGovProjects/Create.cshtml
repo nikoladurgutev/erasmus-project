@@ -4,13 +4,16 @@
 *@
 @{
 }
-<style>
-    .btn-create{
-        margin-top: 5%;
-    }
-</style>
 
 
+<head>
+    <link href="/css/NonGovProjectsIndex.css" rel="stylesheet" type="text/css">
+</head>
+
+<div class="create-form">
+    <h1 class="create-title">
+        Create your project!
+    </h1>
 <form id="create-project-form" asp-action="Create" asp-controller="NonGovProjects" class="text-primary" enctype="multipart/form-data">
     <label>Title</label>
     <input class="form-control" asp-for="ProjectTitle" />
@@ -24,8 +27,9 @@
     @Html.DropDownListFor(z => z.SelectedCityId, new SelectList(Model.Cities, "Value", "Text"), htmlAttributes: new { @class = "form-control"})
     <label>Project Photo</label>
     <input type="file" asp-for="ProjectPhoto" class="mt-3 ml-2"/>
-    <button type="submit" class="btn-create btn btn-lg btn-outline-primary btn-block">Create</button>
+    <button type="submit" class="btn-create btn btn-outline-primary btn-block">Create</button>
 </form>
+</div>
 
 <script>
 </script>
