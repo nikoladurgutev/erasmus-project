@@ -6,6 +6,10 @@
 *@
 @{
 }
+
+<head>
+    <link href="/css/approve_reject.css" rel="stylesheet" type="text/css">
+</head>
 <style>
     .text-blue {
         color: #263F6B;
@@ -105,15 +109,28 @@
 }
 else if(Model.ReviewStatus == ApplicationStatus.InReview)
 {
-    <h1>Your application is sent for review.</h1>
+    <div class="review-container">
+       <div class="review"> 
+           <h3 class="review-title">Your application is sent for review to the organizer!</h3>
+       </div>
+    </div>
+    
 }
 else if(Model.ReviewStatus == ApplicationStatus.Approved)
-{
-    <h1>Your application is approved. Please be ready by the start date.</h1>
+{<div class="message-approve-container">
+    <div class="approved">
+        <h3 class="approved-title">Your application is approved!</h3>
+        <p class="approved-text">Please be ready before the start date.</p>
+    </div>
+</div>
 }
 else if(Model.ReviewStatus == ApplicationStatus.Rejected)
 {
-    <h1>Your application is rejected. Please stay up to date with new events.</h1>
+    <div class="message-rejected-container">
+    <div class="rejected">
+        <h3 class="rejected-title">Your application is rejected</h3>
+    </div>
+</div>
 }
 
 
