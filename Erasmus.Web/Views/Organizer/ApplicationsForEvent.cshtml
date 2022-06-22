@@ -4,6 +4,10 @@
 *@
 @{
 }
+
+<head>
+    <link href="/css/approve_reject.css" rel="stylesheet" type="text/css">
+</head>
 <style>
     .project-photo
     {
@@ -26,14 +30,16 @@ else
             <div class="col-3">
                 <img class="project-photo" src="~/projectimages/@application.NonGovProject.ProjectPhotoPath"/>
             </div>
-            <div class="col-6">
-                <p>@application.Participant.BaseRecord.Email</p>
-                <p>@application.Participant.BaseRecord.FirstName</p>
-                <p>@application.Participant.BaseRecord.LastName</p>
+            <div class="col-6 app">
+                <p class="application-p first">@application.Participant.BaseRecord.Email</p>
+                <p class="application-p">@application.Participant.BaseRecord.FirstName</p>
+                <p class="application-p">@application.Participant.BaseRecord.LastName</p>
                 @foreach(var file in @application.UploadedFiles)
                 {
+                    <div>
                     <label>@file.FileName</label>
-                   <a class="btn btn-primary" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@file.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@file.Id" aria-hidden="true"></i></a>
+                   <a class="btn btn-primary btn-small" asp-controller="Participant" asp-action="ShowUploadedFile" asp-route-id="@file.Id" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> <i class="fa fa-download" data-fileid="@file.Id" aria-hidden="true"></i></a>
+                    </div>
                 }
                 @if(application.ReviewStatus == Erasmus.Domain.Domain.ApplicationStatus.InReview)
                 {
@@ -42,7 +48,7 @@ else
                 }
                 else
                 {
-                    <h1>@application.ReviewStatus</h1>
+                    <p class="status">@application.ReviewStatus</p>
                 }
             </div>
         </div>
